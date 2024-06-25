@@ -9,5 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./top-bar-first-layer.component.scss']
 })
 export class TopBarFirstLayerComponent {
-
+  
+  
 }
