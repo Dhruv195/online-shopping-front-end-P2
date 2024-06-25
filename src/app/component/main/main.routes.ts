@@ -19,7 +19,7 @@ export const routes: Routes = [
                 loadComponent: () => import('./shope/shope.component').then((m) => m.ShopeComponent)
             },
             {
-                path: 'shop-details',
+                path: 'shop-detail',
                 loadComponent: () => import('./shope-details/shope-details.component').then((m) => m.ShopeDetailsComponent)
             },
             {
@@ -27,7 +27,7 @@ export const routes: Routes = [
                 loadComponent: () => import('./shopping-cart/shopping-cart.component').then((m) => m.ShoppingCartComponent)
             },
             {
-                path: 'product-checkout',
+                path: 'checkout',
                 loadComponent: () => import('./product-checkout/product-checkout.component').then((m) => m.ProductCheckoutComponent)
                 //auth-guard
             },
