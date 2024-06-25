@@ -6,29 +6,45 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule,RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  categorySelected = '';
-
+  collapseCategory = false;
   categories = [
     {
-      name: 'Dresses',
-      subcategories: ["Men's Dresses", "Women's Dresses", "Baby's Dresses"],
+      title:'Dresses',
+      link:'/shop'
     },
+    {
+      title:'Shirts',
+      link:'/shop'
+    },
+    {
+      title:'Jeans',
+      link:'/shop'
+    }
   ];
+  headerNav = [
+    {
+      title: 'Home',
+      link:'/home'
+    },
+    {
+      title: 'Shop',
+      link:'/shop'
+    },
+    { 
+      title: 'Contact',
+      link:'/contact'
+    }
+  ]
 
-  simpleCategories = [
-    'Shirts',
-    'Jeans',
-    'Swimwear',
-    'Sleepwear',
-    'Sportswear',
-    'Jumpsuits',
-    'Blazers',
-    'Jackets',
-    'Shoes',
-  ];
+  constructor(){}
+
+  onSelectCategory() {
+    console.log("cate")
+    this.collapseCategory = true;
+  }
 }

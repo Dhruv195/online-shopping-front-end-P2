@@ -5,6 +5,7 @@ import { CategoryCarousulSectionComponent } from './category-carousul-section/ca
 import { CategorySectionComponent } from './category-section/category-section.component';
 import { FeaturedSectionComponent } from './featured-section/featured-section.component';
 import { FeaturedProductSectionComponent } from './featured-product-section/featured-product-section.component';
+import { CommonService } from 'src/app/shared/service/common.service';
 
 @Component({
   selector: 'app-home',

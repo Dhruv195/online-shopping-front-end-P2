@@ -11,5 +11,12 @@ import { RouterModule } from '@angular/router';
 })
 export class TopBarFirstLayerComponent {
   
-  
+  links = [
+    { name: "About", url: "#" },
+    { name: "Contact", url: "#" },
+    { name: "Help", url: "#" },
+    { name: "FAQs", url: "#" },
+  ];
+
+  languages = ["EN", "FR", "AR", "RU"];
 }
