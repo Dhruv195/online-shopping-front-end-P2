@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-category-carousul-section',
   standalone: true,
-  imports: [CommonModule,NgbModule],
+  imports: [CommonModule],
   templateUrl: './category-carousul-section.component.html',
   styleUrls: ['./category-carousul-section.component.scss'],
 })
