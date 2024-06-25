@@ -1,1 +1,46 @@
-<p>sign-in works!</p>
+<div class="">
+
+    <div class="container d-flex flex-column  justify-content-center align-items-center height ">
+        <div class="p-3 shadow-lg border border-dark rounded-2 ">
+            <div class="bgDark rounded-2">
+                <h1 class="text-center cYellow">Sign In </h1>
+            </div>
+            <div class="border border-warning border-2"></div>
+            <form (ngSubmit)="doSignIn()" [formGroup]="signInForm">
+                <div class="form-group p-4">
+                    <label for="inputEmail1">Email<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control mt-2" formControlName="email" id="inputEmail1"
+                        placeholder="Email"
+                        [ngClass]="{'error':signInForm.get('email').invalid && ( signInForm.get('email').touched || submitted)}">
+                    <span class="text-danger"
+                        *ngIf="signInForm.get('email').hasError('required') && ( signInForm.get('email').touched || submitted)">Email
+                        is required</span>
+                    <span class="text-danger" *ngIf="signInForm.get('email').hasError('email') ">Email is invalid</span>
+                </div>
+                <div class="form-group p-4">
+                    <label for="inputPassword1">Password <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input [type]="hiddenPassword ? 'text' : 'password' " class="form-control mt-2"
+                            formControlName="password" id="inputPassword1" placeholder="Password"
+                            [ngClass]="{'error':signInForm.get('password').invalid && (signInForm.get('password').touched || submitted)}">
+                        <button type="button" class="btn bgYellow  mt-2" (click)="showPass()"
+                            [ngClass]="{'bi bi-eye-fill':hiddenPassword ,'bi bi-eye-slash-fill':!hiddenPassword}"></button>
+                    </div>
+
+                    <span class="text-danger"
+                        *ngIf="signInForm.get('password').hasError('required') && (signInForm.get('password').touched || submitted)">Password
+                        is Required</span>
+
+                </div>
+                <div class="p-4 pt-0">
+                    <a  routerLink="/auth/forgot-password">Forgot password ?</a>
+                </div>
+                <div class="p-4 text-center">
+                    <button class="btn bgYellow w-100">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
