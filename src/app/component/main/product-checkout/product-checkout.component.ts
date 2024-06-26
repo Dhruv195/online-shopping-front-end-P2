@@ -18,7 +18,7 @@ export class ProductCheckoutComponent {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next({
+    this.commonService.breadCrumbData$.next({
       pageTitle: 'Product Checkout',
       linkList: [
         { label:'Home',link:'/'},

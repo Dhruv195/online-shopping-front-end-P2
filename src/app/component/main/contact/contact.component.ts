@@ -17,7 +17,7 @@ export class ContactComponent implements OnInit {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next({
+    this.commonService.breadCrumbData$.next({
       pageTitle: 'Contact',
       linkList: [
         { label:'Home',link:'/'},

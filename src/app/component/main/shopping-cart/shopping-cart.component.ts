@@ -21,7 +21,7 @@ export class ShoppingCartComponent {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next({
+    this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Cart',
       linkList: [
         { label:'Home',link:'/'},

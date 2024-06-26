@@ -340,7 +340,7 @@ export class ShopeComponent implements OnInit {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next({
+    this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Page',
       linkList: [
         { label:'Home',link:'/'},

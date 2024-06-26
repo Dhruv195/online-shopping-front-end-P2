@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule } from '@angular/forms';
+import { CommonService } from 'src/app/shared/service/common.service';
 
 @Component({
   selector: 'app-shopping-cart-list',
@@ -12,7 +13,7 @@ import { FormControl, FormsModule } from '@angular/forms';
 export class ShoppingCartListComponent implements OnInit {
 
   cartProductList:any;
-  @Output() subTotalChanged = new EventEmitter<number>();
+
   someAddedCart=[
     {
       name:'Product Name',
@@ -36,6 +37,7 @@ export class ShoppingCartListComponent implements OnInit {
       img:'assets/img/product-1.jpg'
     }
   ]
+  constructor(public commonService:CommonService){}
 
   ngOnInit(): void {
     this.cartProductList= this.getLocalStorage('cartProductList');
@@ -43,7 +45,9 @@ export class ShoppingCartListComponent implements OnInit {
       this.cartProductList=this.someAddedCart;
       this.setLocalStorage('cartProductList',this.cartProductList);
     }
-    this.calculateSubTotal();
+    this.commonService.subTotalAmount$.next(this.calculateSubTotal())
+    this.commonService.totalCartItem$.next(this.cartProductList.length);
+
   }
 
   setLocalStorage(typeOfString:any,storeData:any) {
@@ -61,12 +65,14 @@ export class ShoppingCartListComponent implements OnInit {
       product.quantity -= 1;
       this.updateTotal(product);
     }
-    this.calculateSubTotal();
+    this.commonService.subTotalAmount$.next(this.calculateSubTotal())
+
   }
   quantityPlus(product:any){
     product.quantity += 1;
     this.updateTotal(product);
-    this.calculateSubTotal();
+    this.commonService.subTotalAmount$.next(this.calculateSubTotal())
+
   }
   updateTotal(product: any) {
     product.total = product.price * product.quantity;
@@ -74,10 +80,13 @@ export class ShoppingCartListComponent implements OnInit {
   deleteProduct(index:any){
     this.cartProductList.splice(index,1);
     this.setLocalStorage('cartProductList', this.cartProductList);
+    this.commonService.totalCartItem$.next(this.cartProductList.length);
+    this.commonService.subTotalAmount$.next(this.calculateSubTotal())
   }
   calculateSubTotal() {
-    const subTotal = this.cartProductList.reduce((sum: number, product: any) => sum + (product.price * product.quantity), 0);
-    this.subTotalChanged.emit(subTotal);
+    const subTotal = this.cartProductList.reduce(
+      (sum: number, product: any) => sum + (product.price * product.quantity), 0);
+    return subTotal;
   }
 
 }

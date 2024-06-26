@@ -18,7 +18,7 @@ export class ShopeDetailsComponent {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next({
+    this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Detail',
       linkList: [
         { label:'Home',link:'/'},

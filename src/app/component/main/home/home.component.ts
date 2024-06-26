@@ -20,6 +20,6 @@ export class HomeComponent implements OnInit {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next(null);
+    this.commonService.breadCrumbData$.next(null);
   }
 }

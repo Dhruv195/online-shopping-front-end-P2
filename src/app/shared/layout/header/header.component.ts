@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonService } from '../../service/common.service';
 
 @Component({
   selector: 'app-header',
@@ -41,7 +42,7 @@ export class HeaderComponent {
     }
   ]
 
-  constructor(){}
+  constructor(public commonService:CommonService){}
 
   onSelectCategory() {
     console.log("cate")
