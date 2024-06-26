@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
+import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 
 @Component({
   selector: 'app-shope',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ProdcutCardComponent],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss']
 })
@@ -331,13 +332,17 @@ export class ShopeComponent implements OnInit {
    
     // Add more products as needed
    ];
-
+   displayMode:any
   constructor(public commonService: CommonService) {
     
   }
 
   ngOnInit(): void {
+    
     this.changeBreadCrumbData();
+  }
+  onDisplayModeChange(mode: number): void {
+    this.displayMode = mode;
   }
   changeBreadCrumbData() {
     this.commonService.breadCrumbData.next({

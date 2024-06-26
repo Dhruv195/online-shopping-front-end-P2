@@ -2,32 +2,17 @@
   <div class="row px-xl-5" *ngFor="let product of products.products">
     <!-- Carousel Section -->
     <div class="col-lg-5 mb-30">
-      <div
-        id="product-carousel-{{ product._id }}"
-        class="carousel slide"
-        data-ride="carousel"
-      >
+      <div id="product-carousel-{{ product._id }}" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner bg-light">
-          <div
-            class="carousel-item"
-            *ngFor="let image of product.images; let i = index"
-            [ngClass]="{ active: i === 0 }"
-          >
+          <div class="carousel-item" *ngFor="let image of product.images; let i = index"
+            [ngClass]="{ active: i === 0 }">
             <img class="w-100 h-100" [src]="image" alt="Image" />
           </div>
         </div>
-        <a
-          class="carousel-control-prev"
-          href="#product-carousel-{{ product._id }}"
-          data-slide="prev"
-        >
+        <a class="carousel-control-prev" href="#product-carousel-{{ product._id }}" data-slide="prev">
           <i class="fa fa-2x fa-angle-left text-dark"></i>
         </a>
-        <a
-          class="carousel-control-next"
-          href="#product-carousel-{{ product._id }}"
-          data-slide="next"
-        >
+        <a class="carousel-control-next" href="#product-carousel-{{ product._id }}" data-slide="next">
           <i class="fa fa-2x fa-angle-right text-dark"></i>
         </a>
       </div>
@@ -39,14 +24,8 @@
         <h3>{{ product.productName }}</h3>
         <div class="d-flex mb-3">
           <div class="text-primary mr-2">
-            <small
-              class="fas fa-star"
-              *ngFor="let star of [].constructor(product.ratings)"
-            ></small>
-            <small
-              class="far fa-star"
-              *ngFor="let star of [].constructor(5 - product.ratings)"
-            ></small>
+            <small class="fas fa-star" *ngFor="let star of [].constructor(product.ratings)"></small>
+            <small class="far fa-star" *ngFor="let star of [].constructor(5 - product.ratings)"></small>
           </div>
           <small class="pt-1">({{ product.reviews }} Reviews)</small>
         </div>
@@ -55,38 +34,22 @@
         <div class="d-flex mb-3">
           <strong class="text-dark mr-3">Sizes:</strong>
           <form>
-            <div
-              *ngFor="let size of product.size"
-              class="custom-control custom-radio custom-control-inline"
-            >
-              <input
-                type="radio"
-                class="custom-control-input"
-                [id]="'size-' + size"
-                name="size"
-              />
+            <div *ngFor="let size of product.size" class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" [id]="'size-' + size" name="size" />
               <label class="custom-control-label" [for]="'size-' + size">{{
                 size
-              }}</label>
+                }}</label>
             </div>
           </form>
         </div>
         <div class="d-flex mb-4">
           <strong class="text-dark mr-3">Colors:</strong>
           <form>
-            <div
-              *ngFor="let color of product.colors"
-              class="custom-control custom-radio custom-control-inline"
-            >
-              <input
-                type="radio"
-                class="custom-control-input"
-                [id]="'color-' + color"
-                name="color"
-              />
+            <div *ngFor="let color of product.colors" class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" [id]="'color-' + color" name="color" />
               <label class="custom-control-label" [for]="'color-' + color">{{
                 color
-              }}</label>
+                }}</label>
             </div>
           </form>
         </div>
@@ -97,11 +60,7 @@
                 <i class="fa fa-minus"></i>
               </button>
             </div>
-            <input
-              type="text"
-              class="form-control bg-secondary border-0 text-center"
-              value="1"
-            />
+            <input type="text" class="form-control bg-secondary border-0 text-center" value="1" />
             <div class="input-group-btn">
               <button class="btn btn-primary btn-plus">
                 <i class="fa fa-plus"></i>
@@ -138,62 +97,54 @@
     <div class="col">
       <div class="bg-light p-30">
         <div class="nav nav-tabs mb-4">
-          <a
-            class="nav-item nav-link text-dark active"
-            data-toggle="tab"
-            href="#tab-pane-description-{{ product._id }}"
-            >Description</a
-          >
-          <a
-            class="nav-item nav-link text-dark"
-            data-toggle="tab"
-            href="#tab-pane-information-{{ product._id }}"
-            >Information</a
-          >
-          <a
-            class="nav-item nav-link text-dark"
-            data-toggle="tab"
-            href="#tab-pane-reviews-{{ product._id }}"
-            >Reviews ({{ product.reviews }})</a
-          >
+          <a class="nav-item nav-link text-dark active" data-toggle="tab"
+            href="#tab-pane-description-{{ product._id }}">Description</a>
+          <a class="nav-item nav-link text-dark" data-toggle="tab"
+            href="#tab-pane-information-{{ product._id }}">Information</a>
+          <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-reviews-{{ product._id }}">Reviews
+            ({{ product.reviews }})</a>
         </div>
         <div class="tab-content">
-          <div
-            class="tab-pane fade show active"
-            [id]="'tab-pane-description-' + product._id"
-          >
+          <div class="tab-pane fade show active" [id]="'tab-pane-description-' + product._id">
             <h4 class="mb-3">Product Description</h4>
             <p>{{ product.mainDescription }}</p>
           </div>
-          <div
-            class="tab-pane fade"
-            [id]="'tab-pane-information-' + product._id"
-          >
+          <div class="tab-pane fade" [id]="'tab-pane-information-' + product._id">
             <h4 class="mb-3">Additional Information</h4>
             <p>{{ product.information.description }}</p>
-            <div
-              *ngFor="let point of product.information.infoPoints"
-              class="mb-2"
-            >
+            <div *ngFor="let point of product.information.infoPoints" class="mb-2">
               <h5 class="font-weight-semi-bold text-dark mb-1">{{ point }}</h5>
             </div>
           </div>
           <div class="tab-pane fade" [id]="'tab-pane-reviews-' + product._id">
-            <h4 class="mb-4">
-              {{ product.reviews }} Review(s) for {{ product.productName }}
-            </h4>
-            <div class="media mb-4" *ngIf="product.reviews > 0">
-              <!-- Loop through reviews here if available -->
-            </div>
-            <div class="media">
-              <img
-                src="img/user.jpg"
-                alt="Image"
-                class="img-fluid mr-3 mt-1"
-                style="width: 45px"
-              />
-              <div class="media-body">
-                <h6>Leave a Review</h6>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <h3> {{ product.reviews }} Review(s) for {{ product.productName }}</h3>
+                <ng-container *ngIf="reviewList.reviews.length > 0">
+                  <ng-container *ngFor="let review of reviewList.reviews">
+                    <div class="media mb-4">
+                      <img [src]="review.user_profile_pic" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                      <div class="media-body">
+                        <h6>{{review.firstName+" "+review.lastName }}<small> - <i>{{review.reviewDate|date}}</i></small>
+                        </h6>
+                        <div class="text-primary mb-2">
+                          <small class="fas fa-star" *ngFor="let star of [].constructor(review.reviewRating)"></small>
+                          <small class="far fa-star"
+                            *ngFor="let star of [].constructor(5 - review.reviewRating)"></small>
+
+                        </div>
+                        <p>{{review.reviewMessage}}</p>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+              <div class="col-md-6">
+                <h4 class="mb-4">Leave a review</h4>
+                <small>Your email address will not be published. Required fields are marked *</small>
                 <div class="d-flex my-3">
                   <p class="mb-0 mr-2">Your Rating * :</p>
                   <div class="text-primary">
@@ -207,27 +158,18 @@
                 <form>
                   <div class="form-group">
                     <label for="message">Your Review *</label>
-                    <textarea
-                      id="message"
-                      cols="30"
-                      rows="5"
-                      class="form-control"
-                    ></textarea>
+                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="name">Your Name *</label>
-                    <input type="text" class="form-control" id="name" />
+                    <input type="text" class="form-control" id="name">
                   </div>
                   <div class="form-group">
                     <label for="email">Your Email *</label>
-                    <input type="email" class="form-control" id="email" />
+                    <input type="email" class="form-control" id="email">
                   </div>
                   <div class="form-group mb-0">
-                    <input
-                      type="submit"
-                      value="Leave Your Review"
-                      class="btn btn-primary px-3"
-                    />
+                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
                   </div>
                 </form>
               </div>
@@ -238,3 +180,20 @@
     </div>
   </div>
 </div>
+
+
+<!-- Products Start -->
+<div class="container-fluid py-5">
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May Also
+      Like</span></h2>
+  <div class="row px-xl-5">
+    <div class="col">
+      <div class="owl-carousel related-carousel">
+        <ng-container *ngFor="let item of productList">
+          <app-prodcut-card [product]="item"></app-prodcut-card>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Products End -->

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
+import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 
 @Component({
   selector: 'app-shope-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ProdcutCardComponent],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
 })
@@ -43,8 +44,8 @@ export class ShopeDetailsComponent {
         mainDescription: 'Comfortable running shoes from Nike',
         subDescription: 'Perfect for runners looking for a lightweight shoe.',
         tags: ['shoes', 'nike', 'running'],
-        ratings: 0,
-        reviews: 0,
+        ratings: 3,
+        reviews: 3,
         information: {
           description: 'Breathable and lightweight running shoes',
           infoPoints: ['Lightweight', 'Breathable', 'Comfortable'],
@@ -61,7 +62,92 @@ export class ShopeDetailsComponent {
       },
     ],
     page: 1,
-    items: 2,
+    items: 1,
     total_count: 10,
   };
+
+  reviewList = {
+    _id: '667a93516a95e65e828409cc',
+    productName: 'Nike Running Shoes',
+
+    reviews: [
+      {
+        user_profile_pic: 'assets/img/user.jpg',
+        firstName: 'Dhruv',
+        lastName: 'Joshi',
+        reviewMessage:
+          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
+        reviewRating: 4,
+        reviewDate: '01/01/2045',
+      },
+      {
+        user_profile_pic: 'assets/img/user.jpg',
+        firstName: 'Vishal',
+        lastName: 'Joshi',
+        reviewMessage:
+          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
+        reviewRating: 2,
+        reviewDate: '01/01/20',
+      },
+    ],
+  };
+
+  productList = [
+    {
+      image: 'assets/img/product-1.jpg',
+      links: {
+        cart: '#',
+        wishlist: '#',
+        compare: '#',
+        view: '#',
+      },
+      name: 'Product Name Goes Here',
+      price: '123.00',
+      oldPrice: '123.00',
+      rating: 5,
+      reviews: 99,
+    },
+    {
+      image: 'assets/img/product-2.jpg',
+      links: {
+        cart: '#',
+        wishlist: '#',
+        compare: '#',
+        view: '#',
+      },
+      name: 'Product Name Goes Here',
+      price: '123.00',
+      oldPrice: '123.00',
+      rating: 5,
+      reviews: 99,
+    },
+    {
+      image: 'assets/img/product-3.jpg',
+      links: {
+        cart: '#',
+        wishlist: '#',
+        compare: '#',
+        view: '#',
+      },
+      name: 'Product Name Goes Here',
+      price: '123.00',
+      oldPrice: '123.00',
+      rating: 5,
+      reviews: 99,
+    },
+    {
+      image: 'assets/img/product-4.jpg',
+      links: {
+        cart: '#',
+        wishlist: '#',
+        compare: '#',
+        view: '#',
+      },
+      name: 'Product Name Goes Here',
+      price: '123.00',
+      oldPrice: '123.00',
+      rating: 5,
+      reviews: 99,
+    },
+  ];
 }
