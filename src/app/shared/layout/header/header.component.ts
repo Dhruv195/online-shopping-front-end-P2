@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule,RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -14,37 +14,41 @@ export class HeaderComponent {
   collapseCategory = false;
   categories = [
     {
-      title:'Dresses',
-      link:'/shop'
+      title: 'Dresses',
+      link: '/shop',
     },
     {
-      title:'Shirts',
-      link:'/shop'
+      title: 'Shirts',
+      link: '/shop',
     },
     {
-      title:'Jeans',
-      link:'/shop'
-    }
+      title: 'Jeans',
+      link: '/shop',
+    },
   ];
   headerNav = [
     {
       title: 'Home',
-      link:'/home'
+      link: '/home',
     },
     {
       title: 'Shop',
-      link:'/shop'
+      link: '/shop',
     },
-    { 
+    {
       title: 'Contact',
-      link:'/contact'
-    }
-  ]
+      link: '/contact',
+    },
+    {
+      title: 'Product-Detail',
+      link: '/shop-detail',
+    },
+  ];
 
-  constructor(){}
+  constructor() {}
 
   onSelectCategory() {
-    console.log("cate")
+    console.log('cate');
     this.collapseCategory = true;
   }
 }

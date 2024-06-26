@@ -6,10 +6,10 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-bread-crumb',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule, BreadCrumbComponent],
   templateUrl: './bread-crumb.component.html',
-  styleUrls: ['./bread-crumb.component.scss']
+  styleUrls: ['./bread-crumb.component.scss'],
 })
 export class BreadCrumbComponent {
-  constructor(public commonService:CommonService){}
+  constructor(public commonService: CommonService) {}
 }
