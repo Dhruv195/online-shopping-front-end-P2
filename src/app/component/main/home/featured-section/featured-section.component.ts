@@ -10,4 +10,23 @@ import { CommonModule } from '@angular/common';
 })
 export class FeaturedSectionComponent {
 
+  featuredItems = [
+    {
+      icon: "fa-check",
+      title: "Quality Product",
+    },
+    {
+      icon: "fa-shipping-fast",
+      title: "Free Shipping",
+    },
+    {
+      icon: "fa-exchange-alt",
+      title: "14-Day Return",
+    },
+    {
+      icon: "fa-phone-volume",
+      title: "24/7 Support",
+    },
+  ];
+
 }
