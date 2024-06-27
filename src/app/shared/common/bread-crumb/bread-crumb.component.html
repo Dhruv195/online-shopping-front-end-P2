@@ -4,7 +4,7 @@
     <div class="col-12">
       <nav
         class="breadcrumb bg-light mb-30"
-        *ngIf="commonService.breadCrumbData | async as breadcrumb"
+        *ngIf="commonService.breadCrumbData$ | async as breadcrumb"
       >
         <ng-container *ngFor="let item of breadcrumb.linkList; let last = last">
           <a

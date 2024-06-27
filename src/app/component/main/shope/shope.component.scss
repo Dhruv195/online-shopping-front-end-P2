@@ -1,0 +1,11 @@
+.grid-view .product-card {
+    display: inline-block;
+    width: 30%;
+    margin: 0 1%;
+}
+
+.list-view .product-card {
+    display: block;
+    width: 100%;
+    margin: 0 0 10px 0;
+}

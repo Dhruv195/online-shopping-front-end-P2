@@ -6,14 +6,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './prodcut-card.component.html',
-  styleUrls: ['./prodcut-card.component.scss']
+  styleUrls: ['./prodcut-card.component.scss'],
 })
-export class ProdcutCardComponent implements OnInit{
-
-  @Input() product: any 
+export class ProdcutCardComponent implements OnInit {
+  @Input() product: any;
   ngOnInit(): void {
     console.log(this.product);
-    
   }
-
 }

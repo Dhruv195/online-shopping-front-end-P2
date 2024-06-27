@@ -6,7 +6,7 @@ import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut
 @Component({
   selector: 'app-shope-details',
   standalone: true,
-  imports: [CommonModule,ProdcutCardComponent],
+  imports: [CommonModule, ProdcutCardComponent],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
 })
@@ -17,7 +17,7 @@ export class ShopeDetailsComponent {
     this.changeBreadCrumbData();
   }
   changeBreadCrumbData() {
-    this.commonService.breadCrumbData.next({
+    this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Detail',
       linkList: [
         { label: 'Home', link: '/' },
@@ -137,6 +137,20 @@ export class ShopeDetailsComponent {
     },
     {
       image: 'assets/img/product-4.jpg',
+      links: {
+        cart: '#',
+        wishlist: '#',
+        compare: '#',
+        view: '#',
+      },
+      name: 'Product Name Goes Here',
+      price: '123.00',
+      oldPrice: '123.00',
+      rating: 5,
+      reviews: 99,
+    },
+    {
+      image: 'assets/img/product-5.jpg',
       links: {
         cart: '#',
         wishlist: '#',
