@@ -37,10 +37,6 @@ export class HeaderComponent {
       link: '/shop',
     },
     {
-      title: 'Contact',
-      link: '/contact',
-    },
-    {
       title: 'Product-Detail',
       link: '/shop-detail',
     },

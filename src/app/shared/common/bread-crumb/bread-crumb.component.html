@@ -8,9 +8,9 @@
       >
         <ng-container *ngFor="let item of breadcrumb.linkList; let last = last">
           <a
-            class="breadcrumb-item text-dark"
+            class="breadcrumb-item "
             [routerLink]="item.link"
-            [ngClass]="{ 'de-active-link': last }"
+            [ngClass]="{ 'de-active-link': last,'text-dark':!last }"
             >{{ item.label }}</a
           >
         </ng-container>
