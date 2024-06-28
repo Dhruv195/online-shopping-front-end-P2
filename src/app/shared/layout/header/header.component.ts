@@ -40,10 +40,6 @@ export class HeaderComponent {
       title: 'Contact',
       link: '/contact',
     },
-    {
-      title: 'Product-Detail',
-      link: '/shop-detail',
-    },
   ];
 
   constructor(public commonService: CommonService) {}
