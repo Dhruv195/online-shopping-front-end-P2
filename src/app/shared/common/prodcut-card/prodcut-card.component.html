@@ -2,22 +2,16 @@
   <div class="product-img position-relative overflow-hidden">
     <img class="img-fluid w-100" [src]="product.image" alt="" />
     <div class="product-action">
-      <a class="btn btn-outline-dark btn-square" href=""
-        ><i class="fa fa-shopping-cart"></i
-      ></a>
-      <a class="btn btn-outline-dark btn-square" href=""
+      <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"
         ><i class="far fa-heart"></i
       ></a>
-      <a class="btn btn-outline-dark btn-square" href=""
-        ><i class="fa fa-sync-alt"></i
-      ></a>
-      <a class="btn btn-outline-dark btn-square" href=""
+      <a class="btn btn-outline-dark btn-square" routerLink="/shop-detail"
         ><i class="fa fa-search"></i
       ></a>
     </div>
   </div>
   <div class="text-center py-4">
-    <a class="h6 text-decoration-none text-truncate" href="">{{
+    <a class="h6 text-decoration-none text-truncate" routerLink="/shop-detail">{{
       product.name
     }}</a>
     <div class="d-flex align-items-center justify-content-center mt-2">

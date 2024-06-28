@@ -330,7 +330,7 @@ export class ShopeComponent implements OnInit {
 
     // Add more products as needed
   ];
-  displayMode: string = 'grid-view';
+  displayMode: string = 'grid';
   constructor(public commonService: CommonService) {}
 
   ngOnInit(): void {

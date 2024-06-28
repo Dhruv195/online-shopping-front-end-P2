@@ -1,1 +1,28 @@
-<p>address-form works!</p>
+<div [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-6 form-group"
+            *ngFor="let field of ['firstName', 'lastName', 'email', 'mobileNo', 'addressLine1', 'addressLine2', 'city', 'state', 'zipCode']">
+            <label>{{ field | titlecase }}</label>
+            <input class="form-control" type="text" [formControlName]="field" placeholder="{{ field | titlecase }}"
+                [ngClass]="{
+                'is-invalid':
+                  (addressForm.get(field)?.touched &&
+                    addressForm.get(field)?.hasError('required')) ||
+                  (submitted && addressForm.get(field)?.errors)
+              }">
+            <span class="text-danger" *ngIf="
+                     (addressForm.get(field)?.touched || submitted) &&
+                     addressForm.get(field)?.errors
+                   ">{{ field | titlecase }} is required</span>
+        </div>
+        <div class="col-md-6 form-group">
+            <label>Country</label>
+            <select class="custom-select" formControlName="country">
+                <option>United States</option>
+                <option>Afghanistan</option>
+                <option>Albania</option>
+                <option>Algeria</option>
+            </select>
+        </div>
+    </div>
+</div>
