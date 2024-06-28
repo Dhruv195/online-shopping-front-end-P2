@@ -26,7 +26,7 @@ export class UserProfileComponent implements OnInit {
       linkList: [
         { label: 'Home', link: '/' },
         { label: 'Shop', link: '/shop' },
-        { label: 'Shop List', link: '/shop' },
+        { label: 'Edit Profile', link: '/edit-profile' },
       ],
     });
   }

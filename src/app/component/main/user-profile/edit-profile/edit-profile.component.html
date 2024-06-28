@@ -1,19 +1,102 @@
-<div class="container">
-    <h2>Edit Profile</h2>
-    <form>
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username">
+<div class="container-fluid pl-xl-0 pr-xl-5">
+    <h2 class="">Profile
+      <a class="pl-30" (click)="onEdit()" >
+        <i class="bi bi-pencil-square fs-4 text-primary " *ngIf="disabledEdit" ></i>
+        <i class="bi bi-x-circle-fill" *ngIf="!disabledEdit" ></i>
+      </a>
+    </h2>
+    
+    <form [formGroup]="editProfileForm" (ngSubmit)="onEditProfileSubmit()" >
+
+      <div class="form-group mb-3 mt-5">
+            <div class="d-flex align-items-center" style="gap: 20px;">
+              <img [src]="eventImage ? eventImage : 'https://ui-avatars.com/api/?name=Elon+Musk'" class="w-px-70 h-auto rounded-circle" alt="">
+              <ng-container *ngIf="!disabledEdit" >
+              <input 
+                      type="file" 
+                      id="imgeUpload" 
+                      accept="image/png, image/jpeg" 
+                      class="form-control w-25" 
+                      (change)="submitImage($event)"
+                      formControlName="profilePic"
+                      [ngClass]="{'error':editProfileForm.get('profilePic')?.invalid && (editProfileForm.get('profilePic')?.touched || submitted)}"
+                > 
+              </ng-container>
+            </div>
+        
+    </div>
+
+      <div class="mb-3 row">
+        <div class="col-3 ">
+          <label for="username" class="form-label">First Name</label>
+          <input 
+                type="text" 
+                formControlName="firstName" 
+                [disabled]="!disabledEdit" 
+                class="form-control" 
+                id="username"
+                [ngClass]="{'error':editProfileForm.get('firstName')?.invalid && (editProfileForm.get('firstName')?.touched || submitted)}"
+
+          >
+        </div>
+        <div class="col-3">
+          <label for="username" class="form-label">Last Name</label>
+          <input 
+                type="text" 
+                formControlName="lastName" 
+                [disabled]="disabledEdit" 
+                class="form-control" id="username"
+                [ngClass]="{'error':editProfileForm.get('lastName')?.invalid && (editProfileForm.get('lastName')?.touched || submitted)}"
+
+          >
+        </div>
+      </div> 
+      <div class="mb-3 row">
+        <div class="col-6">
+          <label for="email" class="form-label">Email</label>
+          <input 
+                type="text" 
+                formControlName="email" 
+                [disabled]="disabledEdit" 
+                [ngClass]="{'error':editProfileForm.get('email')?.invalid && (editProfileForm.get('email')?.touched || submitted)}"
+
+                class="form-control" id="email">
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email">
+      <div class="mb-3 row">
+        <div class="col-3">
+          <label for="gender" class="form-label">Gender</label>
+          <select name="" id="" 
+                  formControlName="gender" 
+                  class="form-control" 
+                  [ngClass]="{'error':editProfileForm.get('gender')?.invalid && (editProfileForm.get('gender')?.touched || submitted)}"
+                  [disabled]="disabledEdit">
+            <option value="">Select Gender</option>
+            <option value="">Male</option>
+            <option value="">Female</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label for="dob"  class="form-label">Date Of Birth</label>
+          <input 
+          type="date" 
+          formControlName="dob" 
+          [ngClass]="{'error':editProfileForm.get('dob')?.invalid && (editProfileForm.get('dob')?.touched || submitted)}"
+          [disabled]="disabledEdit" class="form-control">
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password">
+
+      <div class="mb-3 row">
+        <div class="col-3">
+          <label for="dob" class="form-label">Phone</label>
+          <input type="text" 
+                  formControlName="phone" 
+                  [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched || submitted)}"
+                  [disabled]="disabledEdit" class="form-control">
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Save Changes</button>
+    
+      <button type="submit" *ngIf="!disabledEdit"  class="btn btn-primary">Save Changes</button>
     </form>
-  </div>
+</div>
   

@@ -4,27 +4,16 @@
     <div class="px-xl-5">
         <div class="d-flex flex-column vh-100 p-3 bg-light border-end ">
             
-            <ul class="nav nav-pills flex-column mb-auto">
-              <li class="nav-item">
-                <a routerLink="/user-profile/edit-profile" routerLinkActive="active" class="nav-link">
-                  Edit Profile
-                </a>
-              </li>
-              <li>
-                <a routerLink="/user-profile/change-password" routerLinkActive="active" class="nav-link">
-                  Change Password
-                </a>
-              </li>
-              <li>
-                <a routerLink="/user-profile/shopping-cart" routerLinkActive="active" class="nav-link">
-                  Shooping Cart
-                </a>
-              </li>
-              <li>
-                <a routerLink="/user-profile/wish-list" routerLinkActive="active" class="nav-link">
-                  Wish List
-                </a>
-              </li>
+            <ul class="nav nav-pills flex-column mb-auto"> 
+              <ng-container *ngFor="let profileItem of profileUrls" >
+                <li class="nav-item ">
+                  <a  [routerLink]="profileItem.link" routerLinkActive="active" class="nav-link text-dark">
+                    {{profileItem.title}}
+                  </a>
+                </li>
+              </ng-container>
+              
+              
             </ul>
           </div>
       </div>

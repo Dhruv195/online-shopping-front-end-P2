@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { API } from '../constant/api.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class CommonService {
   totalWishListItem$=new BehaviorSubject<any>(this.getCountOfTotalItem('productWishList'))
   subTotalAmount$ = new BehaviorSubject<any>(this.getSubTotalAmount());
   
-  constructor() { }
+  constructor(public https:HttpClient) { }
   getCountOfTotalItem(typeOfString:any) {
     this.localStorageList = this.getLocalStorage(typeOfString);
     if (this.localStorageList !== undefined) {
@@ -42,6 +44,9 @@ export class CommonService {
     if (localStorageData) {
       return JSON.parse(localStorageData);
     }
+  }
+  userSingUp(data:any) {
+    return this.https.post(API.SIGN_UP,data)
   }
 
 }

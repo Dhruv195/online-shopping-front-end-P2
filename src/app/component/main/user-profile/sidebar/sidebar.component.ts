@@ -10,5 +10,22 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  
+  profileUrls = [
+    {
+      title: 'Profile',
+      link:'/user-profile/edit-profile'
+    },
+    {
+      title: 'Change Password',
+      link:'/user-profile/change-password'
+    },
+    {
+      title: 'Shopping Cart',
+      link:'/user-profile/shopping-cart'
+    },
+    {
+      title: 'Wish List',
+      link:'/user-profile/wish-list'
+    }
+  ]
 }

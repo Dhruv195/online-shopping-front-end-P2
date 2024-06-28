@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-shope-details',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent],
+  imports: [CommonModule, ProdcutCardComponent,CarouselModule],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
 })
@@ -26,7 +27,28 @@ export class ShopeDetailsComponent {
       ],
     });
   }
-
+  customOptions: OwlOptions = {
+    loop: true,
+    margin:29,
+    nav: false,
+    items:4,
+    smartSpeed: 500,
+    autoplay: true,
+    responsive: {
+      0:{
+        items:1
+      },
+      576:{
+          items:2
+      },
+      768:{
+          items:3
+      },
+      992:{
+          items:4
+      }
+    },
+  }
   products: any = {
     products: [
       {

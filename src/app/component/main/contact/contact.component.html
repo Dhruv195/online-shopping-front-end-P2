@@ -42,8 +42,6 @@
                             data-validation-required-message="Please enter your message"></textarea>
                         <span class="text-danger" *ngIf="contactForm.get('message').hasError('required') && ( contactForm.get('message').touched || submitted)">Message is required</span>
                         <p class="help-block text-danger"></p>
-
-                       
                     </div>
                     <div>
                         <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send
