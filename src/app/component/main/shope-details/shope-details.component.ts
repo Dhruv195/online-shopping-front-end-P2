@@ -2,16 +2,32 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecursiveAstVisitor } from '@angular/compiler';
 
 @Component({
   selector: 'app-shope-details',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent],
+  imports: [
+    CommonModule,
+    ProdcutCardComponent,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
 })
 export class ShopeDetailsComponent {
-  constructor(public commonService: CommonService) {}
+  constructor(public commonService: CommonService,private router:Router) {}
+  addProductData = {
+    productId: '667d5b274d385bcde22cf76b',
+    quantity: 9,
+    price: 100,
+    size: 'XL',
+    color: 'black',
+  };
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
@@ -25,6 +41,20 @@ export class ShopeDetailsComponent {
         { label: 'Shop Detail', link: '/shop-detail' },
       ],
     });
+  }
+
+  quantityMinus() {
+    if (this.addProductData.quantity > 1) {
+      this.addProductData.quantity -= 1;
+    }
+  }
+  quantityPlus() {
+    this.addProductData.quantity += 1;
+  }
+  addToCart() {
+    
+    console.log(this.addProductData);
+    this.router.navigate(['/shopping-cart'])
   }
 
   products: any = {
@@ -162,6 +192,25 @@ export class ShopeDetailsComponent {
       oldPrice: '123.00',
       rating: 5,
       reviews: 99,
+    },
+  ];
+
+  shareList = [
+    {
+      icon: 'fa-facebook-f',
+      link: 'https://www.facebook.com/',
+    },
+    {
+      icon: ' fa-twitter',
+      link: 'https://x.com/?lang=en',
+    },
+    {
+      icon: 'fa-linkedin-in',
+      link: 'https://in.linkedin.com/',
+    },
+    {
+      icon: 'fa-pinterest',
+      link: 'https://in.pinterest.com/',
     },
   ];
 }

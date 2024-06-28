@@ -2,32 +2,17 @@
   <div class="row px-xl-5" *ngFor="let product of products.products">
     <!-- Carousel Section -->
     <div class="col-lg-5 mb-30">
-      <div
-        id="product-carousel-{{ product._id }}"
-        class="carousel slide"
-        data-ride="carousel"
-      >
+      <div id="product-carousel-{{ product._id }}" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner bg-light">
-          <div
-            class="carousel-item"
-            *ngFor="let image of product.images; let i = index"
-            [ngClass]="{ active: i === 0 }"
-          >
+          <div class="carousel-item" *ngFor="let image of product.images; let i = index"
+            [ngClass]="{ active: i === 0 }">
             <img class="w-100 h-100" [src]="image" alt="Image" />
           </div>
         </div>
-        <a
-          class="carousel-control-prev"
-          href="#product-carousel-{{ product._id }}"
-          data-slide="prev"
-        >
+        <a class="carousel-control-prev" href="#product-carousel-{{ product._id }}" data-slide="prev">
           <i class="fa fa-2x fa-angle-left text-dark"></i>
         </a>
-        <a
-          class="carousel-control-next"
-          href="#product-carousel-{{ product._id }}"
-          data-slide="next"
-        >
+        <a class="carousel-control-next" href="#product-carousel-{{ product._id }}" data-slide="next">
           <i class="fa fa-2x fa-angle-right text-dark"></i>
         </a>
       </div>
@@ -39,14 +24,8 @@
         <h3>{{ product.productName }}</h3>
         <div class="d-flex mb-3">
           <div class="text-primary mr-2">
-            <small
-              class="fas fa-star"
-              *ngFor="let star of [].constructor(product.ratings)"
-            ></small>
-            <small
-              class="far fa-star"
-              *ngFor="let star of [].constructor(5 - product.ratings)"
-            ></small>
+            <small class="fas fa-star" *ngFor="let star of [].constructor(product.ratings)"></small>
+            <small class="far fa-star" *ngFor="let star of [].constructor(5 - product.ratings)"></small>
           </div>
           <small class="pt-1">({{ product.reviews }} Reviews)</small>
         </div>
@@ -55,78 +34,54 @@
         <div class="d-flex mb-3">
           <strong class="text-dark mr-3">Sizes:</strong>
           <form>
-            <div
-              *ngFor="let size of product.size"
-              class="custom-control custom-radio custom-control-inline"
-            >
-              <input
-                type="radio"
-                class="custom-control-input"
-                [id]="'size-' + size"
-                name="size"
-              />
+            <div *ngFor="let size of product.size" class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" [id]="'size-' + size" name="size" [value]="size"
+                [(ngModel)]="addProductData.size" />
               <label class="custom-control-label" [for]="'size-' + size">{{
                 size
-              }}</label>
+                }}</label>
             </div>
           </form>
         </div>
         <div class="d-flex mb-4">
           <strong class="text-dark mr-3">Colors:</strong>
           <form>
-            <div
-              *ngFor="let color of product.colors"
-              class="custom-control custom-radio custom-control-inline"
-            >
-              <input
-                type="radio"
-                class="custom-control-input"
-                [id]="'color-' + color"
-                name="color"
-              />
+            <div *ngFor="let color of product.colors" class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" [id]="'color-' + color" name="color" [value]="color"
+                [(ngModel)]="addProductData.color" />
               <label class="custom-control-label" [for]="'color-' + color">{{
                 color
-              }}</label>
+                }}</label>
             </div>
           </form>
         </div>
         <div class="d-flex align-items-center mb-4 pt-2">
           <div class="input-group quantity mr-3" style="width: 130px">
             <div class="input-group-btn">
-              <button class="btn btn-primary btn-minus">
+              <button class="btn btn-primary btn-minus" (click)="quantityMinus()">
                 <i class="fa fa-minus"></i>
               </button>
             </div>
-            <input
-              type="text"
-              class="form-control bg-secondary border-0 text-center"
-              value="1"
-            />
+            <input type="text" class="form-control bg-secondary border-0 text-center"
+              [(ngModel)]="addProductData.quantity" readonly />
             <div class="input-group-btn">
-              <button class="btn btn-primary btn-plus">
+              <button class="btn btn-primary btn-plus" (click)="quantityPlus()">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
           </div>
-          <button class="btn btn-primary px-3">
+          <button class="btn btn-primary px-3" (click)="addToCart()">
             <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
           </button>
         </div>
         <div class="d-flex pt-2">
           <strong class="text-dark mr-2">Share on:</strong>
           <div class="d-inline-flex">
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-pinterest"></i>
-            </a>
+            <ng-container *ngFor="let share of shareList">
+              <a class="text-dark px-2" href="{{share.link}}" target="_blank">
+                <i class="fab" [ngClass]="share.icon"></i>
+              </a>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -138,43 +93,22 @@
     <div class="col">
       <div class="bg-light p-30">
         <div class="nav nav-tabs mb-4">
-          <a
-            class="nav-item nav-link text-dark active"
-            data-toggle="tab"
-            href="#tab-pane-description-{{ product._id }}"
-            >Description</a
-          >
-          <a
-            class="nav-item nav-link text-dark"
-            data-toggle="tab"
-            href="#tab-pane-information-{{ product._id }}"
-            >Information</a
-          >
-          <a
-            class="nav-item nav-link text-dark"
-            data-toggle="tab"
-            href="#tab-pane-reviews-{{ product._id }}"
-            >Reviews ({{ product.reviews }})</a
-          >
+          <a class="nav-item nav-link text-dark active" data-toggle="tab"
+            href="#tab-pane-description-{{ product._id }}">Description</a>
+          <a class="nav-item nav-link text-dark" data-toggle="tab"
+            href="#tab-pane-information-{{ product._id }}">Information</a>
+          <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-reviews-{{ product._id }}">Reviews
+            ({{ product.reviews }})</a>
         </div>
         <div class="tab-content">
-          <div
-            class="tab-pane fade show active"
-            [id]="'tab-pane-description-' + product._id"
-          >
+          <div class="tab-pane fade show active" [id]="'tab-pane-description-' + product._id">
             <h4 class="mb-3">Product Description</h4>
             <p>{{ product.mainDescription }}</p>
           </div>
-          <div
-            class="tab-pane fade"
-            [id]="'tab-pane-information-' + product._id"
-          >
+          <div class="tab-pane fade" [id]="'tab-pane-information-' + product._id">
             <h4 class="mb-3">Additional Information</h4>
             <p>{{ product.information.description }}</p>
-            <div
-              *ngFor="let point of product.information.infoPoints"
-              class="mb-2"
-            >
+            <div *ngFor="let point of product.information.infoPoints" class="mb-2">
               <h5 class="font-weight-semi-bold text-dark mb-1">{{ point }}</h5>
             </div>
           </div>
@@ -187,34 +121,23 @@
                 <ng-container *ngIf="reviewList.reviews.length > 0">
                   <ng-container *ngFor="let review of reviewList.reviews">
                     <div class="media mb-4">
-                      <img
-                        [src]="review.user_profile_pic"
-                        alt="Image"
-                        class="img-fluid mr-3 mt-1"
-                        style="width: 45px"
-                      />
+                      <img [src]="review.user_profile_pic" alt="Image" class="img-fluid mr-3 mt-1"
+                        style="width: 45px" />
                       <div class="media-body">
                         <h6>
                           {{ review.firstName + " " + review.lastName
                           }}<small>
-                            - <i>{{ review.reviewDate | date }}</i></small
-                          >
+                            - <i>{{ review.reviewDate | date }}</i></small>
                         </h6>
                         <div class="text-primary mb-2">
-                          <small
-                            class="fas fa-star"
-                            *ngFor="
+                          <small class="fas fa-star" *ngFor="
                               let star of [].constructor(review.reviewRating)
-                            "
-                          ></small>
-                          <small
-                            class="far fa-star"
-                            *ngFor="
+                            "></small>
+                          <small class="far fa-star" *ngFor="
                               let star of [].constructor(
                                 5 - review.reviewRating
                               )
-                            "
-                          ></small>
+                            "></small>
                         </div>
                         <p>{{ review.reviewMessage }}</p>
                       </div>
@@ -225,10 +148,8 @@
 
               <div class="col-md-6">
                 <h4 class="mb-4">Leave a review</h4>
-                <small
-                  >Your email address will not be published. Required fields are
-                  marked *</small
-                >
+                <small>Your email address will not be published. Required fields are
+                  marked *</small>
                 <div class="d-flex my-3">
                   <p class="mb-0 mr-2">Your Rating * :</p>
                   <div class="text-primary">
@@ -242,12 +163,7 @@
                 <form>
                   <div class="form-group">
                     <label for="message">Your Review *</label>
-                    <textarea
-                      id="message"
-                      cols="30"
-                      rows="5"
-                      class="form-control"
-                    ></textarea>
+                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="name">Your Name *</label>
@@ -258,11 +174,7 @@
                     <input type="email" class="form-control" id="email" />
                   </div>
                   <div class="form-group mb-0">
-                    <input
-                      type="submit"
-                      value="Leave Your Review"
-                      class="btn btn-primary px-3"
-                    />
+                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3" />
                   </div>
                 </form>
               </div>
