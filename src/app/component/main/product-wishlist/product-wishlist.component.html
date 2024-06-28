@@ -8,6 +8,7 @@
                     <th>Price</th>
                     <th>Description</th>
                     <th>Remove</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
@@ -19,6 +20,10 @@
                         <td>{{product.description}}</td>
                         
                         <td class="align-middle"><button class="btn btn-sm btn-danger" (click)="deleteProductInWishList(index)" ><i class="fa fa-times"></i></button></td>
+                        <td> 
+                            <button class="btn btn-primary" routerLink="/shop-detail" >Buy Now</button>
+
+                        </td>
                     </tr>
                 </ng-container>
                 

@@ -32,6 +32,11 @@ export const routes: Routes = [
                 //auth-guard
             },
             {
+                path: 'user-profile',
+                loadChildren: () => import('./user-profile/user-profile.routes').then((m) => m.routes)
+                //auth-guard
+            },
+            {
                 path: 'contact',
                 loadComponent:()=>import('./contact/contact.component').then((m)=>m.ContactComponent)
             },

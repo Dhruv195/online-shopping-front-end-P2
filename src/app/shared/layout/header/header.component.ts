@@ -35,11 +35,7 @@ export class HeaderComponent {
     {
       title: 'Shop',
       link: '/shop',
-    },
-    {
-      title: 'Product-Detail',
-      link: '/shop-detail',
-    },
+    }
   ];
 
   constructor(public commonService: CommonService) {}
