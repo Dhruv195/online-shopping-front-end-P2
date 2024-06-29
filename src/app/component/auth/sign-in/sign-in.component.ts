@@ -39,7 +39,16 @@ export class SignInComponent {
    * login API to pass formData and get the response and push sub1 in subscribed array for delete in memory
    */
   doSignIn() {
-   
+   this.submitted=true;
+   console.log("form  ",this.signInForm.value)
+   if(this.signInForm.valid){
+    this.authService.signInUser(this.signInForm.value).subscribe({
+      next:(res:any)=>{
+        this.authService.saveToken(res.data.token);
+        this.router.navigate(['/home']);
+      }
+    })
+   }
   }
 
   //hidden password and show password
