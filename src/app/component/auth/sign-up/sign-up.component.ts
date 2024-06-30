@@ -1,46 +1,62 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { CommonService } from 'src/app/shared/service/common.service';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent {
-  signUpForm:any;
+  signUpForm: any;
   hiddenPassword = false;
   hiddenConfirmPassword = false;
   submitted = false;
-  
-  constructor(public commonService:CommonService){}
+
+  constructor(
+    public authService: AuthService,
+    public route: Router,
+    public commonService: CommonService
+  ) {}
 
   ngOnInit(): void {
     this.signInFormGroup();
   }
 
-  doSignUp(){
-    console.log("sign up", this.signUpForm);
-    this.commonService.userSingUp(this.signUpForm.value).subscribe({
+  doSignUp() {
+    this.submitted = true;
+    console.log('Res ', this.signUpForm.value);
+    this.authService.signUpUser(this.signUpForm.value).subscribe({
       next: (res: any) => {
-        console.log('Sign Res ',res)
+        // console.log("res ",res.data.token)
+        // this.authService.saveToken(res.data.token);
+        if (res) {
+          console.log('user are registered');
+          this.route.navigate(['auth/sign-in']);
+        }
       },
-      error: (err: any) => {
-        console.log("Error ",err)
-      }
-    })
+      error: (err) => {
+        console.log('You are already registered');
+      },
+    });
   }
   signInFormGroup() {
     this.signUpForm = new FormGroup({
-      email: new FormControl(null,[Validators.required,Validators.email]),
-      password:new FormControl(null,[Validators.required]),
-      firstName: new FormControl('',Validators.required),
-      lastName:new FormControl('',Validators.required)
-    })
+      firstName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required]),
+    });
   }
 
   //hidden password and show password
