@@ -16,7 +16,7 @@ export class CommonService {
   totalWishListItem$=new BehaviorSubject<any>(this.getCountOfTotalItem('productWishList'))
   subTotalAmount$ = new BehaviorSubject<any>(this.getSubTotalAmount());
   
-  constructor(public httpService:HttpService) { }
+  constructor(public httpService:HttpService,public http:HttpClient) { }
   getCountOfTotalItem(typeOfString:any) {
     this.localStorageList = this.getLocalStorage(typeOfString);
     if (this.localStorageList !== undefined) {
@@ -50,5 +50,6 @@ export class CommonService {
   getUser(){
     return this.httpService.get(API.USER_GET);
   }
+
   
 }

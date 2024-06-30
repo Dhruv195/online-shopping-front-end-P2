@@ -23,8 +23,9 @@ export class HttpService {
   }
 
   get<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
+    console.log("header ")
     const options = { params, headers };
-    return this.http.get<T>(`${this.baseUrl}/${url}`);
+    return this.http.get<T>(`${this.baseUrl}/${url}`).pipe(catchError(this.handleError.bind(this)));
   }
 
   post<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {
@@ -34,16 +35,16 @@ export class HttpService {
 
   put<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {
     const options = { headers };
-    return this.http.put<T>(`${this.baseUrl}/${url}`, body, options);
+    return this.http.put<T>(`${this.baseUrl}/${url}`, body, options).pipe(catchError(this.handleError.bind(this)));
   }
 
   patch<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {
     const options = { headers };
-    return this.http.patch<T>(`${this.baseUrl}/${url}`, body, options);
+    return this.http.patch<T>(`${this.baseUrl}/${url}`, body, options).pipe(catchError(this.handleError.bind(this)));
   }
 
   delete<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
     const options = { params, headers };
-    return this.http.delete<T>(`${this.baseUrl}/${url}`, options);
+    return this.http.delete<T>(`${this.baseUrl}/${url}`, options).pipe(catchError(this.handleError.bind(this)));
   }
 }
