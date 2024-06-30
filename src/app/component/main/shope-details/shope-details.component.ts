@@ -2,10 +2,16 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
-import { Router, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RecursiveAstVisitor } from '@angular/compiler';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-shope-details',
@@ -13,13 +19,19 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
   imports: [
     CommonModule,
     ProdcutCardComponent,
-    RouterModule,
+    CarouselModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  imports: [CommonModule, ProdcutCardComponent, CarouselModule],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
+  animations: [
+    trigger('autoHeight', [
+      state('true', style({ height: '*' })),
+      state('false', style({ height: '0px' })),
+      transition('false <=> true', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class ShopeDetailsComponent {
   constructor(public commonService: CommonService, private router: Router) {}
@@ -44,6 +56,20 @@ export class ShopeDetailsComponent {
       ],
     });
   }
+
+  quantityMinus() {
+    if (this.addProductData.quantity > 1) {
+      this.addProductData.quantity -= 1;
+    }
+  }
+  quantityPlus() {
+    this.addProductData.quantity += 1;
+  }
+  addToCart() {
+    console.log(this.addProductData);
+    this.router.navigate(['/shopping-cart']);
+  }
+
   customOptions: OwlOptions = {
     loop: true,
     margin: 29,

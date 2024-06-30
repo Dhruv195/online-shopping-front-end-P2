@@ -8,9 +8,15 @@ import { FooterComponent } from './shared/layout/footer/footer.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule,TopBarComponent,HeaderComponent,FooterComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TopBarComponent,
+    HeaderComponent,
+    FooterComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'online-shopping-front-end-P2';
