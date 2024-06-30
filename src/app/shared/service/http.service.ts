@@ -24,7 +24,7 @@ export class HttpService {
 
   get<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
     const options = { params, headers };
-    return this.http.get<T>(`${this.baseUrl}/${url}`, options).pipe(catchError(this.handleError.bind(this)));
+    return this.http.get<T>(`${this.baseUrl}/${url}`);
   }
 
   post<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {

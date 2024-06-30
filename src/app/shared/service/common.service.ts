@@ -51,4 +51,8 @@ export class CommonService {
       return JSON.parse(localStorageData);
     }
   }
+
+  getUser() {
+    return this.httpService.get(API.USER_GET);
+  }
 }

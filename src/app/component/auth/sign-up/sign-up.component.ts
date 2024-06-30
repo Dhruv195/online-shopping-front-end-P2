@@ -38,8 +38,6 @@ export class SignUpComponent {
     console.log('Res ', this.signUpForm.value);
     this.authService.signUpUser(this.signUpForm.value).subscribe({
       next: (res: any) => {
-        // console.log("res ",res.data.token)
-        // this.authService.saveToken(res.data.token);
         if (res) {
           console.log('user are registered');
           this.route.navigate(['auth/sign-in']);

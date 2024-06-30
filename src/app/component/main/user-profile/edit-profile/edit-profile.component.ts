@@ -21,6 +21,7 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.initializeEditProfileForm();
+    this.getUserDetails();
   }
   initializeEditProfileForm() {
     this.editProfileForm = new FormGroup({
@@ -66,5 +67,13 @@ export class EditProfileComponent implements OnInit {
   }
   onEditProfileSubmit() {
     this.submitted = true;
+  }
+
+  getUserDetails(){
+    this.commonService.getUser().subscribe({
+      next:(res:any)=>{
+        console.log("Res ",res);
+      }
+    })
   }
 }
