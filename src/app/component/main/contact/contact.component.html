@@ -42,8 +42,6 @@
                             data-validation-required-message="Please enter your message"></textarea>
                         <span class="text-danger" *ngIf="contactForm.get('message').hasError('required') && ( contactForm.get('message').touched || submitted)">Message is required</span>
                         <p class="help-block text-danger"></p>
-
-                       
                     </div>
                     <div>
                         <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send
@@ -59,9 +57,9 @@
                 frameborder="0" style="border:0;" allowfullscreen="" width="100%" height="233" aria-hidden="false" tabindex="0"></iframe>
             </div>
             <div class="bg-light p-30 mb-3">
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>{{contact.address}}</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>{{contact.email}}</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>{{contact.phone}}</p>
             </div>
         </div>
     </div>

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpService } from './http.service';
@@ -44,6 +45,10 @@ export class CommonService {
     if (localStorageData) {
       return JSON.parse(localStorageData);
     }
+  }
+
+  getUser(){
+    return this.httpService.get(API.USER_GET);
   }
   
 }

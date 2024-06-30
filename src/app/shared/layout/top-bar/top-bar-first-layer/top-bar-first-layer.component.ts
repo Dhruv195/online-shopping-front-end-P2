@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
   selector: 'app-top-bar-first-layer',
@@ -23,6 +24,8 @@ export class TopBarFirstLayerComponent {
     { label: 'AR', lang: 'Arabic', subset: 'arabic' },
     { label: 'RU', lang: 'Russian', subset: 'cyrillic' },
   ];
+
+  constructor(public authService:AuthService){}
   onLanguageChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedLanguage = this.languages.find(

@@ -14,7 +14,13 @@ export class ContactComponent implements OnInit {
   contactForm: any;
   submitted=false;
 
-  constructor(public commonService:CommonService){}
+  constructor(public commonService:CommonService){};
+
+  contact={
+    address:'123 Street, New York, USA',
+    email:'info@example.com',
+    phone:'+012 345 67890'
+  }
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
