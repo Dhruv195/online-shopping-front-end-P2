@@ -1,0 +1,22 @@
+
+
+  <div class="container-fluid">
+    <div class="px-xl-5">
+        <div class="d-flex flex-column vh-100 p-3 bg-light border-end ">
+            
+            <ul class="nav nav-pills flex-column mb-auto"> 
+              <ng-container *ngFor="let profileItem of profileUrls" >
+                <li class="nav-item ">
+                  <a  [routerLink]="profileItem.link" routerLinkActive="active" class="nav-link text-dark">
+                    {{profileItem.title}}
+                  </a>
+                </li>
+              </ng-container>
+              
+              
+            </ul>
+          </div>
+      </div>
+    </div>
+    
+  

@@ -5,6 +5,7 @@ import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecursiveAstVisitor } from '@angular/compiler';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-shope-details',
@@ -16,11 +17,12 @@ import { RecursiveAstVisitor } from '@angular/compiler';
     FormsModule,
     ReactiveFormsModule,
   ],
+  imports: [CommonModule, ProdcutCardComponent, CarouselModule],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
 })
 export class ShopeDetailsComponent {
-  constructor(public commonService: CommonService,private router:Router) {}
+  constructor(public commonService: CommonService, private router: Router) {}
   addProductData = {
     productId: '667d5b274d385bcde22cf76b',
     quantity: 9,
@@ -42,21 +44,28 @@ export class ShopeDetailsComponent {
       ],
     });
   }
-
-  quantityMinus() {
-    if (this.addProductData.quantity > 1) {
-      this.addProductData.quantity -= 1;
-    }
-  }
-  quantityPlus() {
-    this.addProductData.quantity += 1;
-  }
-  addToCart() {
-    
-    console.log(this.addProductData);
-    this.router.navigate(['/shopping-cart'])
-  }
-
+  customOptions: OwlOptions = {
+    loop: true,
+    margin: 29,
+    nav: false,
+    items: 4,
+    smartSpeed: 500,
+    autoplay: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      576: {
+        items: 2,
+      },
+      768: {
+        items: 3,
+      },
+      992: {
+        items: 4,
+      },
+    },
+  };
   products: any = {
     products: [
       {
