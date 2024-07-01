@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
+import { ProductListViewComponent } from 'src/app/shared/common/product-list-view/product-list-view.component';
 
 @Component({
   selector: 'app-shope',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent],
+  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
 })

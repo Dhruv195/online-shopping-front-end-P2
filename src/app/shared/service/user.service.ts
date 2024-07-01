@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { API } from '../constant/api.constant';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(public httpService:HttpService) { }
+  constructor(public httpService: HttpService) { }
+  updateUserDetails$ = new BehaviorSubject<any>(false);
   getUser(){
     return this.httpService.get(API.USER_GET);
   }

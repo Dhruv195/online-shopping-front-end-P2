@@ -34,104 +34,44 @@
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a  class="btn px-0"  routerLink="/wish-list" >
-                                <i   class="fas fa-heart text-white " routerLinkActive="text-primary"></i>
-                                <span  class="badge text-secondary border border-secondary rounded-circle "  style="padding-bottom: 2px;">{{commonService.totalWishListItem$ |async}}</span>
+                                <i   class="fas fa-heart text-white mr-1 " routerLinkActive="text-primary"></i>
+                                <span  class="badge text-secondary border border-secondary rounded-circle"  style="padding-bottom: 2px;">{{commonService.totalWishListItem$ |async}}</span>
                             </a>
                             <a href="" class="btn px-0 ml-3"  routerLink="/shopping-cart" >
-                                <i class="fas fa-shopping-cart text-white" routerLinkActive="text-primary"></i>
+                                <i class="fas fa-shopping-cart text-white mr-1" routerLinkActive="text-primary"></i>
                                 <span  class="badge text-secondary border border-secondary rounded-circle "  style="padding-bottom: 2px;">  {{commonService.totalCartItem$ | async}}  </span>
                             </a>
 
                           <a *ngIf="authService.loggedIn()" class="btn px-0 ml-3" id="profileDropdown" data-bs-toggle="dropdown"  >
-                            <img src="assets/img/profile.png" alt="Profile"  class="w-px-40 h-auto rounded-circle" aria-expanded="false">
+                            <img [src]="profileImage ? profileImage : defaultProfileImg" alt="Profile"  class="w-px-40 h-auto rounded-circle" aria-expanded="false">
                           </a>
-                          <div class="dropdown">
+                          <div class="dropdown" *ngIf="authService.loggedIn()">
                             <ul class="dropdown-menu shadow-lg profile  mb-5 bg-white rounded"  aria-labelledby="profileDropdown">
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" routerLink="/user-profile">
                                   <div class="d-flex border-bottom border-dark">
                                     <div class="flex-shrink-0  me-3">
                                       <div class="avatar avatar-online">
-                                        <img src="/assets/img/profile.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img [src]="profileImage ? profileImage : defaultProfileImg" alt class="w-px-40 h-auto rounded-circle" />
                                       </div>
                                     </div>
                                     <div class="flex-grow-1">
-                                      <span class="fw-semibold d-block">John Doe</span>
+                                      <span class="fw-semibold d-block">{{userDetails?.firstName}} {{userDetails?.lastName}}</span>
                                       <small class="text-muted">User</small>
                                     </div>
                                   </div>
                                 </a>
                               </li>
-                              <li><a class="dropdown-item" routerLink="/user-profile"> 
-                                <i class="bi bi-person-fill text-primary fs-4"></i> 
-                                Edit Profile</a></li>
-                              <li><a class="dropdown-item" href="#">
-                                <i class="bi bi-lock-fill fs-4 text-primary"></i>
-                                 Change Password</a></li>
-                              <li><a class="dropdown-item" href="#">
-                                <i class="bi bi-cart-fill fs-4 text-primary"></i>
-                                Cart Item</a></li>
-                              <li><a class="dropdown-item" href="#">
-                                <i class="bi bi-list-stars fs-4 text-primary"></i>
-                                Wish List</a></li>
-                              <li><a class="dropdown-item" href="#">
-                                <i class="bi bi-box-arrow-right fs-4 text-primary"></i>
-                                Sign Out</a></li>
+                              <ng-container *ngFor="let profile of profileRoutes" >
+                                <li><a class="dropdown-item" [routerLink]="profile.link" (click)="clickOnProfileItem(profile)"> 
+                                  <i [class]="profile.icon"></i> 
+                                  {{profile.title}}</a></li>
+                              </ng-container>
+                              
+                              
                             </ul>
                           </div>
                     
-                    <!-- <ul class="dropdown-menu dropdown-menu-end">
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0 me-3">
-                              <div class="avatar avatar-online">
-                                <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                              </div>
-                            </div>
-                            <div class="flex-grow-1">
-                              <span class="fw-semibold d-block">John Doe</span>
-                              <small class="text-muted">Admin</small>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          <i class="bx bx-user me-2"></i>
-                          <span class="align-middle">My Profile</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          <i class="bx bx-cog me-2"></i>
-                          <span class="align-middle">Settings</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          <span class="d-flex align-items-center align-middle">
-                            <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                            <span class="flex-grow-1 align-middle">Billing</span>
-                            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="auth-login-basic.html">
-                          <i class="bx bx-power-off me-2"></i>
-                          <span class="align-middle">Log Out</span>
-                        </a>
-                      </li>
-                    </ul> -->
-                <!-- </li> -->
-            <!-- / Navbar -->
 
                         </div>
                     </div>
@@ -139,4 +79,3 @@
             </div>
         </div>
     </div>
-    <!-- Navbar End -->

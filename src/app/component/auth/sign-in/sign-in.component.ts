@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { Router, RouterModule } from '@angular/router';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,7 +20,7 @@ export class SignInComponent {
   submitted = false;
 
 
-  constructor(public authService:AuthService,public router:Router,public commonService:CommonService,private cd:ChangeDetectorRef){}
+  constructor(public userService:UserService ,public authService:AuthService,public router:Router,public commonService:CommonService,private cd:ChangeDetectorRef){}
 
   /**
    * login FormGroup initialize
@@ -46,6 +47,8 @@ export class SignInComponent {
       next:(res:any)=>{
         this.authService.saveToken(res.data.token);
         this.router.navigate(['/home']);
+    this.userService.updateUserDetails$.next(true)
+
       }
     })
    }

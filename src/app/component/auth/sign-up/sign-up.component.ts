@@ -31,7 +31,7 @@ export class SignUpComponent {
     this.authService.signUpUser(this.signUpForm.value).subscribe({
       next:(res:any)=>{
         if(res){
-          console.log("user are registered");
+          console.log("user are registered",res);
           this.route.navigate(['auth/sign-in']);
         }
       },

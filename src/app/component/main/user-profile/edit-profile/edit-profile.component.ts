@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from 'src/app/shared/service/user.service';
+import { API } from 'src/app/shared/constant/api.constant';
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
+  providers:[DatePipe],
   imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
@@ -16,9 +18,11 @@ export class EditProfileComponent implements OnInit {
   disabledEdit = true;
   submitted = false;
   editProfileForm!: FormGroup;
-  userDetails:any;
+  userDetails!: any;
+  uploadImage: any;
+  defaultProfileImg: any;
 
-  constructor(public commonService:CommonService,public userService:UserService){}
+  constructor(public commonService:CommonService,public userService:UserService,public datePipe:DatePipe){}
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
@@ -27,24 +31,24 @@ export class EditProfileComponent implements OnInit {
   }
   initializeEditProfileForm() {
     this.editProfileForm = new FormGroup({
-      profilePic: new FormControl('',Validators.required),
+      profilePic: new FormControl(''),
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      email:new FormControl('',Validators.required),
-      gender: new FormControl('', Validators.required),
-      dob: new FormControl('', Validators.required),
+      gender: new FormControl(''),
+      dob: new FormControl(''),
       phone: new FormControl('', Validators.required),
     })
       this.editProfileForm.disable()  
   }
   submitImage(event: any) {
     var reader = new FileReader();
-
     reader.onload = () => {
       this.profileImage = reader.result;
-    }
-    
-    reader.readAsDataURL(event.target.files[0]);
+
+  }
+    this.uploadImage = event.target.files[0];
+    reader.readAsDataURL(this.uploadImage);
+    this.editProfileForm.get('profilePic')?.setValue(this.uploadImage);
   }
   onEdit() {
     this.disabledEdit = !this.disabledEdit;
@@ -68,21 +72,25 @@ export class EditProfileComponent implements OnInit {
   }
   onEditProfileSubmit() {
     this.submitted = true;
-    if(this.editProfileForm.valid){
-      let updateUserDetails={
-        profilePic:this.editProfileForm.value.profilePic,
-        firstName: this.editProfileForm.value.firstName,
-        lastName: this.editProfileForm.value.lastName,
-        // dob:this.editProfileForm.value.dob,
-        gender: this.editProfileForm.value.gender,
-        phone:Number (this.editProfileForm.value.phone),
-      };
-      console.log("updated ",updateUserDetails)
-      this.userService.updateUser(updateUserDetails).subscribe({
+    if (this.editProfileForm.valid) {
+      console.log("value ", this.editProfileForm.value)
+      let dob = new Date(this.editProfileForm.get('dob')?.value);
+      let formData = new FormData();
+      if (this.uploadImage) {
+        formData.append('profilePic',  this.uploadImage);
+      }
+      formData.append('firstName', this.editProfileForm.get('firstName')?.value);
+      formData.append('lastName',this.editProfileForm.get('lastName')?.value);
+      formData.append('gender', this.editProfileForm.get('gender')?.value);
+      formData.append('phone', (this.editProfileForm.get('phone')?.value));
+      formData.append('dob', (this.editProfileForm.get('dob')?.value));
+      
+      
+      this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
-          console.log("Res ",res);
-          this.profileImage=res.proifilePic;
+          // this.profileImage=res.data[0].profilePic;
           this.onEdit();
+          this.userService.updateUserDetails$.next(true);
         }
       })
     }
@@ -91,8 +99,20 @@ export class EditProfileComponent implements OnInit {
   getUserDetails(){
     this.userService.getUser().subscribe({
       next:(res:any)=>{
-        this.userDetails=res.data;
-        this.editProfileForm.patchValue(this.userDetails);
+        this.userDetails = res.data;
+        this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
+        this.userDetails.dob=this.datePipe.transform (this.userDetails.dob,'YYYY-MM-dd')
+        this.editProfileForm.patchValue({
+          firstName:this.userDetails.firstName,
+          lastName:this.userDetails.lastName,
+          gender: this.userDetails.gender,
+          dob: this.userDetails.dob,
+          phone: this.userDetails.phone,
+          
+        });
+        this.profileImage = this.userDetails.profilePic;
+        this.userService.updateUserDetails$.next(true);
+        
       }
     })
   }

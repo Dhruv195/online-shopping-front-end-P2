@@ -1,0 +1,72 @@
+<!-- <div class="product-item bg-light mb-4">
+    <div class="product-img position-relative overflow-hidden">
+      <img class="img-fluid w-100" [src]="product.image" alt="" />
+      <div class="product-action">
+        <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"
+          ><i class="far fa-heart"></i
+        ></a>
+        <a class="btn btn-outline-dark btn-square" routerLink="/shop-detail"
+          ><i class="fa fa-search"></i
+        ></a>
+      </div>
+    </div>
+    <div class="text-center py-4">
+      <a class="h6 text-decoration-none text-truncate" routerLink="/shop-detail">{{
+        product.name
+      }}</a>
+      <div class="d-flex align-items-center justify-content-center mt-2">
+        <h5>${{ product.price }}</h5>
+        <h6 class="text-muted ml-2">
+          <del>${{ product.oldPrice }}</del>
+        </h6>
+      </div>
+      <div class="d-flex align-items-center justify-content-center mb-1">
+        <small class="fa fa-star text-primary mr-1"></small>
+        <small class="fa fa-star text-primary mr-1"></small>
+        <small class="fa fa-star text-primary mr-1"></small>
+        <small class="fa fa-star text-primary mr-1"></small>
+        <small class="fa fa-star text-primary mr-1"></small>
+        <small> ({{ product.reviews }})</small>
+      </div>
+    </div>
+  </div> -->
+
+
+  <div class="product-item row bg-light mb-4">
+    <div class="col-4 shadow-sm bg-light">
+        <div class=" position-relative overflow-hidden">
+            <img class="img-fluid w-100 h-50" [src]="product.image" alt="" />
+            <a class="btn btn-outline-dark border rounded-circle border-dark position-absolute top-0 end-0 mt-2" routerLink="/wish-list"
+              ><i class="far fa-heart"></i
+            ></a>
+          </div>
+    </div>
+    <div class="col-8">
+        <div class="text-start py-4">
+            <a class="h3 text-decoration-none text-truncate" routerLink="/shop-detail">{{
+              product.name
+            }}</a>
+            <div class="d-flex  mt-2 align-items-center ">
+                <small class="fa fa-star text-primary mr-1"></small>
+                <small class="fa fa-star text-primary mr-1"></small>
+                <small class="fa fa-star text-primary mr-1"></small>
+                <small class="fa fa-star text-primary mr-1"></small>
+                <small class="fa fa-star text-primary mr-1"></small>
+                <small class="mt-0"> ({{ product.reviews }})</small>
+              </div>
+            <div class="d-flex   mt-3">
+              <h5>${{ product.price }}</h5>
+              <h6 class="text-muted ml-2">
+                <del>${{ product.oldPrice }}</del>
+              </h6>
+            </div>
+            
+            <button class="btn btn-primary px-3">
+                <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+            </button>
+            
+          </div>
+    </div>
+    
+  </div>
+  

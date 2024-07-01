@@ -23,8 +23,7 @@ export class HttpService {
   }
 
   get<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
-    console.log("header ")
-    const options = { params, headers };
+    
     return this.http.get<T>(`${this.baseUrl}/${url}`).pipe(catchError(this.handleError.bind(this)));
   }
 

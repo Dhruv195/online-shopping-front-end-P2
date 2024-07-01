@@ -25,7 +25,7 @@
                 <label class="custom-control-label" for="price-all">{{
                   item.title
                 }}</label>
-                <span class="badge border font-weight-normal">555</span>
+                <span class="badge border font-weight-normal text-dark">555</span>
               </div>
             </ng-container>
           </form>
@@ -84,13 +84,21 @@
             </div>
           </div>
         </div>
-        <div [ngClass]="displayMode === 'grid' ? 'grid-view' : 'list-view'">
           <ng-container *ngFor="let product of products">
-            <div class="col-lg-4 col-md-6 col-sm-6 pb-1 product-card">
-              <app-prodcut-card [product]="product"></app-prodcut-card>
-            </div>
+            <ng-container *ngIf="displayMode=='grid' " >
+              <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                <app-prodcut-card [product]="product"></app-prodcut-card>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="displayMode=='list' " >
+              <div class="col-12" >
+
+              <app-product-list-view [product]="product" ></app-product-list-view>
+              </div>
+            </ng-container>
+            
           </ng-container>
-        </div>
         <div class="col-12">
           <nav>
             <ul class="pagination justify-content-center">

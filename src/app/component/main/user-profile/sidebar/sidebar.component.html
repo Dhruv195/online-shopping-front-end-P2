@@ -7,9 +7,11 @@
             <ul class="nav nav-pills flex-column mb-auto"> 
               <ng-container *ngFor="let profileItem of profileUrls" >
                 <li class="nav-item ">
-                  <a  [routerLink]="profileItem.link" routerLinkActive="active" class="nav-link text-dark">
+                  <a  [routerLink]="profileItem.link" routerLinkActive="active" (click)="onProfileItemClick(profileItem.title)"  class="nav-link text-dark">
+                    <i [class]="profileItem.icon" routerLinkActive="text-light" ></i>
                     {{profileItem.title}}
                   </a>
+
                 </li>
               </ng-container>
               

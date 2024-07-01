@@ -5,12 +5,13 @@
         <i class="bi bi-x-circle-fill" *ngIf="!disabledEdit" ></i>
       </a>
     </h2>
+    <p class="mt-3 fs-5">Your Email : {{userDetails?.email}}</p>
     
     <form [formGroup]="editProfileForm" (ngSubmit)="onEditProfileSubmit()" >
 
-      <div class="form-group mb-3 mt-5">
+      <div class="form-group mb-3 mt-4">
             <div class="d-flex align-items-center" style="gap: 20px;">
-              <img [src]="profileImage ? profileImage : 'https://ui-avatars.com/api/?name=Elon+Musk'" class="w-px-70 h-auto rounded-circle" alt="">
+              <img [src]="profileImage ? profileImage : defaultProfileImg" class="w-px-70 h-auto rounded-circle" alt="">
               <ng-container *ngIf="!disabledEdit" >
               <input 
                       type="file" 
@@ -19,7 +20,7 @@
                       class="form-control w-25" 
                       (change)="submitImage($event)"
                       formControlName="profilePic"
-                      [ngClass]="{'error':editProfileForm.get('profilePic')?.invalid && (editProfileForm.get('profilePic')?.touched || submitted)}"
+                      
                 > 
               </ng-container>
             </div>
@@ -28,7 +29,7 @@
 
       <div class="mb-3 row">
         <div class="col-3 ">
-          <label for="username" class="form-label">First Name</label>
+          <label for="username" class="form-label">First Name <span class="text-danger">*</span></label>
           <input 
                 type="text" 
                 formControlName="firstName" 
@@ -37,37 +38,30 @@
                 [ngClass]="{'error':editProfileForm.get('firstName')?.invalid && (editProfileForm.get('firstName')?.touched || submitted)}"
 
           >
+          <span class="text-danger" *ngIf="editProfileForm.get('firstName')?.hasError('required') && ( editProfileForm.get('firstName')?.dirty || editProfileForm.get('firstName')?.touched || submitted)" >First Name is Required</span>
+
         </div>
         <div class="col-3">
-          <label for="username" class="form-label">Last Name</label>
+          <label for="username" class="form-label">Last Name <span class="text-danger">*</span></label>
           <input 
                 type="text" 
                 formControlName="lastName" 
                 class="form-control" id="username"
                 [ngClass]="{'error':editProfileForm.get('lastName')?.invalid && (editProfileForm.get('lastName')?.touched || submitted)}"
-
+              
           >
+          <span class="text-danger" *ngIf="editProfileForm.get('lastName')?.hasError('required') && ( editProfileForm.get('lastName')?.dirty || editProfileForm.get('lastName')?.touched || submitted)" >Last Name is Required</span>
+
         </div>
       </div> 
-      <div class="mb-3 row">
-        <div class="col-6">
-          <label for="email" class="form-label">Email</label>
-          <input 
-                type="text" 
-                formControlName="email" 
-                [ngClass]="{'error':editProfileForm.get('email')?.invalid && (editProfileForm.get('email')?.touched || submitted)}"
-
-                class="form-control" id="email">
-        </div>
-      </div>
+      
       <div class="mb-3 row">
         <div class="col-3">
           <label for="gender" class="form-label">Gender</label>
           <select name="" id="" 
                   formControlName="gender" 
                   class="form-control" 
-                  [ngClass]="{'error':editProfileForm.get('gender')?.invalid && (editProfileForm.get('gender')?.touched || submitted)}"
-                  [disabled]="disabledEdit">
+                  >
             <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -78,18 +72,18 @@
           <input 
           type="date" 
           formControlName="dob" 
-          [ngClass]="{'error':editProfileForm.get('dob')?.invalid && (editProfileForm.get('dob')?.touched || submitted)}"
-          [disabled]="disabledEdit" class="form-control">
+           class="form-control">
         </div>
       </div>
 
       <div class="mb-3 row">
         <div class="col-3">
-          <label for="dob" class="form-label">Phone</label>
+          <label for="dob" class="form-label">Phone <span class="text-danger">*</span></label>
           <input type="text" 
                   formControlName="phone" 
                   [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched || submitted)}"
                    class="form-control">
+          <span class="text-danger" *ngIf="editProfileForm.get('phone')?.hasError('required') && ( editProfileForm.get('phone')?.dirty || editProfileForm.get('phone')?.touched) || submitted" >Phone Number is Required</span>
         </div>
       </div>
     
