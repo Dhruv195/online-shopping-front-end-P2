@@ -47,9 +47,7 @@ export class CommonService {
     }
   }
 
-  getUser(){
-    return this.httpService.get(API.USER_GET);
-  }
+  
 
   
 }

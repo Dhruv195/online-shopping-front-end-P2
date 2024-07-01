@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,12 +12,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  eventImage: any;
+  profileImage: any;
   disabledEdit = true;
   submitted = false;
   editProfileForm!: FormGroup;
+  userDetails:any;
 
-  constructor(public commonService:CommonService){}
+  constructor(public commonService:CommonService,public userService:UserService){}
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
@@ -39,18 +41,17 @@ export class EditProfileComponent implements OnInit {
     var reader = new FileReader();
 
     reader.onload = () => {
-      this.eventImage = reader.result;
+      this.profileImage = reader.result;
     }
     
     reader.readAsDataURL(event.target.files[0]);
   }
   onEdit() {
     this.disabledEdit = !this.disabledEdit;
-    if (this.disabledEdit) {
+    if (this.disabledEdit ) {
       this.editProfileForm.disable()      
     }
     else {
-      
       this.editProfileForm.enable()
     }
     
@@ -67,12 +68,31 @@ export class EditProfileComponent implements OnInit {
   }
   onEditProfileSubmit() {
     this.submitted = true;
+    if(this.editProfileForm.valid){
+      let updateUserDetails={
+        profilePic:this.editProfileForm.value.profilePic,
+        firstName: this.editProfileForm.value.firstName,
+        lastName: this.editProfileForm.value.lastName,
+        // dob:this.editProfileForm.value.dob,
+        gender: this.editProfileForm.value.gender,
+        phone:Number (this.editProfileForm.value.phone),
+      };
+      console.log("updated ",updateUserDetails)
+      this.userService.updateUser(updateUserDetails).subscribe({
+        next:(res:any)=>{
+          console.log("Res ",res);
+          this.profileImage=res.proifilePic;
+          this.onEdit();
+        }
+      })
+    }
   }
 
   getUserDetails(){
-    this.commonService.getUser().subscribe({
+    this.userService.getUser().subscribe({
       next:(res:any)=>{
-        console.log("Res ",res);
+        this.userDetails=res.data;
+        this.editProfileForm.patchValue(this.userDetails);
       }
     })
   }

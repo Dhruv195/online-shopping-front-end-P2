@@ -10,7 +10,7 @@
 
       <div class="form-group mb-3 mt-5">
             <div class="d-flex align-items-center" style="gap: 20px;">
-              <img [src]="eventImage ? eventImage : 'https://ui-avatars.com/api/?name=Elon+Musk'" class="w-px-70 h-auto rounded-circle" alt="">
+              <img [src]="profileImage ? profileImage : 'https://ui-avatars.com/api/?name=Elon+Musk'" class="w-px-70 h-auto rounded-circle" alt="">
               <ng-container *ngIf="!disabledEdit" >
               <input 
                       type="file" 
@@ -32,7 +32,6 @@
           <input 
                 type="text" 
                 formControlName="firstName" 
-                [disabled]="!disabledEdit" 
                 class="form-control" 
                 id="username"
                 [ngClass]="{'error':editProfileForm.get('firstName')?.invalid && (editProfileForm.get('firstName')?.touched || submitted)}"
@@ -44,7 +43,6 @@
           <input 
                 type="text" 
                 formControlName="lastName" 
-                [disabled]="disabledEdit" 
                 class="form-control" id="username"
                 [ngClass]="{'error':editProfileForm.get('lastName')?.invalid && (editProfileForm.get('lastName')?.touched || submitted)}"
 
@@ -57,7 +55,6 @@
           <input 
                 type="text" 
                 formControlName="email" 
-                [disabled]="disabledEdit" 
                 [ngClass]="{'error':editProfileForm.get('email')?.invalid && (editProfileForm.get('email')?.touched || submitted)}"
 
                 class="form-control" id="email">
@@ -72,8 +69,8 @@
                   [ngClass]="{'error':editProfileForm.get('gender')?.invalid && (editProfileForm.get('gender')?.touched || submitted)}"
                   [disabled]="disabledEdit">
             <option value="">Select Gender</option>
-            <option value="">Male</option>
-            <option value="">Female</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
         </div>
         <div class="col-3">
@@ -92,7 +89,7 @@
           <input type="text" 
                   formControlName="phone" 
                   [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched || submitted)}"
-                  [disabled]="disabledEdit" class="form-control">
+                   class="form-control">
         </div>
       </div>
     
