@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shope',
@@ -331,10 +332,26 @@ export class ShopeComponent implements OnInit {
     // Add more products as needed
   ];
   displayMode: string = 'grid';
-  constructor(public commonService: CommonService) {}
+  constructor(
+    public commonService: CommonService,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  categoryId: any;
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
+    this.activatedRoute.params.subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        if (res.id) {
+          this.categoryId = res.id;
+        }
+      },
+    });
+
+    console.log(this.categoryId);
   }
   onDisplayModeChange(mode: string) {
     this.displayMode = mode;
