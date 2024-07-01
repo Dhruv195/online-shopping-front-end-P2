@@ -1,11 +1,11 @@
 <div class="product-item bg-light mb-4">
   <div class="product-img position-relative overflow-hidden">
-    <img class="img-fluid w-100" [src]="product.images" alt="" />
+    <img class="img-fluid w-100" [src]="product.images[0]" alt="" />
     <div class="product-action">
       <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"
         ><i class="far fa-heart"></i
       ></a>
-      <a class="btn btn-outline-dark btn-square" routerLink="/shop-detail"
+      <a class="btn btn-outline-dark btn-square" [routerLink]="['/shop-detail/', product._id]"
         ><i class="fa fa-search"></i
       ></a>
     </div>

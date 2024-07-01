@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   animate,
@@ -12,6 +12,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { ProductService } from 'src/app/shared/service/product.service';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
   selector: 'app-shope-details',
@@ -19,6 +21,7 @@ import {
   imports: [
     CommonModule,
     ProdcutCardComponent,
+    CarouselModule,
     CarouselModule,
     FormsModule,
     ReactiveFormsModule,
@@ -34,17 +37,46 @@ import {
   ],
 })
 export class ShopeDetailsComponent {
-  constructor(public commonService: CommonService, private router: Router) {}
-  addProductData = {
-    productId: '667d5b274d385bcde22cf76b',
-    quantity: 9,
-    price: 100,
-    size: 'XL',
-    color: 'black',
+  constructor(
+    public commonService: CommonService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private authService: AuthService
+  ) {}
+  addProductCart = {
+    productId: 0,
+    quantity: 1,
+    price: 0,
+    size: '',
+    color: '',
   };
 
+  addProductData = {
+    productId: '',
+    productName: '',
+    price: 0,
+    quantity: 1,
+    totalProductPrice: 0,
+    Images: [],
+  };
+
+  cartList: any[] = [];
+  productId: any;
   ngOnInit(): void {
     this.changeBreadCrumbData();
+    this.activatedRoute.params.subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        if (res.id) {
+          this.productId = res.id;
+        }
+      },
+    });
+    this.getProduct(this.productId);
+    this.getRelatedProduct(this.productId)
+    console.log(this.productId);
   }
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
@@ -57,16 +89,61 @@ export class ShopeDetailsComponent {
     });
   }
 
+  getProduct(productId: any) {
+    this.productService.getProductById(productId).subscribe({
+      next: (res: any) => {
+        console.log('Res ', res);
+        this.products = res.data;
+        console.log(this.products, 'Good');
+      },
+    });
+  }
+
+  getRelatedProduct(productId: any) {
+    this.productService.getRelatedProducts(productId).subscribe({
+      next: (res: any) => {
+        console.log('Res ', res);
+        this.productList = res.data;
+        console.log(this.productList, 'Good');
+      },
+    });
+  }
+
   quantityMinus() {
-    if (this.addProductData.quantity > 1) {
-      this.addProductData.quantity -= 1;
+    if (this.addProductCart.quantity > 1) {
+      this.addProductCart.quantity -= 1;
     }
   }
   quantityPlus() {
-    this.addProductData.quantity += 1;
+    this.addProductCart.quantity += 1;
   }
   addToCart() {
-    console.log(this.addProductData);
+    (this.addProductCart.productId = this.addProductData.productId =
+      this.productId),
+      (this.addProductCart.price = this.addProductData.price =
+        this.products.sellingPrice);
+    if (this.authService.loggedIn()) {
+      console.log(this.addProductCart);
+      this.productService
+        .addProductToCart({ product: this.addProductCart })
+        .subscribe({
+          next: (res: any) => {
+            console.log('response', res);
+          },
+        });
+    } else {
+      this.addProductData.Images = this.products.images;
+      this.addProductData.productName = this.products.productName;
+      this.addProductData.quantity = this.addProductCart.quantity;
+      this.addProductData.totalProductPrice =
+        this.addProductCart.price * this.addProductCart.quantity;
+      console.log(this.addProductData);
+      this.cartList =
+        this.commonService.getLocalStorage('cartProductList') || [];
+      this.cartList.push(this.addProductData);
+      this.commonService.setLocalStorage('cartProductList', this.cartList);
+    }
+
     this.router.navigate(['/shopping-cart']);
   }
 
@@ -92,43 +169,44 @@ export class ShopeDetailsComponent {
       },
     },
   };
+
   products: any = {
-    products: [
-      {
-        _id: '667a93516a95e65e828409cc',
-        productName: 'Nike Running Shoes',
-        images: [
-          'assets/img/product-1.jpg',
-          'assets/img/product-2.jpg',
-          'assets/img/product-3.jpg',
-        ],
-        price: 120,
-        sellingPrice: 100,
-        colors: ['Red', 'Blue'],
-        size: ['8', '9', '10'],
-        mainDescription: 'Comfortable running shoes from Nike',
-        subDescription: 'Perfect for runners looking for a lightweight shoe.',
-        tags: ['shoes', 'nike', 'running'],
-        ratings: 3,
-        reviews: 3,
-        information: {
-          description: 'Breathable and lightweight running shoes',
-          infoPoints: ['Lightweight', 'Breathable', 'Comfortable'],
-        },
-        isFeatured: true,
-        isActive: true,
-        category: {
-          categoryName: 'Sports',
-          bannerImage: 'https://example.com/banner/sports.jpg',
-          image: 'https://example.com/image/sports.jpg',
-          banner: false,
-          isActive: true,
-        },
-      },
-    ],
-    page: 1,
-    items: 1,
-    total_count: 10,
+    // products: [
+    //   {
+    //     _id: '667a93516a95e65e828409cc',
+    //     productName: 'Nike Running Shoes',
+    //     images: [
+    //       'assets/img/product-1.jpg',
+    //       'assets/img/product-2.jpg',
+    //       'assets/img/product-3.jpg',
+    //     ],
+    //     price: 120,
+    //     sellingPrice: 100,
+    //     colors: ['Red', 'Blue'],
+    //     size: ['8', '9', '10'],
+    //     mainDescription: 'Comfortable running shoes from Nike',
+    //     subDescription: 'Perfect for runners looking for a lightweight shoe.',
+    //     tags: ['shoes', 'nike', 'running'],
+    //     ratings: 3,
+    //     reviews: 3,
+    //     information: {
+    //       description: 'Breathable and lightweight running shoes',
+    //       infoPoints: ['Lightweight', 'Breathable', 'Comfortable'],
+    //     },
+    //     isFeatured: true,
+    //     isActive: true,
+    //     category: {
+    //       categoryName: 'Sports',
+    //       bannerImage: 'https://example.com/banner/sports.jpg',
+    //       image: 'https://example.com/image/sports.jpg',
+    //       banner: false,
+    //       isActive: true,
+    //     },
+    //   },
+    // ],
+    // page: 1,
+    // items: 1,
+    // total_count: 10,
   };
 
   reviewList = {
@@ -158,76 +236,76 @@ export class ShopeDetailsComponent {
   };
 
   productList = [
-    {
-      image: 'assets/img/product-1.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-2.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-3.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-4.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-5.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
+    // {
+    //   images:[ 'assets/img/product-1.jpg'],
+    //   links: {
+    //     cart: '#',
+    //     wishlist: '#',
+    //     compare: '#',
+    //     view: '#',
+    //   },
+    //   name: 'Product Name Goes Here',
+    //   price: '123.00',
+    //   sellingPrice: '123.00',
+    //   rating: 5,
+    //   reviews: 99,
+    // },
+    // {
+    //   images: ['assets/img/product-2.jpg'],
+    //   links: {
+    //     cart: '#',
+    //     wishlist: '#',
+    //     compare: '#',
+    //     view: '#',
+    //   },
+    //   name: 'Product Name Goes Here',
+    //   price: '123.00',
+    //   sellingPrice: '123.00',
+    //   rating: 5,
+    //   reviews: 99,
+    // },
+    // {
+    //   images: ['assets/img/product-3.jpg'],
+    //   links: {
+    //     cart: '#',
+    //     wishlist: '#',
+    //     compare: '#',
+    //     view: '#',
+    //   },
+    //   name: 'Product Name Goes Here',
+    //   price: '123.00',
+    //   sellingPrice: '123.00',
+    //   rating: 5,
+    //   reviews: 99,
+    // },
+    // {
+    //   images: ['assets/img/product-4.jpg'],
+    //   links: {
+    //     cart: '#',
+    //     wishlist: '#',
+    //     compare: '#',
+    //     view: '#',
+    //   },
+    //   name: 'Product Name Goes Here',
+    //   price: '123.00',
+    //   sellingPrice: '123.00',
+    //   rating: 5,
+    //   reviews: 99,
+    // },
+    // {
+    //   images: ['assets/img/product-5.jpg'],
+    //   links: {
+    //     cart: '#',
+    //     wishlist: '#',
+    //     compare: '#',
+    //     view: '#',
+    //   },
+    //   name: 'Product Name Goes Here',
+    //   price: '123.00',
+    //   sellingPrice: '123.00',
+    //   rating: 5,
+    //   reviews: 99,
+    // },
   ];
 
   shareList = [

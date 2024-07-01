@@ -5,4 +5,9 @@ export const API = {
   USER_CART: 'cart',
   CATEGORY_LIST: 'category/list',
   PRODUCT_LIST: 'product/list',
+  PRODUCT_BY_ID: 'product/',
+  ADD_TO_CART: 'cart/',
+  GET_USER_CART: 'cart',
+  DELETE_USER_CART: 'cart/',
+  GET_RELATED_PRODUCTS:'product/related/'
 };

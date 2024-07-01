@@ -7,15 +7,13 @@ import { TotalOrderCardComponent } from 'src/app/shared/common/total-order-card/
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [CommonModule,ShoppingCartListComponent,TotalOrderCardComponent],
+  imports: [CommonModule, ShoppingCartListComponent, TotalOrderCardComponent],
   templateUrl: './shopping-cart.component.html',
-  styleUrls: ['./shopping-cart.component.scss']
+  styleUrls: ['./shopping-cart.component.scss'],
 })
 export class ShoppingCartComponent {
   subTotal: number = 0;
-  constructor(public commonService: CommonService) {
-    
-  }
+  constructor(public commonService: CommonService) {}
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
@@ -24,11 +22,11 @@ export class ShoppingCartComponent {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Cart',
       linkList: [
-        { label:'Home',link:'/'},
-        { label:'Shop',link:'/shop'},
-        { label:'Shopping Cart',link:'/shopping-cart'},
-      ]
-    })
+        { label: 'Home', link: '/' },
+        { label: 'Shop', link: '/shop' },
+        { label: 'Shopping Cart', link: '/shopping-cart' },
+      ],
+    });
   }
 
   onSubTotalChanged(subTotal: number) {

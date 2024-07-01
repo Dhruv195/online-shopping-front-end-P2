@@ -104,7 +104,9 @@ export class CategorySectionComponent implements OnInit {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {
         console.log('Res ', res);
-        this.categories = res.data;
+        if (res.data) {
+          this.categories = res.data.categories;
+        }
       },
     });
   }

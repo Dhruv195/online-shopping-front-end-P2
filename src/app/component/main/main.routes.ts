@@ -29,9 +29,9 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'shop/:id',
+        path: 'shop-detail/:id',
         loadComponent: () =>
-          import('./shope/shope.component').then((m) => m.ShopeComponent),
+          import('./shope-details/shope-details.component').then((m) => m.ShopeDetailsComponent),
       },
       {
         path: 'shopping-cart',
