@@ -7,18 +7,9 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './address-form.component.html',
-  styleUrls: ['./address-form.component.scss']
+  styleUrls: ['./address-form.component.scss'],
 })
 export class AddressFormComponent {
-  @Input() addressForm!: FormGroup;
-  submitted = false;
-  @Output() address = new EventEmitter<any>();
-
-  onSubmit() {
-    this.submitted = true;
-    if (this.addressForm.valid) {
-      this.address.emit({ ...this.addressForm.value });
-    }
-  }
-
+  @Input() formGroup!: FormGroup;
+  @Input() submitted!: boolean;
 }

@@ -12,7 +12,7 @@
         <ng-container *ngFor="let product of cartProductList,let index=index" >
             <tr>
                 <td class="align-middle">
-                    <img [src]="product.img" alt="" style="width: 50px;">{{product.name}}</td>
+                    <img [src]="product.Images[0]" alt="" style="width: 50px;">{{product.productName}}</td>
                 <td class="align-middle">${{product.price}}</td>
                 <td class="align-middle">
                     <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -29,11 +29,9 @@
                         </div>
                     </div>
                 </td>
-                <td class="align-middle">${{product.total}}</td>
-                <td class="align-middle"><button class="btn btn-sm btn-danger" (click)="deleteProduct(index)" ><i class="fa fa-times"></i></button></td>
+                <td class="align-middle">${{product.totalProductPrice}}</td>
+                <td class="align-middle"><button class="btn btn-sm btn-danger" (click)="deleteProduct(product.productId,index)" ><i class="fa fa-times"></i></button></td>
             </tr>
         </ng-container>
-        
-        
     </tbody>
 </table>

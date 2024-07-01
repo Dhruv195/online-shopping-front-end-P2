@@ -1,16 +1,16 @@
-<div class="container-fluid pb-5" *ngIf="products.products.length">
-  <div class="row px-xl-5" *ngFor="let product of products.products">
+<div class="container-fluid pb-5" *ngIf="products">
+  <div class="row px-xl-5">
     <!-- Carousel Section -->
     <div class="col-lg-5 mb-30">
       <div
-        id="product-carousel-{{ product._id }}"
+        id="product-carousel-{{ products._id }}"
         class="carousel slide"
         data-ride="carousel"
       >
         <div class="carousel-inner bg-light">
           <div
             class="carousel-item"
-            *ngFor="let image of product.images; let i = index"
+            *ngFor="let image of products.images; let i = index"
             [ngClass]="{ active: i === 0 }"
           >
             <img class="w-100 h-100" [src]="image" alt="Image" />
@@ -18,14 +18,14 @@
         </div>
         <a
           class="carousel-control-prev"
-          href="#product-carousel-{{ product._id }}"
+          href="#product-carousel-{{ products._id }}"
           data-slide="prev"
         >
           <i class="fa fa-2x fa-angle-left text-dark"></i>
         </a>
         <a
           class="carousel-control-next"
-          href="#product-carousel-{{ product._id }}"
+          href="#product-carousel-{{ products._id }}"
           data-slide="next"
         >
           <i class="fa fa-2x fa-angle-right text-dark"></i>
@@ -36,27 +36,27 @@
     <!-- Details Section -->
     <div class="col-lg-7 h-auto mb-30">
       <div class="h-100 bg-light p-30">
-        <h3>{{ product.productName }}</h3>
+        <h3>{{ products.productName }}</h3>
         <div class="d-flex mb-3">
           <div class="text-primary mr-2">
-            <small
+            <!-- <small
               class="fas fa-star"
-              *ngFor="let star of [].constructor(product.ratings)"
+              *ngFor="let star of [].constructor(products.ratings)"
             ></small>
             <small
               class="far fa-star"
-              *ngFor="let star of [].constructor(5 - product.ratings)"
-            ></small>
+              *ngFor="let star of [].constructor(5 - products.ratings)"
+            ></small> -->
           </div>
-          <small class="pt-1">({{ product.reviews }} Reviews)</small>
+          <small class="pt-1">({{ products.reviews }} Reviews)</small>
         </div>
-        <h3 class="font-weight-semi-bold mb-4">${{ product.sellingPrice }}</h3>
-        <p class="mb-4">{{ product.mainDescription }}</p>
+        <h3 class="font-weight-semi-bold mb-4">${{ products.sellingPrice }}</h3>
+        <p class="mb-4">{{ products.mainDescription }}</p>
         <div class="d-flex mb-3">
           <strong class="text-dark mr-3">Sizes:</strong>
           <form>
             <div
-              *ngFor="let size of product.size"
+              *ngFor="let size of products.size"
               class="custom-control custom-radio custom-control-inline"
             >
               <input
@@ -64,6 +64,8 @@
                 class="custom-control-input"
                 [id]="'size-' + size"
                 name="size"
+                [value]="size"
+                [(ngModel)]="addProductCart.size"
               />
               <label class="custom-control-label" [for]="'size-' + size">{{
                 size
@@ -75,7 +77,7 @@
           <strong class="text-dark mr-3">Colors:</strong>
           <form>
             <div
-              *ngFor="let color of product.colors"
+              *ngFor="let color of products.colors"
               class="custom-control custom-radio custom-control-inline"
             >
               <input
@@ -83,6 +85,8 @@
                 class="custom-control-input"
                 [id]="'color-' + color"
                 name="color"
+                [value]="color"
+                [(ngModel)]="addProductCart.color"
               />
               <label class="custom-control-label" [for]="'color-' + color">{{
                 color
@@ -93,40 +97,37 @@
         <div class="d-flex align-items-center mb-4 pt-2">
           <div class="input-group quantity mr-3" style="width: 130px">
             <div class="input-group-btn">
-              <button class="btn btn-primary btn-minus">
+              <button
+                class="btn btn-primary btn-minus"
+                (click)="quantityMinus()"
+              >
                 <i class="fa fa-minus"></i>
               </button>
             </div>
             <input
               type="text"
               class="form-control bg-secondary border-0 text-center"
-              value="1"
+              [(ngModel)]="addProductCart.quantity" 
+              readonly
             />
             <div class="input-group-btn">
-              <button class="btn btn-primary btn-plus">
+              <button class="btn btn-primary btn-plus" (click)="quantityPlus()">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
           </div>
-          <button class="btn btn-primary px-3">
+          <button class="btn btn-primary px-3" (click)="addToCart()">
             <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
           </button>
         </div>
         <div class="d-flex pt-2">
           <strong class="text-dark mr-2">Share on:</strong>
           <div class="d-inline-flex">
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-pinterest"></i>
-            </a>
+            <ng-container *ngFor="let share of shareList">
+              <a class="text-dark px-2" href="{{ share.link }}" target="_blank">
+                <i class="fab" [ngClass]="share.icon"></i>
+              </a>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -134,55 +135,55 @@
   </div>
 
   <!-- Navbar Section -->
-  <div class="row px-xl-5" *ngFor="let product of products.products">
+  <div class="row px-xl-5" >
     <div class="col">
       <div class="bg-light p-30">
         <div class="nav nav-tabs mb-4">
           <a
             class="nav-item nav-link text-dark active"
             data-toggle="tab"
-            href="#tab-pane-description-{{ product._id }}"
+            href="#tab-pane-description-{{ products._id }}"
             >Description</a
           >
           <a
             class="nav-item nav-link text-dark"
             data-toggle="tab"
-            href="#tab-pane-information-{{ product._id }}"
+            href="#tab-pane-information-{{ products._id }}"
             >Information</a
           >
           <a
             class="nav-item nav-link text-dark"
             data-toggle="tab"
-            href="#tab-pane-reviews-{{ product._id }}"
-            >Reviews ({{ product.reviews }})</a
+            href="#tab-pane-reviews-{{ products._id }}"
+            >Reviews ({{ products.reviews }})</a
           >
         </div>
         <div class="tab-content">
           <div
             class="tab-pane fade show active"
-            [id]="'tab-pane-description-' + product._id"
+            [id]="'tab-pane-description-' + products._id"
           >
             <h4 class="mb-3">Product Description</h4>
-            <p>{{ product.mainDescription }}</p>
+            <p>{{ products.mainDescription }}</p>
           </div>
           <div
             class="tab-pane fade"
-            [id]="'tab-pane-information-' + product._id"
+            [id]="'tab-pane-information-' + products._id"
           >
             <h4 class="mb-3">Additional Information</h4>
-            <p>{{ product.information.description }}</p>
+            <p>{{ products.information.description }}</p>
             <div
-              *ngFor="let point of product.information.infoPoints"
+              *ngFor="let point of products.information.infoPoints"
               class="mb-2"
             >
               <h5 class="font-weight-semi-bold text-dark mb-1">{{ point }}</h5>
             </div>
           </div>
-          <div class="tab-pane fade" [id]="'tab-pane-reviews-' + product._id">
+          <div class="tab-pane fade" [id]="'tab-pane-reviews-' + products._id">
             <div class="row">
               <div class="col-md-6">
                 <h3>
-                  {{ product.reviews }} Review(s) for {{ product.productName }}
+                  {{ products.reviews }} Review(s) for {{ products.productName }}
                 </h3>
                 <ng-container *ngIf="reviewList.reviews.length > 0">
                   <ng-container *ngFor="let review of reviewList.reviews">
@@ -293,55 +294,18 @@
 
 <!-- Products Start -->
 <div class="container-fluid py-5">
-  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May Also Like</span></h2>
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+    <span class="bg-secondary pr-3">You May Also Like</span>
+  </h2>
   <div class="row px-xl-5">
-      <div class="col">
-        <owl-carousel-o [options]="customOptions">
-
-          <ng-container *ngFor="let product of productList" >
-            <ng-template carouselSlide> 
-            <div>
-                <div class="product-item bg-light">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" [src]="product.image" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">{{product.name}}</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>${{product.price}}</h5><h6 class="text-muted ml-2"><del>${{product.oldPrice}}</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="col">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let product of productList">
+          <ng-template carouselSlide>
+            <app-prodcut-card [product]="product"></app-prodcut-card>
           </ng-template>
-          </ng-container>
-        </owl-carousel-o>
-        <!-- <div>Some tags before</div>
-        <owl-carousel-o [options]="customOptions">
-      
-          <ng-container *ngFor="let slide of productList">
-            <ng-template carouselSlide [id]="slide.name">
-              <img [src]="slide.image" [alt]="slide.name" [title]="slide.name">
-            </ng-template>
-          </ng-container>
-      
-        </owl-carousel-o>
-        <div>Some tags after</div> -->
-        
-      </div>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
   </div>
 </div>
