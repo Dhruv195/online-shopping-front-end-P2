@@ -4,7 +4,7 @@
   <div class="product-item row bg-light mb-4">
     <div class="col-4 shadow-sm bg-light">
         <div class=" position-relative overflow-hidden">
-            <img class="img-fluid w-100 " [src]="product.images[0]" alt="" />
+            <img class="img-fluid w-100 " [src]="product.images[0] || 'assets/img/not-image-found.jpg'" alt="" />
             <a class="btn btn-outline-dark border rounded-circle border-dark position-absolute top-0 end-0 mt-2" routerLink="/wish-list"
               ><i class="far fa-heart"></i
             ></a>

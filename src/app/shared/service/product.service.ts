@@ -13,11 +13,8 @@ export class ProductService {
     return this.httpService.get(API.CATEGORY_LIST);
   }
 
-  getProductList(param1:any=1,param2:any=11111111111) {
-    console.log(param2)
-    let params=new HttpParams()
-    .set('page',param1)
-    .set('items',param2);
+  getProductList(params:any) {
+    
     return this.httpService.get(API.PRODUCT_LIST,params);
   }
 

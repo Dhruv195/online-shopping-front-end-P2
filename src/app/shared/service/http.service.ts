@@ -7,7 +7,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 })
 export class HttpService {
   baseUrl = 'https://shoppingcart-api.demoserver.biz';
-  constructor(public http:HttpClient ) { }
+  constructor(private http:HttpClient ) { }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
@@ -16,6 +16,7 @@ export class HttpService {
     } else {
       errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
     }
+
     return throwError(() => new Error(errorMessage));
   }
 
