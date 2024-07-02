@@ -75,7 +75,7 @@ export class ShopeDetailsComponent {
       },
     });
     this.getProduct(this.productId);
-    this.getRelatedProduct(this.productId)
+    this.getRelatedProduct(this.productId);
     console.log(this.productId);
   }
   changeBreadCrumbData() {
@@ -102,9 +102,10 @@ export class ShopeDetailsComponent {
   getRelatedProduct(productId: any) {
     this.productService.getRelatedProducts(productId).subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
-        this.productList = res.data;
-        console.log(this.productList, 'Good');
+        if (res.success) {
+          console.log('Res ', res);
+          this.productList = res.data.products;
+        }
       },
     });
   }
@@ -235,7 +236,7 @@ export class ShopeDetailsComponent {
     ],
   };
 
-  productList = [
+  productList: any[] = [
     // {
     //   images:[ 'assets/img/product-1.jpg'],
     //   links: {

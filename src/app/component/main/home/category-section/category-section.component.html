@@ -4,26 +4,15 @@
     <span class="bg-secondary pr-3">Categories</span>
   </h2>
   <div class="row px-xl-5 pb-3">
-    <div
-      class="col-lg-3 col-md-4 col-sm-6 pb-1"
-      *ngFor="let category of categories"
-    >
-      <a class="text-decoration-none" >
+    <div class="col-lg-3 col-md-4 col-sm-6 pb-1" *ngFor="let category of categories">
+      <a class="text-decoration-none">
         <div class="cat-item d-flex align-items-center mb-4">
           <div class="overflow-hidden" style="width: 100px; height: 100px">
-            <img
-              class="img-fluid"
-              [src]="category.image"
-              alt="{{ category.name }}"
-            />
+            <img class="img-fluid" [src]="category.image" alt="{{ category.name }}" />
           </div>
           <div class="flex-fill pl-3">
-            <h1>af{{ category._id }}</h1>
-
             <h6>{{ category.categoryName }}</h6>
-            <small class="text-body"
-              >{{ category.productCount }} Products</small
-            >
+            <small class="text-body">{{ category.productCount }} Products</small>
           </div>
         </div>
       </a>

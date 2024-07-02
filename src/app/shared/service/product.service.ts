@@ -14,7 +14,6 @@ export class ProductService {
   }
 
   getProductList(param1:any=1,param2:any=11111111111) {
-    console.log(param2)
     let params=new HttpParams()
     .set('page',param1)
     .set('items',param2);
