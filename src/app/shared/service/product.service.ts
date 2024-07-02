@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { API } from '../constant/api.constant';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,12 @@ export class ProductService {
     return this.httpService.get(API.CATEGORY_LIST);
   }
 
-  getProductList() {
-    return this.httpService.get(API.PRODUCT_LIST);
+  getProductList(param1:any=1,param2:any=11111111111) {
+    console.log(param2)
+    let params=new HttpParams()
+    .set('page',param1)
+    .set('items',param2);
+    return this.httpService.get(API.PRODUCT_LIST,params);
   }
 
   getProductById(productId: any) {

@@ -19,28 +19,24 @@ export class HttpService {
     return throwError(() => new Error(errorMessage));
   }
 
-  get<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
+  get<T>(url: string, params?: HttpParams): Observable<T> {
     
-    return this.http.get<T>(`${this.baseUrl}/${url}`).pipe(catchError(this.handleError.bind(this)));
+    return this.http.get<T>(`${this.baseUrl}/${url}`,{params: params}).pipe(catchError(this.handleError.bind(this)));
   }
 
-  post<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {
-    const options = { headers };
-    return this.http.post<T>(`${this.baseUrl}/${url}`, body, options).pipe(catchError(this.handleError.bind(this)));
+  post<T>(url: string, body: any): Observable<T> {
+    return this.http.post<T>(`${this.baseUrl}/${url}`, body).pipe(catchError(this.handleError.bind(this)));
   }
 
-  put<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {
-    const options = { headers };
-    return this.http.put<T>(`${this.baseUrl}/${url}`, body, options).pipe(catchError(this.handleError.bind(this)));
+  put<T>(url: string, body: any): Observable<T> {
+    return this.http.put<T>(`${this.baseUrl}/${url}`, body).pipe(catchError(this.handleError.bind(this)));
   }
 
-  patch<T>(url: string, body: any, headers?: HttpHeaders): Observable<T> {
-    const options = { headers };
-    return this.http.patch<T>(`${this.baseUrl}/${url}`, body, options).pipe(catchError(this.handleError.bind(this)));
+  patch<T>(url: string, body: any): Observable<T> {
+    return this.http.patch<T>(`${this.baseUrl}/${url}`, body).pipe(catchError(this.handleError.bind(this)));
   }
 
-  delete<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
-    const options = { params, headers };
-    return this.http.delete<T>(`${this.baseUrl}/${url}`, options).pipe(catchError(this.handleError.bind(this)));
+  delete<T>(url: string, params?: HttpParams): Observable<T> {
+    return this.http.delete<T>(`${this.baseUrl}/${url}`).pipe(catchError(this.handleError.bind(this)));
   }
 }

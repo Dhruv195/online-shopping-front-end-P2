@@ -81,9 +81,9 @@
           <label for="dob" class="form-label">Phone <span class="text-danger">*</span></label>
           <input type="text" 
                   formControlName="phone" 
-                  [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched || submitted)}"
+                  [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched  || submitted)}"
                    class="form-control">
-          <span class="text-danger" *ngIf="editProfileForm.get('phone')?.hasError('required') && ( editProfileForm.get('phone')?.dirty || editProfileForm.get('phone')?.touched) || submitted" >Phone Number is Required</span>
+          <span class="text-danger" *ngIf="editProfileForm.get('phone')?.hasError('required') && ( editProfileForm.get('phone')?.dirty || editProfileForm.get('phone')?.touched || submitted )" >Phone Number is Required</span>
         </div>
       </div>
     

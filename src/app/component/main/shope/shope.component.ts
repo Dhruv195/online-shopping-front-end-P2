@@ -4,11 +4,13 @@ import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 import { ProductListViewComponent } from 'src/app/shared/common/product-list-view/product-list-view.component';
 import { ActivatedRoute } from '@angular/router';
+import { ProductService } from 'src/app/shared/service/product.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-shope',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent],
+  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
 })
@@ -332,10 +334,15 @@ export class ShopeComponent implements OnInit {
 
     // Add more products as needed
   ];
+  pageSize=3;
+  page=1;
+
+  productList:any;
   displayMode: string = 'grid';
   constructor(
     public commonService: CommonService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public productService:ProductService
   ) {}
 
   categoryId: any;
@@ -353,9 +360,18 @@ export class ShopeComponent implements OnInit {
     });
 
     console.log(this.categoryId);
+    this.getProductList()
   }
   onDisplayModeChange(mode: string) {
     this.displayMode = mode;
+  }
+  getProductList()
+  {
+    this.productService.getProductList(this.page,this.pageSize).subscribe({
+      next:(res:any)=>{
+        this.productList=res.data.products;
+      }
+    })
   }
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
@@ -366,5 +382,11 @@ export class ShopeComponent implements OnInit {
         { label: 'Shop List', link: '/shop' },
       ],
     });
+  }
+
+  changePageOfProduct(page:any){
+    // console.log("Page ",this.page);
+    this.page=page;
+    this.getProductList();
   }
 }
