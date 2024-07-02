@@ -119,8 +119,8 @@ export class ShoppingCartListComponent implements OnInit {
       next: (res: any) => {
         console.log('Res ', res);
         if (res.data) {
-          this.cartProductList = res.data[0]?.products;
-          this.commonService.subTotalAmount$.next(res.data[0]?.totalAmount);
+          this.cartProductList = res.data.products;
+          this.commonService.subTotalAmount$.next(res.data.totalAmount);
           this.commonService.totalCartItem$.next(
             this.cartProductList?.length || 0
           );

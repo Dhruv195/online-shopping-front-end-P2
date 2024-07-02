@@ -74,17 +74,19 @@ export class EditProfileComponent implements OnInit {
     this.submitted = true;
     if (this.editProfileForm.valid) {
       console.log("value ", this.editProfileForm.value)
-      let dob = new Date(this.editProfileForm.get('dob')?.value);
       let formData = new FormData();
+      formData.append('firstName', this.editProfileForm.get('firstName')?.value);
+      formData.append('lastName', this.editProfileForm.get('lastName')?.value);
+      formData.append('phone', (this.editProfileForm.get('phone')?.value));
       if (this.uploadImage) {
         formData.append('profilePic',  this.uploadImage);
       }
-      formData.append('firstName', this.editProfileForm.get('firstName')?.value);
-      formData.append('lastName',this.editProfileForm.get('lastName')?.value);
-      formData.append('gender', this.editProfileForm.get('gender')?.value);
-      formData.append('phone', (this.editProfileForm.get('phone')?.value));
-      formData.append('dob', (this.editProfileForm.get('dob')?.value));
-      
+      if (this.editProfileForm.get('gender')?.value) {
+        formData.append('gender', this.editProfileForm.get('gender')?.value);
+      }
+      if ((this.editProfileForm.get('dob')?.value)) {
+        formData.append('dob', (this.editProfileForm.get('dob')?.value));
+      }
       
       this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
