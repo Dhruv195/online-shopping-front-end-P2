@@ -334,8 +334,9 @@ export class ShopeComponent implements OnInit {
 
     // Add more products as needed
   ];
-  pageSize=3;
-  page=1;
+  pageSize=10;
+  page = 1;
+  totalProduct:any
 
   productList:any;
   displayMode: string = 'grid';
@@ -368,8 +369,11 @@ export class ShopeComponent implements OnInit {
   getProductList()
   {
     this.productService.getProductList(this.page,this.pageSize).subscribe({
-      next:(res:any)=>{
-        this.productList=res.data.products;
+      next: (res: any) => {
+        console.log(res);
+        
+        this.productList = res.data.products;
+        this.totalProduct = res.data.total_count
       }
     })
   }
