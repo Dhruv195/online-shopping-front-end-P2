@@ -16,18 +16,10 @@
             <img class="w-100 h-100" [src]="image" alt="Image" />
           </div>
         </div>
-        <a
-          class="carousel-control-prev"
-          href="#product-carousel-{{ products._id }}"
-          data-slide="prev"
-        >
+        <a class="carousel-control-prev" data-slide="prev">
           <i class="fa fa-2x fa-angle-left text-dark"></i>
         </a>
-        <a
-          class="carousel-control-next"
-          href="#product-carousel-{{ products._id }}"
-          data-slide="next"
-        >
+        <a class="carousel-control-next" data-slide="next">
           <i class="fa fa-2x fa-angle-right text-dark"></i>
         </a>
       </div>
@@ -36,21 +28,23 @@
     <!-- Details Section -->
     <div class="col-lg-7 h-auto mb-30">
       <div class="h-100 bg-light p-30">
-        <h3>{{ products.productName }}</h3>
+        <h3>{{ products.productName | titlecase }}</h3>
         <div class="d-flex mb-3">
           <div class="text-primary mr-2">
-            <!-- <small
+            <small
               class="fas fa-star"
               *ngFor="let star of [].constructor(products.ratings)"
             ></small>
             <small
               class="far fa-star"
               *ngFor="let star of [].constructor(5 - products.ratings)"
-            ></small> -->
+            ></small>
           </div>
           <small class="pt-1">({{ products.reviews }} Reviews)</small>
         </div>
-        <h3 class="font-weight-semi-bold mb-4">${{ products.sellingPrice }}</h3>
+        <h3 class="font-weight-semi-bold mb-4">
+          {{ products.sellingPrice | currency : "USD" : "symbol" : "1.2-2" }}
+        </h3>
         <p class="mb-4">{{ products.mainDescription }}</p>
         <div class="d-flex mb-3">
           <strong class="text-dark mr-3">Sizes:</strong>
@@ -107,7 +101,7 @@
             <input
               type="text"
               class="form-control bg-secondary border-0 text-center"
-              [(ngModel)]="addProductCart.quantity" 
+              [(ngModel)]="addProductCart.quantity"
               readonly
             />
             <div class="input-group-btn">
@@ -135,7 +129,7 @@
   </div>
 
   <!-- Navbar Section -->
-  <div class="row px-xl-5" >
+  <div class="row px-xl-5">
     <div class="col">
       <div class="bg-light p-30">
         <div class="nav nav-tabs mb-4">
@@ -183,7 +177,8 @@
             <div class="row">
               <div class="col-md-6">
                 <h3>
-                  {{ products.reviews }} Review(s) for {{ products.productName }}
+                  {{ products.reviews }} Review(s) for
+                  {{ products.productName }}
                 </h3>
                 <ng-container *ngIf="reviewList.reviews.length > 0">
                   <ng-container *ngFor="let review of reviewList.reviews">

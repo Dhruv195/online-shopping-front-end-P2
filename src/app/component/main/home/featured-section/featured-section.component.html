@@ -1,12 +1,17 @@
 <div class="container-fluid pt-5">
-    <div class="row px-xl-5 pb-3">
-        <ng-container *ngFor="let item of featuredItems">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 [ngClass]="item.icon" class="fa text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">{{item.title}}</h5>
-                </div>
-            </div>
-        </ng-container>
-    </div>
+  <div class="row px-xl-5 pb-3">
+    <ng-container *ngFor="let item of featuredItems">
+      <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+        <div
+          class="d-flex align-items-center bg-light mb-4"
+          style="padding: 30px"
+        >
+          <h1 [ngClass]="item.icon" class="fa text-primary m-0 mr-2"></h1>
+          <h5 class="font-weight-semi-bold m-0">
+            {{ item.title | titlecase }}
+          </h5>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </div>
