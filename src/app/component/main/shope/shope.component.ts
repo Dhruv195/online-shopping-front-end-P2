@@ -20,8 +20,9 @@ import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-ca
 export class ShopeComponent implements OnInit {
   filters = [
     {
-      filter_type: 'FILTER BY PRICE',
-      filter_items: [
+      title: 'FILTER BY PRICE',
+      type :'price',
+      price : [
         {
           title: 'All Price',
           total: '1000',
@@ -50,8 +51,9 @@ export class ShopeComponent implements OnInit {
     },
 
     {
-      filter_type: 'FILTER BY COLOR',
-      filter_items: [
+      title: 'FILTER BY COLOR',
+      type:'color',
+      color: [
         {
           title: 'All Color',
           total: '1000',
@@ -80,8 +82,9 @@ export class ShopeComponent implements OnInit {
     },
 
     {
-      filter_type: 'FILTER BY SIZE',
-      filter_items: [
+      title: 'FILTER BY SIZE',
+      type : 'size',
+      size: [
         {
           title: 'All Size',
           total: '1000',
@@ -364,10 +367,11 @@ export class ShopeComponent implements OnInit {
     },
   ]
   filterForm: any;
-  pageSize=10;
+  pageSize=5;
   page = 1;
   totalProduct: any;
-  params: any;
+  // params=new HttpParams();
+  params:any;
 
   productList:any;
   displayMode: string = 'grid';
@@ -393,116 +397,57 @@ export class ShopeComponent implements OnInit {
         }
       },
     });
-    this.initializeSelectedFilterForm();
-    this.getProductList();
-    ////////////////////
-    // this.getAllFilterItem()
-  }
-  //*********************** */
-  onFilterChanged(selectedFilters: any) {
-    console.log('Selected Filters:', selectedFilters);
-    
-    // Apply the selected filters to your API call
-    const params = this.buildFilterParams(selectedFilters);
-    console.log("prams filter ",params)
-    // this.fetchFilteredData(params);
-    const apiUrl = this.constructApiUrl(params);
-    console.log("API URL:", apiUrl);
-  }
-  // buildFilterParams(filters: any) {
-  //   let params: any = {};
-  //   for (let key in filters) {
-  //     if (filters[key].length > 0) {
-  //       params[key] = filters[key].join(',');
-  //     }
-  //   }
-  //   return params;
-  // }
-
-  buildFilterParams(filters: any) {
-    let params: any = {};
-    for (let key in filters) {
-      if (filters[key].length > 0) {
-        params[key.toLowerCase().replace(' ', '')] = filters[key].join(',');
-      }
-    }
-    return params;
-  }
-  constructApiUrl(params: any) {
-    const baseUrl = '{{URL}}/product/list';
-    const queryParams = new URLSearchParams(params).toString();
-    return `${baseUrl}?${queryParams}`;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //******************************************** */
-  ////////////
-  initializeSelectedFilterForm() {
-    this.filterForm = new FormGroup({
-      filterItemArray: new FormArray([]),
-    });
-  }
-  ////////////////
-  get filterFormArray(): any{
-    return this.filterForm.get('filterItemArray') as FormArray<any>
-  }
-  ///////////////
-  getAllFilterItem() {
-    this.filterItemsList.forEach((element: any) => {
-      this.filterFormArray.push(this.preparedFilterControl())
-    })
-  }
-  /////////////
-  getControls() {
-    this.filterForm.controls;
-  }
-  preparedFilterControl(toPatchData: any = {}) {
-    const filterControl = new FormGroup({
-      checked: new FormControl(false),
-    });
-    // if (toPatchData) {
-    //   hobbyControl.patchValue(toPatchData);
-    // }
-    return filterControl;
-  }
-
-
-
-  onSelectFilterChecked(title:any,event:any) {
-    console.log("Chacjked ",title)
-    console.log("Chacjked ",event)
-  }
-  onDisplayModeChange(mode: string) {
-    this.displayMode = mode;
-  }
-  getProductList() {
-    
     this.params = {
       page: this.page,
       items:this.pageSize
     }
+    this.getProductList(this.params);
+    this.getProductListOfSearch();
+  }
 
-    this.productService.getProductList(this.params).subscribe({
+  getProductListOfSearch() {
+    this.productService.productList.subscribe({
       next: (res: any) => {
-        this.productList = res.data.products;
-        this.totalProduct = res.data.total_count;
+        this.productList = res;
+      }
+    });
+    this.productService.totalProducts.subscribe({
+      next: (res: any) => {
+        this.totalProduct = res;
+      }
+    })
+  }
+
+ 
+  //*********************** */
+  onFilterChanged(selectedFilters: any) {
+    console.log("selected ",selectedFilters)
+    Object.keys(selectedFilters).forEach((element : any) => {
+      if (element && selectedFilters[element].length) {
+        selectedFilters[element].forEach((item : any,index : any) => {
+            this.params[element+`[${index}]`] = item
+        });      
+      }1
+    });
+    this.getProductList(this.params);
+   
+  }
+
+  onSelectFilterChecked(title: any, event: any) { }
+  
+  onDisplayModeChange(mode: string) {
+    this.displayMode = mode;
+  }
+  getProductList(params:any) {
+    
+    this.productService.getProductList(params).subscribe({
+      next: (res: any) => {
+        this.productService.productList.next(res.data.products);
+        this.productService.totalProducts.next(res.data.total_count);
         this.router.navigate(
           ['/shop'],
           {
+            relativeTo: this.activatedRoute,
             queryParams: this.params,
           }
           );
@@ -521,8 +466,12 @@ export class ShopeComponent implements OnInit {
   }
 
   changePageOfProduct(page:any){
-    // console.log("Page ",this.page);
+    this.params = {
+      ...this.params,
+      page: this.page,
+      items:this.pageSize
+    }
     this.page=page;
-    this.getProductList();
+    this.getProductList(this.params);
   }
 }

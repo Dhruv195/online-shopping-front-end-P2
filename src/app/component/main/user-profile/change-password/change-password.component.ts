@@ -21,8 +21,7 @@ export class ChangePasswordComponent implements OnInit {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Page',
       linkList: [
-        { label: 'Home', link: '/' },
-        { label: 'Shop', link: '/shop' },
+        { label: 'Home', link: '/' }, 
         { label: 'Change Password', link: '/change-password' },
       ],
     });

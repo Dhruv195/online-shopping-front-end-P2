@@ -13,7 +13,6 @@ export class ProdcutCardComponent  implements OnInit{
   @Input() product: any;
 
   ngOnInit(): void {
-    console.log(this.product);
     
   }
 

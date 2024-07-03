@@ -1,59 +1,57 @@
-<!-- <div>
-    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
-    <div class="bg-light p-4 mb-30">
-        <form>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" checked id="price-all">
-                <label class="custom-control-label" for="price-all">All Price</label>
-                <span class="badge border font-weight-normal">1000</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-1">
-                <label class="custom-control-label" for="price-1">$0 - $100</label>
-                <span class="badge border font-weight-normal">150</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-2">
-                <label class="custom-control-label" for="price-2">$100 - $200</label>
-                <span class="badge border font-weight-normal">295</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-3">
-                <label class="custom-control-label" for="price-3">$200 - $300</label>
-                <span class="badge border font-weight-normal">246</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-4">
-                <label class="custom-control-label" for="price-4">$300 - $400</label>
-                <span class="badge border font-weight-normal">145</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                <input type="checkbox" class="custom-control-input" id="price-5">
-                <label class="custom-control-label" for="price-5">$400 - $500</label>
-                <span class="badge border font-weight-normal">168</span>
-            </div>
-        </form>
-    </div>
-</div> -->
+
 
 <div  *ngFor="let filter of filters">
     <h5 class="section-title position-relative text-uppercase mb-3">
-      <span class="bg-secondary pr-3">{{ filter.filter_type }}</span>
+      <span class="bg-secondary pr-3">{{ filter.title }}</span>
     </h5>
     <div class="bg-light p-4 mb-30">
+      <ng-container *ngIf="filter.price" >
+        <form>
+          <div *ngFor="let item of filter.price">
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                (change)="onFilterChange(filter.type, item, $event)"
+                id="{{ filter.title }}-{{ item.title }}"
+              />
+              <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
+              <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
+            </div>
+          </div>
+        </form>
+    </ng-container>
+    <ng-container *ngIf="filter.color" >
       <form>
-        <div *ngFor="let item of filter.filter_items">
+        <div *ngFor="let item of filter.color">
           <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
             <input
               type="checkbox"
               class="custom-control-input"
-              (change)="onFilterChange(filter.filter_type, item, $event)"
-              id="{{ filter.filter_type }}-{{ item.title }}"
+              (change)="onFilterChange(filter.type, item, $event)"
+              id="{{ filter.title }}-{{ item.title }}"
             />
-            <label class="custom-control-label" for="{{ filter.filter_type }}-{{ item.title }}">{{ item.title }}</label>
+            <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
             <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
           </div>
         </div>
       </form>
+  </ng-container>
+  <ng-container *ngIf="filter.size" >
+    <form>
+      <div *ngFor="let item of filter.size">
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            (change)="onFilterChange(filter.type, item, $event)"
+            id="{{ filter.title }}-{{ item.title }}"
+          />
+          <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
+          <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
+        </div>
+      </div>
+    </form>
+</ng-container> 
     </div>
   </div>

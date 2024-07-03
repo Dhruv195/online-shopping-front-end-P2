@@ -65,7 +65,6 @@ export class EditProfileComponent implements OnInit {
       pageTitle: 'Shop Page',
       linkList: [
         { label: 'Home', link: '/' },
-        { label: 'Shop', link: '/shop' },
         { label: 'Edit Profile', link: '/edit-profile' },
       ],
     });
