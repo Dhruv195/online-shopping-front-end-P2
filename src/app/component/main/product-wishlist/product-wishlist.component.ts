@@ -45,7 +45,7 @@ export class ProductWishlistComponent  {
 
     this.productWishList= this.getLocalStorage('productWishList');
     if(this.productWishList==undefined){
-      this.productWishList=this.someAddedWishList;
+      this.productWishList=[];
       this.setLocalStorage('productWishList',this.productWishList);
     }
     this.commonService.totalWishListItem$.next(this.productWishList.length);
