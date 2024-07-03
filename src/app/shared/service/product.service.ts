@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { API } from '../constant/api.constant';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) { }
+  productList = new BehaviorSubject<any>([]);
+  totalProducts = new BehaviorSubject<any>(0);
 
   getCategoryList() {
     return this.httpService.get(API.CATEGORY_LIST);

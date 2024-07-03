@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from 'src/app/shared/service/auth.guard';
 
 export const routes: Routes = [
   {
@@ -46,13 +47,13 @@ export const routes: Routes = [
           import('./product-checkout/product-checkout.component').then(
             (m) => m.ProductCheckoutComponent
           ),
-        //auth-guard
+        canActivate:[authGuard]
       },
       {
         path: 'user-profile',
         loadChildren: () =>
           import('./user-profile/user-profile.routes').then((m) => m.routes),
-        //auth-guard
+        canActivate:[authGuard]
       },
       {
         path: 'contact',
@@ -65,6 +66,7 @@ export const routes: Routes = [
           import('./product-wishlist/product-wishlist.component').then(
             (m) => m.ProductWishlistComponent
           ),
+        canActivate:[authGuard]
       },
     ],
   },

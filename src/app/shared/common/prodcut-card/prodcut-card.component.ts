@@ -5,18 +5,14 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-prodcut-card',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './prodcut-card.component.html',
   styleUrls: ['./prodcut-card.component.scss'],
 })
-export class ProdcutCardComponent  implements OnInit{
+export class ProdcutCardComponent implements OnInit {
   @Input() product: any;
 
   ngOnInit(): void {
-    console.log("sdf",this.product);
-    
+    console.log('sdf', this.product);
   }
-
-
-
 }

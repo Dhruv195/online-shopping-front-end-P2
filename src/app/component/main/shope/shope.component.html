@@ -97,6 +97,7 @@
             </div>
           </div>
         </div>
+        <ng-container *ngIf="productList" >
           <ng-container *ngFor="let product of productList">
             <ng-container *ngIf="displayMode=='grid' " >
               <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
@@ -111,6 +112,10 @@
             </ng-container>
             
           </ng-container>
+        </ng-container>
+        <ng-container *ngIf="productList.length==0"  >
+          <img src="assets/img/not-image-found.jpg" appSetImageDimension alt="">
+        </ng-container>
         <div class="col-12">
           <nav>
             

@@ -72,12 +72,7 @@ export class HeaderComponent implements OnInit {
   userDetails: any;
   constructor(public commonService: CommonService,public authService:AuthService,public userService:UserService) {}
   ngOnInit(): void {
-    this.getUserDetails();
-    this.userService.updateUserDetails$.subscribe({
-      next: (res: any) => {
-        this.getUserDetails()
-      }
-    })
+    
   }
   doSignOut() {
     localStorage.removeItem('token')
