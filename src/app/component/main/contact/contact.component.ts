@@ -11,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  contactForm: any;
+  contactForm!: any;
   submitted=false;
 
   constructor(public commonService:CommonService){};
@@ -47,8 +47,20 @@ export class ContactComponent implements OnInit {
   onContactSubmit() {
     this.submitted = true;
     if (this.contactForm.valid) {
-      
+      this.addEnquiryData(this.contactForm.value)
     }
+  }
+
+  addEnquiryData(enquiryData:any) {
+    this.commonService.addEnquiry(enquiryData).subscribe({
+      next: ((res: any) => {
+        if (res.success) {
+          console.log("res",res);
+          this.contactForm.reset()
+          this.submitted=false
+        }
+      })
+    })
   }
 
 }

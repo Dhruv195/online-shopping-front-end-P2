@@ -1,0 +1,24 @@
+<ng-container *ngFor="let order of orderList">
+    <div class="container-fluid">
+        <div class="product-item row bg-light border border-1 gap-2">
+            <div class="row p-2">
+                <div class="col-6">
+                    <div class="btn btn-dark text-light">{{order._id|uppercase}}</div>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-dark">View Order</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span>Ordered On {{order.createdAt|date}}</span>
+                </div>
+                <div class="col-6 text-end">
+                    <span>Order Total {{order.totalAmount |currency}}</span>
+                </div>
+            </div>
+        </div>
+        <app-product-list-view [isOrderView]="true" [product]="order.products[0]">
+        </app-product-list-view>
+    </div>
+</ng-container>

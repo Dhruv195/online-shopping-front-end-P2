@@ -12,5 +12,7 @@ export const API = {
   GET_USER_CART: 'cart',
   DELETE_USER_CART: 'cart/',
   GET_RELATED_PRODUCTS: 'product/related/',
-  ORDER_CHECKOUT:'order/checkout'
+  ORDER_CHECKOUT: 'order/checkout',
+  GET_ORDER_LIST: 'order/list',
+  ENQUIRY:'enquiry'
 };

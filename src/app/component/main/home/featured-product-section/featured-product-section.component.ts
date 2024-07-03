@@ -135,7 +135,7 @@ export class FeaturedProductSectionComponent implements OnInit {
     this.getCategory();
   }
   getCategory() {
-    this.productService.getProductList().subscribe({
+    this.productService.getProductList('').subscribe({
       next: (res: any) => {
         console.log('Res ', res);
         this.products = res.data.products;

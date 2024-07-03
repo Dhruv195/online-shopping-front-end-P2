@@ -52,6 +52,11 @@ export class CommonService {
     }
   }
 
+
+  addEnquiry(enquiryData:any) {
+    return this.httpService.post(API.ENQUIRY,enquiryData)
+  }
+
   
 
   

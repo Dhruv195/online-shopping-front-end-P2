@@ -3,14 +3,17 @@ import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 import { ProductListViewComponent } from 'src/app/shared/common/product-list-view/product-list-view.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpParams } from '@angular/common/http';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-card.component';
 
 @Component({
   selector: 'app-shope',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule],
+  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule,ReactiveFormsModule,FilterCardComponent],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
 })
@@ -334,19 +337,50 @@ export class ShopeComponent implements OnInit {
 
     // Add more products as needed
   ];
+  filterItemsList= [
+    {
+      title: 'All Price',
+      total: '1000',
+    },
+    {
+      title: '0-100',
+      total: '150',
+    },
+    {
+      title: '100-200',
+      total: '290',
+    },
+    {
+      title: '200-300',
+      total: '234',
+    },
+    {
+      title: '300-400',
+      total: '300',
+    },
+    {
+      title: '400-500',
+      total: '230',
+    },
+  ]
+  filterForm: any;
   pageSize=10;
   page = 1;
-  totalProduct:any
+  totalProduct: any;
+  params: any;
 
   productList:any;
   displayMode: string = 'grid';
   constructor(
     public commonService: CommonService,
     private activatedRoute: ActivatedRoute,
-    public productService:ProductService
+    public productService: ProductService,
+    public router:Router
   ) {}
 
   categoryId: any;
+
+  
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
@@ -359,21 +393,119 @@ export class ShopeComponent implements OnInit {
         }
       },
     });
+    this.initializeSelectedFilterForm();
+    this.getProductList();
+    ////////////////////
+    // this.getAllFilterItem()
+  }
+  //*********************** */
+  onFilterChanged(selectedFilters: any) {
+    console.log('Selected Filters:', selectedFilters);
+    
+    // Apply the selected filters to your API call
+    const params = this.buildFilterParams(selectedFilters);
+    console.log("prams filter ",params)
+    // this.fetchFilteredData(params);
+    const apiUrl = this.constructApiUrl(params);
+    console.log("API URL:", apiUrl);
+  }
+  // buildFilterParams(filters: any) {
+  //   let params: any = {};
+  //   for (let key in filters) {
+  //     if (filters[key].length > 0) {
+  //       params[key] = filters[key].join(',');
+  //     }
+  //   }
+  //   return params;
+  // }
 
-    console.log(this.categoryId);
-    this.getProductList()
+  buildFilterParams(filters: any) {
+    let params: any = {};
+    for (let key in filters) {
+      if (filters[key].length > 0) {
+        params[key.toLowerCase().replace(' ', '')] = filters[key].join(',');
+      }
+    }
+    return params;
+  }
+  constructApiUrl(params: any) {
+    const baseUrl = '{{URL}}/product/list';
+    const queryParams = new URLSearchParams(params).toString();
+    return `${baseUrl}?${queryParams}`;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //******************************************** */
+  ////////////
+  initializeSelectedFilterForm() {
+    this.filterForm = new FormGroup({
+      filterItemArray: new FormArray([]),
+    });
+  }
+  ////////////////
+  get filterFormArray(): any{
+    return this.filterForm.get('filterItemArray') as FormArray<any>
+  }
+  ///////////////
+  getAllFilterItem() {
+    this.filterItemsList.forEach((element: any) => {
+      this.filterFormArray.push(this.preparedFilterControl())
+    })
+  }
+  /////////////
+  getControls() {
+    this.filterForm.controls;
+  }
+  preparedFilterControl(toPatchData: any = {}) {
+    const filterControl = new FormGroup({
+      checked: new FormControl(false),
+    });
+    // if (toPatchData) {
+    //   hobbyControl.patchValue(toPatchData);
+    // }
+    return filterControl;
+  }
+
+
+
+  onSelectFilterChecked(title:any,event:any) {
+    console.log("Chacjked ",title)
+    console.log("Chacjked ",event)
   }
   onDisplayModeChange(mode: string) {
     this.displayMode = mode;
   }
-  getProductList()
-  {
-    this.productService.getProductList(this.page,this.pageSize).subscribe({
+  getProductList() {
+    
+    this.params = {
+      page: this.page,
+      items:this.pageSize
+    }
+
+    this.productService.getProductList(this.params).subscribe({
       next: (res: any) => {
-        console.log(res);
-        
         this.productList = res.data.products;
-        this.totalProduct = res.data.total_count
+        this.totalProduct = res.data.total_count;
+        this.router.navigate(
+          ['/shop'],
+          {
+            queryParams: this.params,
+          }
+          );
       }
     })
   }

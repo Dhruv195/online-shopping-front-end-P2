@@ -14,4 +14,7 @@ export class OrderService {
   addCheckoutOrder(order: any) {
     return this.httpService.post(API.ORDER_CHECKOUT, order);
   }
+  getOrderList() {
+    return this.httpService.get(API.GET_ORDER_LIST)
+  }
 }

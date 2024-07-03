@@ -36,6 +36,11 @@ export class SidebarComponent {
       
     },
     {
+      title: 'Order List',
+      link: '/user-profile/order-list',
+      icon:'bi bi-card-checklist fs-4 text-primary'
+    },
+    {
       title: 'Sign Out',
       link:'/home',
       icon:'bi bi-box-arrow-right fs-4 text-primary'

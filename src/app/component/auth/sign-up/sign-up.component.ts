@@ -9,6 +9,7 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -26,7 +27,8 @@ export class SignUpComponent {
   constructor(
     public authService: AuthService,
     public route: Router,
-    public commonService: CommonService
+    public commonService: CommonService,
+    public userService:UserService
   ) {}
 
   ngOnInit(): void {
@@ -39,8 +41,11 @@ export class SignUpComponent {
     this.authService.signUpUser(this.signUpForm.value).subscribe({
       next:(res:any)=>{
         if(res){
-          console.log("user are registered",res);
-          this.route.navigate(['auth/sign-in']);
+          console.log("user are registered", res);
+          this.authService.saveToken(res.data.token)
+          this.route.navigate(['home/']);
+    this.userService.updateUserDetails$.next(true)
+
         }
       },
       error: (err) => {

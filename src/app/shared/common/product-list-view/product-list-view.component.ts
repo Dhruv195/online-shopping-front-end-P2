@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductListViewComponent {
   @Input() product: any;
+  @Input() isOrderView: any;
   ngOnInit(): void {
     console.log(this.product);
   }
