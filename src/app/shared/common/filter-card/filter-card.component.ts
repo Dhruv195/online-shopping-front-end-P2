@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +9,22 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./filter-card.component.scss']
 })
 export class FilterCardComponent {
+  @Input() filters!: any[];
+  @Output() filterChanged = new EventEmitter<any>();
 
+  selectedFilters: { [key: string]: any[] } = {};
+
+  onFilterChange(filterType: string, item: any, event: any) {
+    if (!this.selectedFilters[filterType]) {
+      this.selectedFilters[filterType] = [];
+    }
+
+    if (event.target.checked) {
+      this.selectedFilters[filterType].push(item.title);
+    } else {
+      this.selectedFilters[filterType] = this.selectedFilters[filterType].filter(i => i !== item.title);
+    }
+
+    this.filterChanged.emit(this.selectedFilters);
+  }
 }

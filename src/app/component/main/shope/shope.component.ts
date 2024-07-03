@@ -8,11 +8,12 @@ import { ProductService } from 'src/app/shared/service/product.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpParams } from '@angular/common/http';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-card.component';
 
 @Component({
   selector: 'app-shope',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule,ReactiveFormsModule],
+  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule,ReactiveFormsModule,FilterCardComponent],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
 })
@@ -379,6 +380,8 @@ export class ShopeComponent implements OnInit {
 
   categoryId: any;
 
+  
+
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.activatedRoute.params.subscribe({
@@ -393,8 +396,60 @@ export class ShopeComponent implements OnInit {
     this.initializeSelectedFilterForm();
     this.getProductList();
     ////////////////////
-    this.getAllFilterItem()
+    // this.getAllFilterItem()
   }
+  //*********************** */
+  onFilterChanged(selectedFilters: any) {
+    console.log('Selected Filters:', selectedFilters);
+    
+    // Apply the selected filters to your API call
+    const params = this.buildFilterParams(selectedFilters);
+    console.log("prams filter ",params)
+    // this.fetchFilteredData(params);
+    const apiUrl = this.constructApiUrl(params);
+    console.log("API URL:", apiUrl);
+  }
+  // buildFilterParams(filters: any) {
+  //   let params: any = {};
+  //   for (let key in filters) {
+  //     if (filters[key].length > 0) {
+  //       params[key] = filters[key].join(',');
+  //     }
+  //   }
+  //   return params;
+  // }
+
+  buildFilterParams(filters: any) {
+    let params: any = {};
+    for (let key in filters) {
+      if (filters[key].length > 0) {
+        params[key.toLowerCase().replace(' ', '')] = filters[key].join(',');
+      }
+    }
+    return params;
+  }
+  constructApiUrl(params: any) {
+    const baseUrl = '{{URL}}/product/list';
+    const queryParams = new URLSearchParams(params).toString();
+    return `${baseUrl}?${queryParams}`;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //******************************************** */
   ////////////
   initializeSelectedFilterForm() {
     this.filterForm = new FormGroup({

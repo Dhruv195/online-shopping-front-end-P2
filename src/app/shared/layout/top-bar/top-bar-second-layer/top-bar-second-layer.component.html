@@ -8,13 +8,15 @@
       </a>
     </div>
     <div class="col-lg-4 col-6 text-left">
-      <form (submit)="onSearch()">
+      <form (submit)="onSearch($event)">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search for products" [(ngModel)]="searchQuery"
             name="search" />
-          <span class="input-group-text bg-transparent text-primary rounded-0">
+            <!-- <button type="submit"> -->
+          <button type="submit" class="input-group-text bg-transparent text-primary rounded-0">
             <i class="fa fa-search"></i>
-          </span>
+          </button>
+            <!-- </button> -->
         </div>
       </form>
     </div>
