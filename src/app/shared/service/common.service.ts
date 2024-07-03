@@ -12,6 +12,11 @@ export class CommonService {
   cartProductList: any;
 
   breadCrumbData$ = new BehaviorSubject<any>({});
+  toastType$ = new BehaviorSubject<any>('');
+  toastMsg$ = new BehaviorSubject<any>('');
+  toastShow$ = new BehaviorSubject<any>(false);
+
+
   totalCartItem$ = new BehaviorSubject<any>(
     this.getCountOfTotalItem('cartProductList')
   );
@@ -52,7 +57,19 @@ export class CommonService {
     }
   }
 
-  
+  showToastMessage(toastType:any,toastMsg:any) {
+    this.toastType$.next(toastType);
+    this.toastMsg$.next(toastMsg);
+    this.toastShow$.next(true)
+
+    setTimeout(() => {
+      this.closeToast();
+    }, 3000);
+  }
+
+  closeToast(){
+    this.toastShow$.next(false);
+  }
 
   
 }

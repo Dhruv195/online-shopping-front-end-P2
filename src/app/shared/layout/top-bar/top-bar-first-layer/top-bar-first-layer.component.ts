@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import { API } from 'src/app/shared/constant/api.constant';
 import { DropdownDirective } from 'src/app/shared/directive/dropdown.directive';
+import { TOAST_TYPE } from 'src/app/shared/constant/toast';
+import { CommonService } from 'src/app/shared/service/common.service';
 
 @Component({
   selector: 'app-top-bar-first-layer',
@@ -60,7 +62,7 @@ export class TopBarFirstLayerComponent implements OnInit {
 
 
 
-  constructor(public authService:AuthService,public userService:UserService){}
+  constructor(public authService:AuthService,public userService:UserService,public commonService:CommonService){}
   ngOnInit(): void {
     this.getUserDetails()
   }
@@ -93,6 +95,8 @@ export class TopBarFirstLayerComponent implements OnInit {
   clickOnProfileItem(profile:any) {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
+      this.commonService.showToastMessage(TOAST_TYPE.success,'Sign Out Successfully')
+
     }
   }
   getUserDetails() {

@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from 'src/app/shared/service/user.service';
+import { TOAST_TYPE } from 'src/app/shared/constant/toast';
 
 @Component({
   selector: 'app-sign-in',
@@ -47,8 +48,12 @@ export class SignInComponent {
       next:(res:any)=>{
         this.authService.saveToken(res.data.token);
         this.router.navigate(['/home']);
-    this.userService.updateUserDetails$.next(true)
-
+        this.userService.updateUserDetails$.next(true)
+        this.commonService.showToastMessage(TOAST_TYPE.success,'User LogIn Successfully')
+      },
+      error:(res:any)=>{
+        console.log(res);
+        this.commonService.showToastMessage(TOAST_TYPE.danger,'Error in email and password')
       }
     })
    }
