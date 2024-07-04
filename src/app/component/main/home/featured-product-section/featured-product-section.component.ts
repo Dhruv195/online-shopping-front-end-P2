@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 import { ProductService } from 'src/app/shared/service/product.service';
@@ -9,9 +14,9 @@ import { ProductService } from 'src/app/shared/service/product.service';
   imports: [CommonModule, ProdcutCardComponent],
   templateUrl: './featured-product-section.component.html',
   styleUrls: ['./featured-product-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedProductSectionComponent implements OnInit {
-  // products = [
   //   {
   //     image: 'assets/img/product-1.jpg',
   //     links: {
@@ -128,17 +133,27 @@ export class FeaturedProductSectionComponent implements OnInit {
   //   // Add more products as needed
   // ];
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  products: any;
+  products: any[] = [];
   ngOnInit(): void {
-    this.getCategory();
+    this.getProduct();
   }
-  getCategory() {
+
+  /**
+   * getProduct() call API for Product-List
+   */
+  getProduct() {
     this.productService.getProductList('').subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
         this.products = res.data.products;
+        this.cdr.markForCheck();
+      },
+      error: (err: any) => {
+        this.products = [];
       },
     });
   }

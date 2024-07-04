@@ -7,15 +7,21 @@
         class="carousel slide"
         data-ride="carousel"
       >
-        <div class="carousel-inner bg-light">
-          <div
-            class="carousel-item"
-            *ngFor="let image of products.images; let i = index"
-            [ngClass]="{ active: i === 0 }"
-          >
-            <img class="w-100 h-100" [src]="image" alt="Image" />
-          </div>
+      <div class="carousel-inner bg-light" *ngIf="products.images.length!==0">
+        <div
+          class="carousel-item"
+          *ngFor="let image of products.images; let i = index"
+          [ngClass]="{ active: i === 0 }"
+        >
+          <img class="w-100 h-100" [src]="image " alt="Image" />
         </div>
+      </div>
+      <div class=" bg-light" *ngIf="products.images.length==0">
+        
+          <img class="w-100 h-100" src="assets/img/not-im
+          age-found.jpg" alt="Image" />
+        
+      </div>
         <a class="carousel-control-prev" data-slide="prev">
           <i class="fa fa-2x fa-angle-left text-dark"></i>
         </a>

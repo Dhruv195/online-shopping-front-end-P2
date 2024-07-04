@@ -34,33 +34,6 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductCheckoutComponent {
-  constructor(
-    public commonService: CommonService,
-    private fb: FormBuilder,
-    private productService: ProductService,
-    private authService: AuthService,
-    private cdr: ChangeDetectorRef,
-    private orderService: OrderService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.changeBreadCrumbData();
-    this.billingAddressForm = this.createAddressForm();
-    this.shippingAddressForm = this.createAddressForm();
-    this.getUserCartDetail();
-  }
-  changeBreadCrumbData() {
-    this.commonService.breadCrumbData$.next({
-      pageTitle: 'Product Checkout',
-      linkList: [
-        { label: 'Home', link: '/' },
-        { label: 'Shop', link: '/shop' },
-        { label: 'Checkout', link: '/checkout' },
-      ],
-    });
-  }
-
   billingAddressForm!: FormGroup;
   shippingAddressForm!: FormGroup;
   showShippingAddress = false;
@@ -74,9 +47,45 @@ export class ProductCheckoutComponent {
       total: 90,
     },
   };
-
   paymentMethodList = ['Paytm', 'Google-Pay', 'Paypal'];
 
+  constructor(
+    public commonService: CommonService,
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef,
+    private orderService: OrderService,
+    private router: Router
+  ) {}
+
+  /**
+   * Call breadcrumb and UserCart-detail function
+   */
+  ngOnInit(): void {
+    this.changeBreadCrumbData();
+    this.billingAddressForm = this.createAddressForm();
+    this.shippingAddressForm = this.createAddressForm();
+    this.getUserCartDetail();
+  }
+  /**
+   * changeBreadCrumbData()  call breadCrumb service
+   */
+  changeBreadCrumbData() {
+    this.commonService.breadCrumbData$.next({
+      pageTitle: 'Product Checkout',
+      linkList: [
+        { label: 'Home', link: '/' },
+        { label: 'Shop', link: '/shop' },
+        { label: 'Checkout', link: '/checkout' },
+      ],
+    });
+  }
+
+  /**
+   *
+   * @returns Forms with multiple FormControls
+   */
   createAddressForm(): FormGroup {
     return this.fb.group({
       firstName: ['', Validators.required],
@@ -92,13 +101,20 @@ export class ProductCheckoutComponent {
     });
   }
 
+  /**
+   * Toggle the shipping address
+   */
   toggleShippingAddress(): void {
     this.showShippingAddress = !this.showShippingAddress;
     if (!this.showShippingAddress) {
       this.shippingAddressForm.reset();
+      this.submitted = false;
     }
   }
 
+  /**
+   * getUserCartDetail() call API for user-cart detail
+   */
   getUserCartDetail() {
     this.productService.getUserCart().subscribe({
       next: (res: any) => {
@@ -109,7 +125,6 @@ export class ProductCheckoutComponent {
               name: element.productName,
               price: element.totalProductPrice,
             };
-            console.log(newProduct);
             this.formData.orderTotal.products.push(newProduct);
           });
           this.formData.orderTotal.subtotal = res.data.totalAmount;
@@ -121,6 +136,10 @@ export class ProductCheckoutComponent {
     });
   }
 
+  /**
+   * 
+   * @returns Valid the form and call get post API
+   */
   onSubmit(): void {
     this.submitted = true;
 
@@ -136,24 +155,22 @@ export class ProductCheckoutComponent {
     const shippingAddress = this.showShippingAddress
       ? this.shippingAddressForm.value
       : billingAddress;
-
     const orderData: any = {
       billingAddress: shippingAddress,
       paymentMethod: this.paymentMethod,
     };
-
     this.addToCheckout(orderData);
-
-    // // Process the form data
-    // console.log('Billing Address:', billingAddress);
-    // console.log('Shipping Address:', shippingAddress);
   }
 
+  /**
+   * 
+   * @param orderData Add post data in addToCart API
+   */
   addToCheckout(orderData: any) {
     this.orderService.addCheckoutOrder(orderData).subscribe({
       next: (res: any) => {
         console.log(res);
-        
+
         if (res.success) {
           this.router.navigate(['/home']);
         }

@@ -18,6 +18,9 @@ export class ShoppingCartComponent {
   ngOnInit(): void {
     this.changeBreadCrumbData();
   }
+  /**
+   * call breadcrumb service
+   */
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Cart',

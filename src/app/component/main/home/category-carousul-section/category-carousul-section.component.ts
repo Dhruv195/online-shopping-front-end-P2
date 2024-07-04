@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductService } from 'src/app/shared/service/product.service';
@@ -9,50 +13,27 @@ import { ProductService } from 'src/app/shared/service/product.service';
   imports: [CommonModule, RouterModule],
   templateUrl: './category-carousul-section.component.html',
   styleUrls: ['./category-carousul-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryCarousulSectionComponent {
-  carouselItems: any[] = [
-    // {
-    //   image: 'assets/img/carousel-1.jpg',
-    //   alt: 'Men Fashion',
-    //   title: 'Men Fashion',
-    //   description:
-    //     'Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam',
-    //   buttonText: 'Shop Now',
-    //   buttonLink: '/shop-detail',
-    // },
-    // {
-    //   image: 'assets/img/carousel-2.jpg',
-    //   alt: 'Women Fashion',
-    //   title: 'Women Fashion',
-    //   description:
-    //     'Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam',
-    //   buttonText: 'Shop Now',
-    //   buttonLink: '/shop-detail',
-    // },
-    // {
-    //   image: 'assets/img/carousel-3.jpg',
-    //   alt: 'Kids Fashion',
-    //   title: 'Kids Fashion',
-    //   description:
-    //     'Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam',
-    //   buttonText: 'Shop Now',
-    //   buttonLink: '/shop-detail',
-    // },
-  ];
+  carouselItems: any[] = [];
 
-
-
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   products: any;
   ngOnInit(): void {
     this.getCategory();
   }
+
+  /**
+   * getCategory() call category API
+   */
   getCategory() {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {
-        console.log('Caroisel ', res);
         if (res.success) {
           res.data.categories.forEach((element: any) => {
             if (element.banner) {
@@ -64,12 +45,13 @@ export class CategoryCarousulSectionComponent {
                 buttonLink: '/shop-detail',
               };
               this.carouselItems.push(bannerItem);
-              console.log(bannerItem, 'dd');
             }
           });
-          console.log(this.carouselItems, 'srg');
+          this.cdr.markForCheck();
         }
-        // this.carouselItems = res.data.products;
+      },
+      error: (err: any) => {
+        this.carouselItems = [];
       },
     });
   }

@@ -14,6 +14,7 @@ import {
 } from '@angular/animations';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { reviewList, shareList } from 'src/app/shared/constant/common-function';
 
 @Component({
   selector: 'app-shope-details',
@@ -37,13 +38,6 @@ import { AuthService } from 'src/app/shared/service/auth.service';
   ],
 })
 export class ShopeDetailsComponent {
-  constructor(
-    public commonService: CommonService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private productService: ProductService,
-    private authService: AuthService
-  ) {}
   addProductCart = {
     productId: 0,
     quantity: 1,
@@ -51,6 +45,7 @@ export class ShopeDetailsComponent {
     size: '',
     color: '',
   };
+  products: any = {};
 
   addProductData = {
     productId: '',
@@ -61,14 +56,51 @@ export class ShopeDetailsComponent {
     Images: [],
   };
 
+  productList: any[] = [];
+
+  customOptions: OwlOptions = {
+    loop: true,
+    margin: 29,
+    nav: false,
+    items: 4,
+    smartSpeed: 500,
+    autoplay: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      576: {
+        items: 2,
+      },
+      768: {
+        items: 3,
+      },
+      992: {
+        items: 4,
+      },
+    },
+  };
+
+  reviewList = reviewList;
+  shareList = shareList;
+  constructor(
+    public commonService: CommonService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private authService: AuthService
+  ) {}
+
   cartList: any[] = [];
   productId: any;
+
+  /**
+   * Call breadcrumb and Product-List function
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.activatedRoute.params.subscribe({
       next: (res: any) => {
-        console.log(res);
-
         if (res.id) {
           this.productId = res.id;
         }
@@ -76,8 +108,10 @@ export class ShopeDetailsComponent {
     });
     this.getProduct(this.productId);
     this.getRelatedProduct(this.productId);
-    console.log(this.productId);
   }
+  /**
+   * call breadcrumb service
+   */
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Detail',
@@ -89,6 +123,10 @@ export class ShopeDetailsComponent {
     });
   }
 
+  /**
+   * 
+   * @param productId get product by particular Id
+   */
   getProduct(productId: any) {
     this.productService.getProductById(productId).subscribe({
       next: (res: any) => {
@@ -96,9 +134,16 @@ export class ShopeDetailsComponent {
         this.products = res.data;
         console.log(this.products, 'Good');
       },
+      error: (err: any) => {
+        this.products = [];
+      },
     });
   }
 
+  /**
+   * 
+   * @param productId get related product by Id
+   */
   getRelatedProduct(productId: any) {
     this.productService.getRelatedProducts(productId).subscribe({
       next: (res: any) => {
@@ -120,6 +165,11 @@ export class ShopeDetailsComponent {
   quantityPlus() {
     this.addProductCart.quantity += 1;
   }
+
+  /**
+   * Add to cart localStorage if not login
+   * And if login then call addToCart API
+   */
   addToCart() {
     (this.addProductCart.productId = this.addProductData.productId =
       this.productId),
@@ -146,187 +196,6 @@ export class ShopeDetailsComponent {
       this.cartList.push(this.addProductData);
       this.commonService.setLocalStorage('cartProductList', this.cartList);
     }
-
     this.router.navigate(['/shopping-cart']);
   }
-
-  customOptions: OwlOptions = {
-    loop: true,
-    margin: 29,
-    nav: false,
-    items: 4,
-    smartSpeed: 500,
-    autoplay: true,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      576: {
-        items: 2,
-      },
-      768: {
-        items: 3,
-      },
-      992: {
-        items: 4,
-      },
-    },
-  };
-
-  products: any = {
-    // products: [
-    //   {
-    //     _id: '667a93516a95e65e828409cc',
-    //     productName: 'Nike Running Shoes',
-    //     images: [
-    //       'assets/img/product-1.jpg',
-    //       'assets/img/product-2.jpg',
-    //       'assets/img/product-3.jpg',
-    //     ],
-    //     price: 120,
-    //     sellingPrice: 100,
-    //     colors: ['Red', 'Blue'],
-    //     size: ['8', '9', '10'],
-    //     mainDescription: 'Comfortable running shoes from Nike',
-    //     subDescription: 'Perfect for runners looking for a lightweight shoe.',
-    //     tags: ['shoes', 'nike', 'running'],
-    //     ratings: 3,
-    //     reviews: 3,
-    //     information: {
-    //       description: 'Breathable and lightweight running shoes',
-    //       infoPoints: ['Lightweight', 'Breathable', 'Comfortable'],
-    //     },
-    //     isFeatured: true,
-    //     isActive: true,
-    //     category: {
-    //       categoryName: 'Sports',
-    //       bannerImage: 'https://example.com/banner/sports.jpg',
-    //       image: 'https://example.com/image/sports.jpg',
-    //       banner: false,
-    //       isActive: true,
-    //     },
-    //   },
-    // ],
-    // page: 1,
-    // items: 1,
-    // total_count: 10,
-  };
-
-  reviewList = {
-    _id: '667a93516a95e65e828409cc',
-    productName: 'Nike Running Shoes',
-
-    reviews: [
-      {
-        user_profile_pic: 'assets/img/user.jpg',
-        firstName: 'Dhruv',
-        lastName: 'Joshi',
-        reviewMessage:
-          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-        reviewRating: 4,
-        reviewDate: '01/01/2045',
-      },
-      {
-        user_profile_pic: 'assets/img/user.jpg',
-        firstName: 'Vishal',
-        lastName: 'Joshi',
-        reviewMessage:
-          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-        reviewRating: 2,
-        reviewDate: '01/01/20',
-      },
-    ],
-  };
-
-  productList: any[] = [
-    // {
-    //   images:[ 'assets/img/product-1.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-2.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-3.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-4.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-5.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-  ];
-
-  shareList = [
-    {
-      icon: 'fa-facebook-f',
-      link: 'https://www.facebook.com/',
-    },
-    {
-      icon: ' fa-twitter',
-      link: 'https://x.com/?lang=en',
-    },
-    {
-      icon: 'fa-linkedin-in',
-      link: 'https://in.linkedin.com/',
-    },
-    {
-      icon: 'fa-pinterest',
-      link: 'https://in.pinterest.com/',
-    },
-  ];
 }

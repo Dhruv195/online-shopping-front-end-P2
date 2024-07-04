@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { RouterModule } from '@angular/router';
@@ -9,105 +9,31 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   templateUrl: './category-section.component.html',
   styleUrls: ['./category-section.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class CategorySectionComponent implements OnInit {
-  // categories = [
-  //   {
-  //     image: "assets/img/cat-1.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-2.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-3.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-4.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-1.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-2.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-3.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-4.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },    {
-  //     image: "assets/img/cat-1.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-2.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-3.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-4.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },    {
-  //     image: "assets/img/cat-1.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-2.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-3.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   {
-  //     image: "assets/img/cat-4.jpg",
-  //     name: "Category Name",
-  //     products: 100,
-  //   },
-  //   // Repeat or add more categories as needed
-  // ];
 
-  categories: any;
+  categories: any[]=[];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,private cdr:ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getCategory();
   }
+  /**
+   * getCategory() call API for category
+   */
   getCategory() {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
         if (res.data) {
           this.categories = res.data.categories;
         }
+        this.cdr.markForCheck()
       },
+      error: (err:any) => {
+        this.categories=[] 
+      }
     });
   }
 }
