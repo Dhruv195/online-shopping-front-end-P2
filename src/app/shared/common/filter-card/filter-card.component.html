@@ -12,6 +12,7 @@
               <input
                 type="checkbox"
                 class="custom-control-input"
+                [checked]="selectedFilters['price'].includes(item.title)"
                 (change)="onFilterChange(filter.type, item, $event)"
                 id="{{ filter.title }}-{{ item.title }}"
               />
@@ -28,6 +29,8 @@
             <input
               type="checkbox"
               class="custom-control-input"
+              [checked]="selectedFilters['color'].includes(item.title)"
+              
               (change)="onFilterChange(filter.type, item, $event)"
               id="{{ filter.title }}-{{ item.title }}"
             />
@@ -44,6 +47,8 @@
           <input
             type="checkbox"
             class="custom-control-input"
+            [checked]="selectedFilters['size'].includes(item.title)"
+
             (change)="onFilterChange(filter.type, item, $event)"
             id="{{ filter.title }}-{{ item.title }}"
           />

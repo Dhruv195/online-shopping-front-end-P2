@@ -61,15 +61,11 @@ export class TopBarFirstLayerComponent implements OnInit {
       icon:'bi bi-box-arrow-right fs-4 text-primary'
     }
   ]
-  profileImage: any;
-  defaultProfileImg: any;
-  userDetails: any;
 
 
 
   constructor(public authService:AuthService,public userService:UserService,public commonService:CommonService){}
   ngOnInit(): void {
-    this.getUserDetails()
   }
   onLanguageChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
@@ -101,17 +97,7 @@ export class TopBarFirstLayerComponent implements OnInit {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
       this.commonService.showToastMessage(TOAST_TYPE.success,'Sign Out Successfully')
-
     }
   }
-  getUserDetails() {
-    this.userService.getUser().subscribe({
-      next: (res: any) => {
-        this.userDetails = res.data;
-        this.profileImage = this.userDetails.profilePic;
-        this.defaultProfileImg = API.USER_NAME_PROFILE_IMG + `${this.userDetails?.firstName}+${this.userDetails?.lastName}`
-      }
-    });
-    
-  }
+  
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
@@ -17,7 +17,7 @@ import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-ca
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
 })
-export class ShopeComponent implements OnInit {
+export class ShopeComponent implements OnInit  {
   filters = [
     {
       title: 'FILTER BY PRICE',
@@ -112,260 +112,8 @@ export class ShopeComponent implements OnInit {
       ],
     },
   ];
-  products = [
-    {
-      image: 'assets/img/product-1.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-2.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-3.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-4.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-1.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-2.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-3.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-4.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-1.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-2.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-3.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-4.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-1.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-2.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-3.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-    {
-      image: 'assets/img/product-4.jpg',
-      links: {
-        cart: '#',
-        wishlist: '#',
-        compare: '#',
-        view: '#',
-      },
-      name: 'Product Name Goes Here',
-      price: '123.00',
-      oldPrice: '123.00',
-      rating: 5,
-      reviews: 99,
-    },
-
-    // Add more products as needed
-  ];
-  filterItemsList= [
-    {
-      title: 'All Price',
-      total: '1000',
-    },
-    {
-      title: '0-100',
-      total: '150',
-    },
-    {
-      title: '100-200',
-      total: '290',
-    },
-    {
-      title: '200-300',
-      total: '234',
-    },
-    {
-      title: '300-400',
-      total: '300',
-    },
-    {
-      title: '400-500',
-      total: '230',
-    },
-  ]
+  
+  pageItemArray=[10,20,30];
   filterForm: any;
   pageSize=5;
   page = 1;
@@ -404,7 +152,15 @@ export class ShopeComponent implements OnInit {
     this.getProductList(this.params);
     this.getProductListOfSearch();
   }
-
+  
+  onChangePageSize(page:any){
+    this.pageSize=page;
+    this.params={
+      ...this.params,
+      items:this.pageSize
+    }
+    this.getProductList(this.params);
+  }
   getProductListOfSearch() {
     this.productService.productList.subscribe({
       next: (res: any) => {
@@ -418,16 +174,30 @@ export class ShopeComponent implements OnInit {
     })
   }
 
- 
-  //*********************** */
   onFilterChanged(selectedFilters: any) {
-    console.log("selected ",selectedFilters)
+    console.log("selected ",selectedFilters);
+    // Clear previous filters
+    Object.keys(this.params).forEach(key => {
+      if (key.includes('price[') || key.includes('color[') || key.includes('size[') || key === 'minPrice' || key === 'maxPrice') {
+        delete this.params[key];
+      }
+    });
+
+     // Handle price filters
+  if (selectedFilters.price && selectedFilters.price.length  && !selectedFilters.price.includes('All Price')) {
+    const prices = selectedFilters.price.map((price:any) => price.split('-').map(Number));
+    const minPrice = Math.min(...prices.map((price:any) => price[0]));
+    const maxPrice = Math.max(...prices.map((price:any) => price[1]));
+
+    this.params.minPrice = minPrice;
+    this.params.maxPrice = maxPrice;
+  }
     Object.keys(selectedFilters).forEach((element : any) => {
-      if (element && selectedFilters[element].length) {
+      if (element && element !== 'price' && selectedFilters[element].length && !selectedFilters[element].includes(`All ${element.charAt(0).toUpperCase() + element.slice(1)}`)) {
         selectedFilters[element].forEach((item : any,index : any) => {
             this.params[element+`[${index}]`] = item
         });      
-      }1
+      }
     });
     this.getProductList(this.params);
    
@@ -449,6 +219,7 @@ export class ShopeComponent implements OnInit {
           {
             relativeTo: this.activatedRoute,
             queryParams: this.params,
+            // queryParamsHandling: 'merge',
           }
           );
       }
