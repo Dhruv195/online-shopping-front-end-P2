@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -17,6 +17,7 @@ import { UserService } from 'src/app/shared/service/user.service';
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class SignUpComponent {
   signUpForm: any;
@@ -28,7 +29,8 @@ export class SignUpComponent {
     public authService: AuthService,
     public route: Router,
     public commonService: CommonService,
-    public userService:UserService
+    public userService:UserService,
+    public cd:ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -41,16 +43,13 @@ export class SignUpComponent {
     this.authService.signUpUser(this.signUpForm.value).subscribe({
       next:(res:any)=>{
         if(res){
-          console.log("user are registered", res);
           this.authService.saveToken(res.data.token)
           this.route.navigate(['home/']);
-    this.userService.updateUserDetails$.next(true)
-
+          this.userService.updateUserDetails$.next(true);
+          this.cd.markForCheck();
         }
       },
-      error: (err) => {
-        console.log('You are already registered');
-      },
+      error: (err) => {},
     });
   }
   signInFormGroup() {

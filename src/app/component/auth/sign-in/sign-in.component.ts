@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,8 @@ import { TOAST_TYPE } from 'src/app/shared/constant/toast';
   standalone: true,
   imports: [CommonModule,ReactiveFormsModule,RouterModule],
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class SignInComponent {
   hiddenPassword = false;
@@ -38,18 +39,18 @@ export class SignInComponent {
   }
 
   /**
-   * login API to pass formData and get the response and push sub1 in subscribed array for delete in memory
+   * SignIn form data pass in signInUser API
    */
   doSignIn() {
    this.submitted=true;
-   console.log("form  ",this.signInForm.value)
    if(this.signInForm.valid){
     this.authService.signInUser(this.signInForm.value).subscribe({
       next:(res:any)=>{
         this.authService.saveToken(res.data.token);
-        this.router.navigate(['/home']);
         this.userService.updateUserDetails$.next(true)
         this.commonService.showToastMessage(TOAST_TYPE.success,'User LogIn Successfully')
+        this.router.navigate(['/home']);
+        this.cd.markForCheck()
       },
       error:(res:any)=>{
         console.log(res);
@@ -58,7 +59,6 @@ export class SignInComponent {
     })
    }
   }
-
   //hidden password and show password
   showPass() {
     this.hiddenPassword = !this.hiddenPassword;

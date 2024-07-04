@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpParams } from '@angular/common/http';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-card.component';
+import { FILTER } from 'src/app/shared/constant/common-function';
 
 @Component({
   selector: 'app-shope',
@@ -16,166 +17,80 @@ import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-ca
   imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule,ReactiveFormsModule,FilterCardComponent],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ShopeComponent implements OnInit  {
-  filters = [
-    {
-      title: 'FILTER BY PRICE',
-      type :'price',
-      price : [
-        {
-          title: 'All Price',
-          total: '1000',
-        },
-        {
-          title: '0-100',
-          total: '150',
-        },
-        {
-          title: '100-200',
-          total: '290',
-        },
-        {
-          title: '200-300',
-          total: '234',
-        },
-        {
-          title: '300-400',
-          total: '300',
-        },
-        {
-          title: '400-500',
-          total: '230',
-        },
-      ],
-    },
-
-    {
-      title: 'FILTER BY COLOR',
-      type:'color',
-      color: [
-        {
-          title: 'All Color',
-          total: '1000',
-        },
-        {
-          title: 'Black',
-          total: '150',
-        },
-        {
-          title: 'White',
-          total: '290',
-        },
-        {
-          title: 'Red',
-          total: '234',
-        },
-        {
-          title: 'Blue',
-          total: '300',
-        },
-        {
-          title: 'Green',
-          total: '230',
-        },
-      ],
-    },
-
-    {
-      title: 'FILTER BY SIZE',
-      type : 'size',
-      size: [
-        {
-          title: 'All Size',
-          total: '1000',
-        },
-        {
-          title: 'XS',
-          total: '150',
-        },
-        {
-          title: 'S',
-          total: '290',
-        },
-        {
-          title: 'M',
-          total: '234',
-        },
-        {
-          title: 'L',
-          total: '300',
-        },
-        {
-          title: 'XL',
-          total: '230',
-        },
-      ],
-    },
-  ];
-  
+  filters =FILTER;
   pageItemArray=[10,20,30];
   filterForm: any;
   pageSize=5;
   page = 1;
   totalProduct: any;
-  // params=new HttpParams();
   params:any;
-
   productList:any;
   displayMode: string = 'grid';
+
+
   constructor(
     public commonService: CommonService,
     private activatedRoute: ActivatedRoute,
     public productService: ProductService,
-    public router:Router
+    public router:Router,
+    public cd:ChangeDetectorRef
   ) {}
 
-  categoryId: any;
 
   
-
+  /**
+   * BreadCrumbData
+   * HandlePagePrams
+   * PagePramsTo fetch getProductList
+   * Behaviour Subject to get ProductList and TotalProduct Why ? Because "serch Bar in header"
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
-    this.activatedRoute.params.subscribe({
-      next: (res: any) => {
-        console.log(res);
-
-        if (res.id) {
-          this.categoryId = res.id;
-        }
-      },
-    });
+    this.handlePagePrams();
+    this.getProductList(this.params);
+    this.getProductListAndTotaProduct();
+  }
+  //page and pageSize in params
+  handlePagePrams(){
     this.params = {
+      ...this.params,
       page: this.page,
       items:this.pageSize
     }
-    this.getProductList(this.params);
-    this.getProductListOfSearch();
   }
-  
-  onChangePageSize(page:any){
-    this.pageSize=page;
-    this.params={
-      ...this.params,
-      items:this.pageSize
-    }
+  //cahnge Page size to set Products
+  onChangePageSize(pageSize:any){
+    this.pageSize=pageSize;
+    this.handlePagePrams();
     this.getProductList(this.params);
   }
-  getProductListOfSearch() {
+   
+  //Behaviour Subject to get ProductList and TotalProduct Why ? Because "serch Bar in header"
+  getProductListAndTotaProduct() {
     this.productService.productList.subscribe({
       next: (res: any) => {
         this.productList = res;
+        this.cd.markForCheck();
+      },
+      error:(res:any)=>{
+        this.productList=[];
       }
     });
     this.productService.totalProducts.subscribe({
       next: (res: any) => {
         this.totalProduct = res;
+        this.cd.markForCheck();
+      },
+      error:(res:any)=>{
+        this.totalProduct=0;
       }
     })
   }
-
+  //filter Card to get selected filter items
   onFilterChanged(selectedFilters: any) {
-    console.log("selected ",selectedFilters);
     // Clear previous filters
     Object.keys(this.params).forEach(key => {
       if (key.includes('price[') || key.includes('color[') || key.includes('size[') || key === 'minPrice' || key === 'maxPrice') {
@@ -184,14 +99,15 @@ export class ShopeComponent implements OnInit  {
     });
 
      // Handle price filters
-  if (selectedFilters.price && selectedFilters.price.length  && !selectedFilters.price.includes('All Price')) {
-    const prices = selectedFilters.price.map((price:any) => price.split('-').map(Number));
-    const minPrice = Math.min(...prices.map((price:any) => price[0]));
-    const maxPrice = Math.max(...prices.map((price:any) => price[1]));
+    if (selectedFilters.price && selectedFilters.price.length  && !selectedFilters.price.includes('All Price')) {
+      const prices = selectedFilters.price.map((price:any) => price.split('-').map(Number));
+      const minPrice = Math.min(...prices.map((price:any) => price[0]));
+      const maxPrice = Math.max(...prices.map((price:any) => price[1]));
 
-    this.params.minPrice = minPrice;
-    this.params.maxPrice = maxPrice;
-  }
+      this.params.minPrice = minPrice;
+      this.params.maxPrice = maxPrice;
+    }
+    //handle params for API multiple select price,size 
     Object.keys(selectedFilters).forEach((element : any) => {
       if (element && element !== 'price' && selectedFilters[element].length && !selectedFilters[element].includes(`All ${element.charAt(0).toUpperCase() + element.slice(1)}`)) {
         selectedFilters[element].forEach((item : any,index : any) => {
@@ -199,19 +115,18 @@ export class ShopeComponent implements OnInit  {
         });      
       }
     });
+    //for params for getProductListd
     this.getProductList(this.params);
-   
   }
-
-  onSelectFilterChecked(title: any, event: any) { }
-  
+  //grid View and list View For change View Mode
   onDisplayModeChange(mode: string) {
     this.displayMode = mode;
   }
+  //API Call Of ProductList
   getProductList(params:any) {
-    
     this.productService.getProductList(params).subscribe({
       next: (res: any) => {
+        //pass in Behaviour Subject
         this.productService.productList.next(res.data.products);
         this.productService.totalProducts.next(res.data.total_count);
         this.router.navigate(
@@ -222,9 +137,11 @@ export class ShopeComponent implements OnInit  {
             // queryParamsHandling: 'merge',
           }
           );
+          this.cd.markForCheck();
       }
     })
   }
+  //set BreadCrumbData
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Page',
@@ -235,13 +152,9 @@ export class ShopeComponent implements OnInit  {
       ],
     });
   }
-
+  //Change Page and Call API of ProductList
   changePageOfProduct(page:any){
-    this.params = {
-      ...this.params,
-      page: this.page,
-      items:this.pageSize
-    }
+    this.handlePagePrams();
     this.page=page;
     this.getProductList(this.params);
   }

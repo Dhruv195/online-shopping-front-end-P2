@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,20 +8,24 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   standalone: true,
   imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent implements OnInit {
   contactForm!: any;
   submitted=false;
 
-  constructor(public commonService:CommonService){};
+  constructor(public commonService:CommonService,public cd:ChangeDetectorRef){};
 
   contact={
     address:'123 Street, New York, USA',
     email:'info@example.com',
     phone:'+012 345 67890'
   }
-
+  /**
+   * BreadCrumbData Set
+   * initializeConteactForm
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.initializeContactForm()
@@ -43,21 +47,21 @@ export class ContactComponent implements OnInit {
       message:new FormControl('',Validators.required)
     })
   }
-
+  //Submit ContactForm
   onContactSubmit() {
     this.submitted = true;
     if (this.contactForm.valid) {
       this.addEnquiryData(this.contactForm.value)
     }
   }
-
+  //Add EnquiryData in Using API
   addEnquiryData(enquiryData:any) {
     this.commonService.addEnquiry(enquiryData).subscribe({
       next: ((res: any) => {
         if (res.success) {
-          console.log("res",res);
-          this.contactForm.reset()
-          this.submitted=false
+          this.contactForm.reset();
+          this.submitted=false;
+          this.cd.markForCheck();
         }
       })
     })
