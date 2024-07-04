@@ -123,14 +123,11 @@ export class ShoppingCartListComponent implements OnInit {
           this.commonService.subTotalAmount$.next(res.data.totalAmount);
           this.commonService.totalCartItem$.next(
             this.cartProductList?.length || 0
-            
           );
           this.cdr.markForCheck();
-
         } else {
           this.cartProductList = [];
           this.cdr.markForCheck();
-
         }
       },
     });

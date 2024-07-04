@@ -5,10 +5,20 @@
         <span class="bg-secondary pr-3">Billing Address</span>
       </h5>
       <div class="bg-light p-30 mb-5">
-        <app-address-form [formGroup]="billingAddressForm" [submitted]="submitted"></app-address-form>
+        <app-address-form
+          [formGroup]="billingAddressForm"
+          [submitted]="submitted"
+        ></app-address-form>
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input px-3" id="shipto" (change)="toggleShippingAddress()" />
-          <label class="custom-control-label" for="shipto">Ship to different address</label>
+          <input
+            type="checkbox"
+            class="custom-control-input px-3"
+            id="shipto"
+            (change)="toggleShippingAddress()"
+          />
+          <label class="custom-control-label" for="shipto"
+            >Ship to different address</label
+          >
         </div>
       </div>
       <div *ngIf="showShippingAddress" class="mb-5" id="shipping-address">
@@ -16,7 +26,10 @@
           <span class="bg-secondary pr-3">Shipping Address</span>
         </h5>
         <div class="bg-light p-30 mb-5">
-          <app-address-form [formGroup]="shippingAddressForm" [submitted]="submitted"></app-address-form>
+          <app-address-form
+            [formGroup]="shippingAddressForm"
+            [submitted]="submitted"
+          ></app-address-form>
         </div>
       </div>
     </div>
@@ -27,8 +40,11 @@
       <div class="bg-light p-30 mb-5">
         <div class="border-bottom">
           <h6 class="mb-3">Products</h6>
-          <div *ngFor="let product of formData.orderTotal.products" class="d-flex justify-content-between">
-            <p>{{ product.name }}</p>
+          <div
+            *ngFor="let product of formData.orderTotal.products"
+            class="d-flex justify-content-between"
+          >
+            <p>{{ product.name | titlecase }}</p>
             <p>${{ product.price }}</p>
           </div>
         </div>
@@ -56,23 +72,29 @@
           <span class="bg-secondary pr-3">Payment</span>
         </h5>
         <div class="bg-light p-30">
-
           <ng-container *ngFor="let method of paymentMethodList">
             <div class="form-group">
               <div class="custom-control custom-radio">
-
-
-                <input type="radio" class="custom-control-input" [id]="'payment-' + method" name="method" [value]="method"
-                  [(ngModel)]="paymentMethod" />
-                <label class="custom-control-label" [for]="'payment-' + method">{{
-                  method
-                  }}</label>
-
-
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  [id]="'payment-' + method"
+                  name="method"
+                  [value]="method"
+                  [(ngModel)]="paymentMethod"
+                />
+                <label
+                  class="custom-control-label"
+                  [for]="'payment-' + method"
+                  >{{ method }}</label
+                >
               </div>
             </div>
           </ng-container>
-          <button (click)="onSubmit()" class="btn btn-block btn-primary font-weight-bold py-3">
+          <button
+            (click)="onSubmit()"
+            class="btn btn-block btn-primary font-weight-bold py-3"
+          >
             Place Order
           </button>
         </div>

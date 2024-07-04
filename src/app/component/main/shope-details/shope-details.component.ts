@@ -105,6 +105,8 @@ export class ShopeDetailsComponent {
         if (res.success) {
           console.log('Res ', res);
           this.productList = res.data.products;
+          this.addProductCart.size = this.products.size[0];
+          this.addProductCart.color = this.products.colors[0];
         }
       },
     });
@@ -136,9 +138,11 @@ export class ShopeDetailsComponent {
       this.addProductData.Images = this.products.images;
       this.addProductData.productName = this.products.productName;
       this.addProductData.quantity = this.addProductCart.quantity;
-      this.addProductData.totalProductPrice =this.addProductCart.price * this.addProductCart.quantity;
+      this.addProductData.totalProductPrice =
+        this.addProductCart.price * this.addProductCart.quantity;
       console.log(this.addProductData);
-      this.cartList =this.commonService.getLocalStorage('cartProductList') || [];
+      this.cartList =
+        this.commonService.getLocalStorage('cartProductList') || [];
       this.cartList.push(this.addProductData);
       this.commonService.setLocalStorage('cartProductList', this.cartList);
     }
