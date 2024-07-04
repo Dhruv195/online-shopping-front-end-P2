@@ -12,7 +12,7 @@ import { PROFILE_ITEMS } from 'src/app/shared/constant/common-function';
 })
 export class SidebarComponent {
   profileUrls = PROFILE_ITEMS;
-
+  //Sign Out to remove token 
   onProfileItemClick(item:any) {
     if (item == 'Sign Out') {
       localStorage.removeItem('token')

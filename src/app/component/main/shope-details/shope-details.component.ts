@@ -92,7 +92,6 @@ export class ShopeDetailsComponent {
   getProduct(productId: any) {
     this.productService.getProductById(productId).subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
         this.products = res.data;
         console.log(this.products, 'Good');
       },
@@ -103,7 +102,6 @@ export class ShopeDetailsComponent {
     this.productService.getRelatedProducts(productId).subscribe({
       next: (res: any) => {
         if (res.success) {
-          console.log('Res ', res);
           this.productList = res.data.products;
         }
       },
@@ -151,6 +149,7 @@ export class ShopeDetailsComponent {
     margin: 29,
     nav: false,
     items: 4,
+    dots:false,
     smartSpeed: 500,
     autoplay: true,
     responsive: {

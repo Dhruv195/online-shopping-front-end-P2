@@ -1,35 +1,5 @@
 export const FILTER= [
-    {
-      title: 'FILTER BY PRICE',
-      type :'price',
-      price : [
-        {
-          title: 'All Price',
-          total: '1000',
-        },
-        {
-          title: '0-100',
-          total: '150',
-        },
-        {
-          title: '100-200',
-          total: '290',
-        },
-        {
-          title: '200-300',
-          total: '234',
-        },
-        {
-          title: '300-400',
-          total: '300',
-        },
-        {
-          title: '400-500',
-          total: '230',
-        },
-      ],
-    },
-
+    
     {
       title: 'FILTER BY COLOR',
       type:'color',

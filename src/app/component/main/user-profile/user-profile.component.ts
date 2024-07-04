@@ -15,11 +15,13 @@ import { RouterModule } from '@angular/router';
 export class UserProfileComponent implements OnInit {
 
   constructor(private commonService:CommonService){}
-
+  /**
+   * BreadCrumb Data Set
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
   }
-
+  
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Page',

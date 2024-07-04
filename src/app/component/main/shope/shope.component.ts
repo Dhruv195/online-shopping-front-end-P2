@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
@@ -6,20 +6,20 @@ import { ProductListViewComponent } from 'src/app/shared/common/product-list-vie
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpParams } from '@angular/common/http';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterCardComponent } from 'src/app/shared/common/filter-card/filter-card.component';
 import { FILTER } from 'src/app/shared/constant/common-function';
+import { Options, LabelType, NgxSliderModule } from "@angular-slider/ngx-slider";
+import { debounceTime, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-shope',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule,ReactiveFormsModule,FilterCardComponent],
+  imports: [CommonModule, ProdcutCardComponent,ProductListViewComponent,NgbModule,FilterCardComponent,NgxSliderModule],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class ShopeComponent implements OnInit  {
+export class ShopeComponent implements OnInit ,AfterViewInit {
   filters =FILTER;
   pageItemArray=[10,20,30];
   filterForm: any;
@@ -29,6 +29,25 @@ export class ShopeComponent implements OnInit  {
   params:any;
   productList:any;
   displayMode: string = 'grid';
+
+  minValue: number = 100;
+  maxValue: number = 400;
+  options: Options = {
+    floor: 0,
+    ceil: 500,
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return "<b>Min price:</b> $" + value;
+        case LabelType.High:
+          return "<b>Max price:</b> $" + value;
+        default:
+          return "$" + value;
+      }
+    }
+  };
+  @ViewChild('priceMinMax') minMaxPrice!: ElementRef;
+
 
 
   constructor(
@@ -61,6 +80,7 @@ export class ShopeComponent implements OnInit  {
       items:this.pageSize
     }
   }
+  
   //cahnge Page size to set Products
   onChangePageSize(pageSize:any){
     this.pageSize=pageSize;
@@ -157,5 +177,21 @@ export class ShopeComponent implements OnInit  {
     this.handlePagePrams();
     this.page=page;
     this.getProductList(this.params);
+  }
+
+
+  getMinMaxPrice(priceMinMax:any) {
+    console.log(priceMinMax)
+    console.log(this.minValue)
+    console.log(this.maxValue)
+    
+  }
+
+  ngAfterViewInit(): void {
+    this.params.minPrice = this.minValue;
+    this.params.maxPrice = this.maxValue;
+    fromEvent(this.minMaxPrice.nativeElement, 'input')
+      .pipe(debounceTime(300))
+      .subscribe(() => this.getProductList(this.params));
   }
 }

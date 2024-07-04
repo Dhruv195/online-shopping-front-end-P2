@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -11,7 +11,8 @@ import { API } from 'src/app/shared/constant/api.constant';
   providers:[DatePipe],
   imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss']
+  styleUrls: ['./edit-profile.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class EditProfileComponent implements OnInit {
   profileImage: any;
@@ -22,13 +23,18 @@ export class EditProfileComponent implements OnInit {
   uploadImage: any;
   defaultProfileImg: any;
 
-  constructor(public commonService:CommonService,public userService:UserService,public datePipe:DatePipe){}
-
+  constructor(public commonService:CommonService,public userService:UserService,public datePipe:DatePipe,public cd:ChangeDetectorRef){}
+  /**
+   * BreadCrumb Data Set
+   * initialize Profile Edit Form
+   * getUserDetails API Call
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.initializeEditProfileForm();
     this.getUserDetails();
   }
+  //initialize Profile Edit Form
   initializeEditProfileForm() {
     this.editProfileForm = new FormGroup({
       profilePic: new FormControl(''),
@@ -40,16 +46,17 @@ export class EditProfileComponent implements OnInit {
     })
       this.editProfileForm.disable()  
   }
+  //Upload Image Set ProfileImage
   submitImage(event: any) {
     var reader = new FileReader();
     reader.onload = () => {
       this.profileImage = reader.result;
-
-  }
+    }
     this.uploadImage = event.target.files[0];
     reader.readAsDataURL(this.uploadImage);
     this.editProfileForm.get('profilePic')?.setValue(this.uploadImage);
   }
+  //Edit Icon Handle to Edit Button and Input is Enable
   onEdit() {
     this.disabledEdit = !this.disabledEdit;
     if (this.disabledEdit ) {
@@ -60,6 +67,7 @@ export class EditProfileComponent implements OnInit {
     }
     
   }
+  //BreadCrumbData set
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Page',
@@ -69,6 +77,7 @@ export class EditProfileComponent implements OnInit {
       ],
     });
   }
+  //Handle Edit Profile Submit Data in FormData
   onEditProfileSubmit() {
     this.submitted = true;
     if (this.editProfileForm.valid) {
@@ -89,9 +98,12 @@ export class EditProfileComponent implements OnInit {
       
       this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
-          // this.profileImage=res.data[0].profilePic;
           this.onEdit();
           this.userService.updateUserDetails$.next(true);
+          this.cd.markForCheck()
+        },
+        error: (res: any) => {
+          
         }
       })
     }
@@ -100,7 +112,16 @@ export class EditProfileComponent implements OnInit {
   getUserDetails(){
     this.userService.getUser().subscribe({
       next:(res:any)=>{
-        this.userDetails = res.data;
+        this.handleUserProfileData(res);
+        
+        this.userService.updateUserDetails$.next(true);
+        this.cd.markForCheck();
+      }
+    })
+  }
+
+  handleUserProfileData(res: any) {
+    this.userDetails = res.data;
         this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
         this.userDetails.dob=this.datePipe.transform (this.userDetails.dob,'YYYY-MM-dd')
         this.editProfileForm.patchValue({
@@ -109,12 +130,7 @@ export class EditProfileComponent implements OnInit {
           gender: this.userDetails.gender,
           dob: this.userDetails.dob,
           phone: this.userDetails.phone,
-          
         });
         this.profileImage = this.userDetails.profilePic;
-        this.userService.updateUserDetails$.next(true);
-        
-      }
-    })
   }
 }
