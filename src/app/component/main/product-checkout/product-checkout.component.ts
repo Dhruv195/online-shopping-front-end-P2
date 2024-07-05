@@ -96,7 +96,7 @@ export class ProductCheckoutComponent {
       addressLine2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zipcode: ['', Validators.required],
+      zipcode: ['', Validators.required,Validators.pattern('^[0-9]')],
       country: ['', Validators.required],
     });
   }
@@ -129,7 +129,7 @@ export class ProductCheckoutComponent {
           });
           this.formData.orderTotal.subtotal = res.data.totalAmount;
           this.formData.orderTotal.total =
-            res.data.totalAmount + this.formData.orderTotal.shipping;
+            res.data.totalAmount + this.formData.orderTotal.shipping; 
         }
         this.cdr.markForCheck();
       },
@@ -157,6 +157,7 @@ export class ProductCheckoutComponent {
       : billingAddress;
     const orderData: any = {
       billingAddress: shippingAddress,
+      shippingCharge:this.formData.orderTotal.shipping,
       paymentMethod: this.paymentMethod,
     };
     this.addToCheckout(orderData);

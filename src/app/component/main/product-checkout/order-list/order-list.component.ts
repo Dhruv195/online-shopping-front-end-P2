@@ -9,11 +9,12 @@ import { OrderService } from 'src/app/shared/service/order.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
 import { ProductListViewComponent } from 'src/app/shared/common/product-list-view/product-list-view.component';
 import { CommonService } from 'src/app/shared/service/common.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [CommonModule, ProductListViewComponent],
+  imports: [CommonModule, ProductListViewComponent,RouterModule],
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,4 +62,5 @@ export class OrderListComponent implements OnInit {
       },
     });
   }
+
 }

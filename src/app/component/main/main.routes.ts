@@ -35,6 +35,11 @@ export const routes: Routes = [
           import('./shope-details/shope-details.component').then((m) => m.ShopeDetailsComponent),
       },
       {
+        path: 'order-view/:id',
+        loadComponent: () =>
+          import('./product-checkout/order-view/order-view.component').then((m) => m.OrderViewComponent),
+      },
+      {
         path: 'shopping-cart',
         loadComponent: () =>
           import('./shopping-cart/shopping-cart.component').then(

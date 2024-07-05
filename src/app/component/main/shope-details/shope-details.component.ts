@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/common/prodcut-card/prodcut-card.component';
@@ -36,6 +40,7 @@ import { reviewList, shareList } from 'src/app/shared/constant/common-function';
       transition('false <=> true', animate('300ms ease-in-out')),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShopeDetailsComponent {
   addProductCart = {
@@ -88,7 +93,8 @@ export class ShopeDetailsComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   cartList: any[] = [];
@@ -124,15 +130,16 @@ export class ShopeDetailsComponent {
   }
 
   /**
-   * 
+   *
    * @param productId get product by particular Id
    */
   getProduct(productId: any) {
     this.productService.getProductById(productId).subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
+        // console.log('Res ', res);
         this.products = res.data;
-        console.log(this.products, 'Good');
+        // console.log(this.products, 'Good');
+        this.cdr.markForCheck();
       },
       error: (err: any) => {
         this.products = [];
@@ -141,7 +148,7 @@ export class ShopeDetailsComponent {
   }
 
   /**
-   * 
+   *
    * @param productId get related product by Id
    */
   getRelatedProduct(productId: any) {
@@ -153,6 +160,7 @@ export class ShopeDetailsComponent {
           this.addProductCart.size = this.products.size[0];
           this.addProductCart.color = this.products.colors[0];
         }
+        this.cdr.markForCheck();
       },
     });
   }
@@ -182,6 +190,8 @@ export class ShopeDetailsComponent {
         .subscribe({
           next: (res: any) => {
             console.log('response', res);
+            this.router.navigate(['/shopping-cart'])
+            this.cdr.markForCheck();
           },
         });
     } else {

@@ -14,5 +14,6 @@ export const API = {
   GET_RELATED_PRODUCTS: 'product/related/',
   ORDER_CHECKOUT: 'order/checkout',
   GET_ORDER_LIST: 'order/list',
-  ENQUIRY:'enquiry'
+  ENQUIRY: 'enquiry',
+  GET_ORDER_BY_ID:'order/'
 };

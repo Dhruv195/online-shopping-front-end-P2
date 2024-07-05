@@ -89,7 +89,6 @@ export class ShoppingCartListComponent implements OnInit {
   }
   quantityPlus(product: any) {
     product.quantity += 1;
-
     this.updateTotal(product);
     this.commonService.subTotalAmount$.next(this.calculateSubTotal());
   }
@@ -118,30 +117,41 @@ export class ShoppingCartListComponent implements OnInit {
     this.productService.getUserCart().subscribe({
       next: (res: any) => {
         console.log('Res ', res);
-        if (res.data) {
+        if (res.success) {
           this.cartProductList = res.data.products;
           this.commonService.subTotalAmount$.next(res.data.totalAmount);
           this.commonService.totalCartItem$.next(
             this.cartProductList?.length || 0
           );
-          this.cdr.markForCheck();
-        } else {
-          this.cartProductList = [];
-          this.cdr.markForCheck();
+          
         }
+        else{
+          this.cartProductList=[]
+        }
+        console.log(this.cartProductList,"cart");
+
+        this.cdr.markForCheck();
       },
     });
   }
+
 
   removeProductCart(productId: any) {
     this.productService.deleteProductCart(productId).subscribe({
       next: (res: any) => {
         console.log('Res ', res);
-        if (res) {
+        if (res.success) {
           this.getUserCartDetail();
         }
-        this.cdr.markForCheck();
+        this.cdr.markForCheck()
       },
     });
+  }
+
+
+
+  checkOutOrder() {
+    console.log(this.cartProductList,"list");
+    
   }
 }

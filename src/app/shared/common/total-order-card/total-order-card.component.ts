@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, getLocaleFirstDayOfWeek } from '@angular/common';
 import { CommonService } from '../../service/common.service';
 import { RouterModule } from '@angular/router';
 
@@ -13,10 +13,13 @@ import { RouterModule } from '@angular/router';
 export class TotalOrderCardComponent implements OnInit {
 
   constructor(public commonService: CommonService) { }
-  shippingAmount = 10;
 
   ngOnInit(): void {}
 
+  checkOutOrder() {
+    // console.log(localStorage.getItem(''));s
+    
+  }
 
 
 } 

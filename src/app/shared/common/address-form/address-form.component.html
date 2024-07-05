@@ -1,8 +1,6 @@
 <div [formGroup]="formGroup">
   <div class="row">
-    <div
-      class="col-md-6 form-group"
-      *ngFor="
+    <div class="col-md-6 form-group" *ngFor="
         let field of [
           'firstName',
           'lastName',
@@ -14,29 +12,26 @@
           'state',
           'zipcode'
         ]
-      "
-    >
+      ">
       <label>{{ field | titlecase }}</label>
-      <input
-        class="form-control"
-        type="text"
-        [formControlName]="field"
-        placeholder="{{ field | titlecase }}"
-        [ngClass]="{
+      <input class="form-control" type="text" [formControlName]="field" placeholder="{{ field | titlecase }}" [ngClass]="{
           'is-invalid':
             (formGroup.get(field)?.touched &&
               formGroup.get(field)?.hasError('required')) ||
             (submitted && formGroup.get(field)?.errors)
-        }"
-      />
-      <span
-        class="text-danger"
-        *ngIf="
+        }" />
+      <span class="text-danger" *ngIf="
           (formGroup.get(field)?.touched || submitted) &&
           formGroup.get(field)?.errors
-        "
-        >{{ field | titlecase }} is required</span
-      >
+        ">{{ field | titlecase }} is required.</span>
+      <span class="text-danger" *ngIf="field=='email' &&
+              (formGroup.get(field)?.touched || submitted) &&
+              formGroup.get(field)?.errors
+            ">Email is Invalid.</span>
+      <span class="text-danger" *ngIf="field=='zipcode' &&
+                  (formGroup.get(field)?.touched || submitted) &&
+                  formGroup.get(field)?.errors
+                ">Zipcode is contain only numbers.</span>
     </div>
     <div class="col-md-6 form-group">
       <label>Country</label>

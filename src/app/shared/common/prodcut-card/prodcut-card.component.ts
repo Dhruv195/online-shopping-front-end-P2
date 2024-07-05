@@ -9,10 +9,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './prodcut-card.component.html',
   styleUrls: ['./prodcut-card.component.scss'],
 })
-export class ProdcutCardComponent implements OnInit {
+export class ProdcutCardComponent  {
   @Input() product: any;
 
-  ngOnInit(): void {
-    console.log('sdf', this.product);
-  }
 }

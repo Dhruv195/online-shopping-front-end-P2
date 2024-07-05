@@ -17,4 +17,8 @@ export class OrderService {
   getOrderList() {
     return this.httpService.get(API.GET_ORDER_LIST)
   }
+
+  getOrderById(orderId:any) {
+    return this.httpService.get(API.GET_ORDER_BY_ID+orderId)
+  }
 }
