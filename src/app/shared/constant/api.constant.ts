@@ -14,5 +14,8 @@ export const API = {
   GET_RELATED_PRODUCTS: 'product/related/',
   ORDER_CHECKOUT: 'order/checkout',
   GET_ORDER_LIST: 'order/list',
-  ENQUIRY:'enquiry'
+  ENQUIRY: 'enquiry',
+  CHANGE_PASSWORD: 'user/changePassword',
+  FORGOT_PASSWORD: 'user/forget-password/',
+  CONFIRM_EMAIL:'user/confirm-email'
 };

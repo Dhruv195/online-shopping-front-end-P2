@@ -1,0 +1,205 @@
+<!-- <div class="" style="margin-top: 2%; margin-left: auto;margin-right:auto ; margin-bottom: 8%;">
+
+    <div class="container d-flex flex-column  justify-content-center align-items-center height ">
+        <div class="p-3 shadow-lg border border-dark rounded-2 width">
+            <div class="bgDark rounded-2">
+                <h1 class="text-center cYellow">Sign Up </h1>
+            </div>
+            <div class="border border-warning border-2"></div>
+            <form (ngSubmit)="doSignUp()" [formGroup]="signUpForm">
+
+                <div class="form-group pt-3">
+                    <label for="inputFirstName">First Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control " formControlName="firstName" id="inputEmail1"
+                        placeholder="First Name"
+                        [ngClass]="{'error':signUpForm.get('firstName').invalid && ( signUpForm.get('firstName').touched || submitted)}">
+                    <span class="text-danger"
+                        *ngIf="signUpForm.get('firstName').hasError('required') && ( signUpForm.get('firstName').touched || submitted)">Email
+                        is required</span>
+                </div>
+                <div class="form-group pt-2 ">
+                    <label for="inputLastName">Last Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="lastName" id="inputEmail1"
+                        placeholder="Last Name"
+                        [ngClass]="{'error':signUpForm.get('lastName').invalid && ( signUpForm.get('lastName').touched || submitted)}">
+                    <span class="text-danger"
+                        *ngIf="signUpForm.get('lastName').hasError('required') && ( signUpForm.get('lastName').touched || submitted)">Email
+                        is required</span>
+                </div>
+
+                <div class="form-group pt-2">
+                    <label for="inputEmail1">Email<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="email" id="inputEmail1"
+                        placeholder="Email"
+                        [ngClass]="{'error':signUpForm.get('email').invalid && ( signUpForm.get('email').touched || submitted)}">
+                    <span class="text-danger"
+                        *ngIf="signUpForm.get('email').hasError('required') && ( signUpForm.get('email').touched || submitted)">Email
+                        is required</span>
+                    <span class="text-danger" *ngIf="signUpForm.get('email').hasError('email') ">Email is invalid</span>
+                </div>
+
+                <div class="form-group pt-2">
+                    <label for="inputPassword">Password <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input [type]="hiddenPassword ? 'text' : 'password' " class="form-control"
+                            formControlName="password" id="inputPassword" placeholder="Password"
+                            [ngClass]="{'error':signUpForm.get('password').invalid && (signUpForm.get('password').touched || submitted)}">
+                        <button type="button" class="btn bgYellow  mt-2" (click)="showPassword()"
+                            [ngClass]="{'bi bi-eye-fill':hiddenPassword ,'bi bi-eye-slash-fill':!hiddenPassword}"></button>
+                    </div>
+
+                    <span class="text-danger fs-6"
+                        *ngIf="signUpForm.get('password').hasError('required') && (signUpForm.get('password').touched || submitted)">Password
+                        is Required</span>
+
+                </div>
+                
+                <div class="pt-2">
+                    <a  routerLink="/auth/forgot-password">Forgot password ?</a>
+                </div>
+                <div class="p-4 text-center">
+                    <button class="btn bgYellow w-100">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div> -->
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="p-3 shadow-lg border border-dark rounded-2">
+        <div class="bg-dark rounded-2 text-center">
+          <h1 class="text-primary">Sign Up</h1>
+        </div>
+        <div class="border border-warning border-2"></div>
+        <form (ngSubmit)="doSignUp()" [formGroup]="signUpForm">
+          <div class="form-group pt-3">
+            <label for="inputFirstName"
+              >First Name<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="firstName"
+              id="inputFirstName"
+              placeholder="First Name"
+              [ngClass]="{
+                error:
+                  signUpForm.get('firstName').invalid &&
+                  (signUpForm.get('firstName').touched || submitted)
+              }"
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                signUpForm.get('firstName').hasError('required') &&
+                (signUpForm.get('firstName').touched || submitted)
+              "
+              >First Name is required</span
+            >
+          </div>
+          <div class="form-group pt-2">
+            <label for="inputLastName"
+              >Last Name<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastName"
+              id="inputLastName"
+              placeholder="Last Name"
+              [ngClass]="{
+                error:
+                  signUpForm.get('lastName').invalid &&
+                  (signUpForm.get('lastName').touched || submitted)
+              }"
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                signUpForm.get('lastName').hasError('required') &&
+                (signUpForm.get('lastName').touched || submitted)
+              "
+              >Last Name is required</span
+            >
+          </div>
+          <div class="form-group pt-2">
+            <label for="inputEmail"
+              >Email<span class="text-danger">*</span></label
+            >
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              id="inputEmail"
+              placeholder="Email"
+              [ngClass]="{
+                error:
+                  signUpForm.get('email').invalid &&
+                  (signUpForm.get('email').touched || submitted)
+              }"
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                signUpForm.get('email').hasError('required') &&
+                (signUpForm.get('email').touched || submitted)
+              "
+              >Email is required</span
+            >
+            <span
+              class="text-danger"
+              *ngIf="signUpForm.get('email').hasError('email')"
+              >Invalid email format</span
+            >
+          </div>
+          <div class="form-group pt-2">
+            <label for="inputPassword"
+              >Password <span class="text-danger">*</span></label
+            >
+            <div class="input-group">
+              <input
+                [type]="hiddenPassword ? 'text' : 'password'"
+                class="form-control"
+                formControlName="password"
+                id="inputPassword"
+                placeholder="Password"
+                [ngClass]="{
+                  error:
+                    signUpForm.get('password').invalid &&
+                    (signUpForm.get('password').touched || submitted)
+                }"
+              />
+              <button
+                type="button"
+                class="btn bg-primary"
+                (click)="showPassword()"
+                [ngClass]="{
+                  'bi bi-eye-fill': hiddenPassword,
+                  'bi bi-eye-slash-fill': !hiddenPassword
+                }"
+              ></button>
+            </div>
+            <span
+              class="text-danger fs-6"
+              *ngIf="
+                signUpForm.get('password').hasError('required') &&
+                (signUpForm.get('password').touched || submitted)
+              "
+              >Password is required</span
+            >
+          </div>
+          <div class="form-group pt-2">
+            <a routerLink="/auth/confirmation-email">Forgot password?</a>
+          </div>
+          <div class="pt-4 text-center">
+            <button class="btn bg-primary w-100">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

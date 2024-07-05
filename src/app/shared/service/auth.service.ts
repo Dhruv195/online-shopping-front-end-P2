@@ -27,4 +27,16 @@ export class AuthService {
     let token = this.getToken();
     return token ? true : false;
   }
+  //Change Password API Call
+  changePassword(dataChangePassword:any) {
+    return this.httpService.post(API.CHANGE_PASSWORD, dataChangePassword);
+  }
+  //Forgot Password API Call
+  forgotPassword(data:any, token:any) {
+    return this.httpService.post(API.FORGOT_PASSWORD+token , data);
+  }
+  //Confirm Email API Call
+  confirmEmail(data: any) {
+    return this.httpService.post(API.CONFIRM_EMAIL, data);
+  }
 }
