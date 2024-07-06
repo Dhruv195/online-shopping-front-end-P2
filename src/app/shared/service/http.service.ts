@@ -3,13 +3,14 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { TOAST_TYPE } from '../constant/toast';
 import { CommonService } from './common.service';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = 'https://shoppingcart-api.demoserver.biz';
-  constructor(private http:HttpClient ,private injector: Injector) { }
+  baseUrl = environment.apiUrl;
+  constructor(private http:HttpClient ,private injector: Injector) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
