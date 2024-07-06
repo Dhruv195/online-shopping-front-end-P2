@@ -1,0 +1,308 @@
+<div class="container-fluid pb-5" *ngIf="products">
+  <div class="row px-xl-5">
+    <!-- Carousel Section -->
+    <div class="col-lg-5 mb-30">
+      <div
+        id="product-carousel-{{ products._id }}"
+        class="carousel slide"
+        data-ride="carousel"
+      >
+        <div
+          class="carousel-inner bg-light"
+          *ngIf="products.images.length !== 0"
+        >
+          <div
+            class="carousel-item"
+            *ngFor="let image of products.images; let i = index"
+            [ngClass]="{ active: i === 0 }"
+          >
+            <img class="w-100 h-100" [src]="image" alt="Image" />
+          </div>
+        </div>
+        <div class="bg-light" *ngIf="products.images.length == 0">
+          <img
+            class="w-100 h-100"
+            src="assets/img/not-image-found.jpg"
+            alt="Image"
+          />
+        </div>
+        <a class="carousel-control-prev" data-slide="prev">
+          <i class="fa fa-2x fa-angle-left text-dark"></i>
+        </a>
+        <a class="carousel-control-next" data-slide="next">
+          <i class="fa fa-2x fa-angle-right text-dark"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="col-lg-7 h-auto mb-30">
+      <div class="h-100 bg-light p-30">
+        <h3>{{ products.productName | titlecase }}</h3>
+        <div class="d-flex mb-3">
+          <div class="text-primary mr-2">
+            <small
+              class="fas fa-star"
+              *ngFor="let star of [].constructor(products.ratings)"
+            ></small>
+            <small
+              class="far fa-star"
+              *ngFor="let star of [].constructor(5 - products.ratings)"
+            ></small>
+          </div>
+          <small class="pt-1">({{ products.reviews }} Reviews)</small>
+        </div>
+        <h3 class="font-weight-semi-bold mb-4">
+          {{ products.sellingPrice | currency : "USD" : "symbol" : "1.2-2" }}
+        </h3>
+        <p class="mb-4">{{ products.mainDescription }}</p>
+        <div class="d-flex mb-3">
+          <strong class="text-dark mr-3">Sizes:</strong>
+          <form>
+            <div
+              *ngFor="let size of products.size"
+              class="custom-control custom-radio custom-control-inline"
+            >
+              <input
+                type="radio"
+                class="custom-control-input"
+                [id]="'size-' + size"
+                name="size"
+                [value]="size"
+                [(ngModel)]="addProductCart.size"
+              />
+              <label class="custom-control-label" [for]="'size-' + size">{{
+                size
+              }}</label>
+            </div>
+          </form>
+        </div>
+        <div class="d-flex mb-4">
+          <strong class="text-dark mr-3">Colors:</strong>
+          <form>
+            <div
+              *ngFor="let color of products.colors"
+              class="custom-control custom-radio custom-control-inline"
+            >
+              <input
+                type="radio"
+                class="custom-control-input"
+                [id]="'color-' + color"
+                name="color"
+                [value]="color"
+                [(ngModel)]="addProductCart.color"
+              />
+              <label class="custom-control-label" [for]="'color-' + color">{{
+                color
+              }}</label>
+            </div>
+          </form>
+        </div>
+        <div class="d-flex align-items-center mb-4 pt-2">
+          <div class="input-group quantity mr-3" style="width: 130px">
+            <div class="input-group-btn">
+              <button
+                class="btn btn-primary btn-minus"
+                (click)="quantityMinus()"
+              >
+                <i class="fa fa-minus"></i>
+              </button>
+            </div>
+            <input
+              type="text"
+              class="form-control bg-secondary border-0 text-center"
+              [(ngModel)]="addProductCart.quantity"
+              readonly
+            />
+            <div class="input-group-btn">
+              <button class="btn btn-primary btn-plus" (click)="quantityPlus()">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-primary px-3" (click)="addToCart()">
+            <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+          </button>
+        </div>
+        <div class="d-flex pt-2">
+          <strong class="text-dark mr-2">Share on:</strong>
+          <div class="d-inline-flex">
+            <ng-container *ngFor="let share of shareList">
+              <a class="text-dark px-2" href="{{ share.link }}" target="_blank">
+                <i class="fab" [ngClass]="share.icon"></i>
+              </a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar Section -->
+  <div class="row px-xl-5">
+    <div class="col">
+      <div class="bg-light p-30">
+        <div class="nav nav-tabs mb-4">
+          <a
+            class="nav-item nav-link text-dark active"
+            data-toggle="tab"
+            href="#tab-pane-description-{{ products._id }}"
+            >Description</a
+          >
+          <a
+            class="nav-item nav-link text-dark"
+            data-toggle="tab"
+            href="#tab-pane-information-{{ products._id }}"
+            >Information</a
+          >
+          <a
+            class="nav-item nav-link text-dark"
+            data-toggle="tab"
+            href="#tab-pane-reviews-{{ products._id }}"
+            >Reviews ({{ products.reviews }})</a
+          >
+        </div>
+        <div class="tab-content">
+          <div
+            class="tab-pane fade show active"
+            [id]="'tab-pane-description-' + products._id"
+          >
+            <h4 class="mb-3">Product Description</h4>
+            <p>{{ products.mainDescription }}</p>
+          </div>
+          <div
+            class="tab-pane fade"
+            [id]="'tab-pane-information-' + products._id"
+          >
+            <h4 class="mb-3">Additional Information</h4>
+            <p>{{ products.information.description }}</p>
+            <div
+              *ngFor="let point of products.information.infoPoints"
+              class="mb-2"
+            >
+              <h5 class="font-weight-semi-bold text-dark mb-1">{{ point }}</h5>
+            </div>
+          </div>
+          <div class="tab-pane fade" [id]="'tab-pane-reviews-' + products._id">
+            <div class="row">
+              <div class="col-md-6">
+                <h3>
+                  {{ products.reviews }} Review(s) for
+                  {{ products.productName }}
+                </h3>
+                <ng-container *ngIf="reviewList.reviews.length > 0">
+                  <ng-container *ngFor="let review of reviewList.reviews">
+                    <div class="media mb-4">
+                      <img
+                        [src]="review.user_profile_pic"
+                        alt="Image"
+                        class="img-fluid mr-3 mt-1"
+                        style="width: 45px"
+                      />
+                      <div class="media-body">
+                        <h6>
+                          {{ review.firstName + " " + review.lastName
+                          }}<small>
+                            - <i>{{ review.reviewDate | date }}</i></small
+                          >
+                        </h6>
+                        <div class="text-primary mb-2">
+                          <small
+                            class="fas fa-star"
+                            *ngFor="
+                              let star of [].constructor(review.reviewRating)
+                            "
+                          ></small>
+                          <small
+                            class="far fa-star"
+                            *ngFor="
+                              let star of [].constructor(
+                                5 - review.reviewRating
+                              )
+                            "
+                          ></small>
+                        </div>
+                        <p>{{ review.reviewMessage }}</p>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+              <div class="col-md-6">
+                <h4 class="mb-4">Leave a review</h4>
+                <small
+                  >Your email address will not be published. Required fields are
+                  marked *</small
+                >
+                <div class="d-flex my-3">
+                  <p class="mb-0 mr-2">Your Rating * :</p>
+                  <div class="text-primary">
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </div>
+                </div>
+                <form>
+                  <div class="form-group">
+                    <label for="message">Your Review *</label>
+                    <textarea
+                      id="message"
+                      cols="30"
+                      rows="5"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+                  <div class="form-group mb-0">
+                    <input
+                      type="submit"
+                      value="Leave Your Review"
+                      class="btn btn-primary px-3"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Products Start -->
+<!-- <div class="container-fluid py-5">
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+    <span class="bg-secondary pr-3">You May Also Like</span>
+  </h2>
+  <div class="row px-xl-5">
+    <div class="col">
+      <div class="owl-carousel related-carousel">
+        <ng-container *ngFor="let item of productList">
+          <app-prodcut-card [product]="item"></app-prodcut-card>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Products End -->
+
+<!-- Products Start -->
+<div class="container-fluid py-5">
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+    <span class="bg-secondary pr-3">You May Also Like</span>
+  </h2>
+  <div class="row px-xl-5">
+    <div class="col">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let product of productList">
+          <ng-template carouselSlide>
+            <app-prodcut-card [product]="product"></app-prodcut-card>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</div>

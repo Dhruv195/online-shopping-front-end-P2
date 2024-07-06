@@ -145,8 +145,7 @@ export const featuredItems = [
   },
 ];
 
-
-export const   reviewList = {
+export const reviewList = {
   _id: '667a93516a95e65e828409cc',
   productName: 'Nike Running Shoes',
 
@@ -172,7 +171,7 @@ export const   reviewList = {
   ],
 };
 
-export const   shareList = [
+export const shareList = [
   {
     icon: 'fa-facebook-f',
     link: 'https://www.facebook.com/',

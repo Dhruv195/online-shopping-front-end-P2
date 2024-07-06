@@ -8,11 +8,11 @@ export const routes: Routes = [
     },
     {
         path: '',
-        loadChildren: ()=> import('./component/main/main.routes').then((m)=>m.routes)
+        loadChildren: ()=> import('./main/main.routes').then((m)=>m.routes)
     },
     {
         path: 'auth',
-        loadChildren:()=>import('./component/auth/auth.routes').then((m)=>m.routes)
+        loadChildren:()=>import('./auth/auth.routes').then((m)=>m.routes)
     },
     {
         path: "**",
@@ -21,6 +21,6 @@ export const routes: Routes = [
     },
     {
         path: 'error',
-        loadComponent:()=>import('./shared/common/error/error.component').then((m)=>m.ErrorComponent)
+        loadComponent:()=>import('./shared/components/error/error.component').then((m)=>m.ErrorComponent)
     }
 ];
