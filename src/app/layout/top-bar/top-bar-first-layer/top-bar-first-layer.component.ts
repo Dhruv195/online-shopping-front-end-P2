@@ -11,7 +11,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
 @Component({
   selector: 'app-top-bar-first-layer',
   standalone: true,
-  imports: [CommonModule, RouterModule,DropdownDirective],
+  imports: [CommonModule, RouterModule, DropdownDirective],
   templateUrl: './top-bar-first-layer.component.html',
   styleUrls: ['./top-bar-first-layer.component.scss'],
 })
@@ -19,55 +19,56 @@ export class TopBarFirstLayerComponent implements OnInit {
   links = [
     { name: 'About', url: '#' },
     { name: 'Contact', url: 'contact' },
-    { name: 'Help', url: '#' },
+    { name: 'Help', url: 'shop-detail' },
     { name: 'FAQs', url: '#' },
   ];
 
   languages = [
-    { label: 'EN', lang: 'English',languageCode:'en', subset: 'latin' },
-    { label: 'HI', lang: 'English',languageCode:'hi', subset: 'latin' },
-    { label: 'FR', lang: 'French',languageCode:'fr',  subset: 'latin-ext' },
-    { label: 'AR', lang: 'Arabic',languageCode:'ar', subset: 'arabic' },
-    { label: 'RU', lang: 'Russian',languageCode:'ru', subset: 'cyrillic' },
+    { label: 'EN', lang: 'English', languageCode: 'en', subset: 'latin' },
+    { label: 'HI', lang: 'English', languageCode: 'hi', subset: 'latin' },
+    { label: 'FR', lang: 'French', languageCode: 'fr', subset: 'latin-ext' },
+    { label: 'AR', lang: 'Arabic', languageCode: 'ar', subset: 'arabic' },
+    { label: 'RU', lang: 'Russian', languageCode: 'ru', subset: 'cyrillic' },
   ];
   profileRoutes = [
     {
       title: 'Edit Profile',
       link: '/user-profile',
-      icon:'bi bi-person-fill text-primary fs-4'
+      icon: 'bi bi-person-fill text-primary fs-4',
     },
     {
       title: 'Change Password',
       link: '/user-profile/change-password',
-      icon:"bi bi-lock-fill fs-4 text-primary"
+      icon: 'bi bi-lock-fill fs-4 text-primary',
     },
     {
       title: 'Cart Item',
       link: '/user-profile/shopping-cart',
-      icon:'bi bi-cart-fill fs-4 text-primary'
+      icon: 'bi bi-cart-fill fs-4 text-primary',
     },
     {
       title: 'Wish List',
       link: '/user-profile/wish-list',
-      icon:'bi bi-list-stars fs-4 text-primary'
+      icon: 'bi bi-list-stars fs-4 text-primary',
     },
     {
       title: 'Order List',
       link: '/user-profile/order-list',
-      icon:'bi bi-card-checklist fs-4 text-primary'
+      icon: 'bi bi-card-checklist fs-4 text-primary',
     },
     {
       title: 'Sign Out',
       link: '/home',
-      icon:'bi bi-box-arrow-right fs-4 text-primary'
-    }
-  ]
+      icon: 'bi bi-box-arrow-right fs-4 text-primary',
+    },
+  ];
 
-
-
-  constructor(public authService:AuthService,public userService:UserService,public commonService:CommonService){}
-  ngOnInit(): void {
-  }
+  constructor(
+    public authService: AuthService,
+    public userService: UserService,
+    public commonService: CommonService
+  ) {}
+  ngOnInit(): void {}
   onLanguageChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedLanguage = this.languages.find(
@@ -94,17 +95,19 @@ export class TopBarFirstLayerComponent implements OnInit {
     document.head.appendChild(linkElement);
   }
 
-  clickOnProfileItem(profile:any) {
+  clickOnProfileItem(profile: any) {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
-      this.commonService.showToastMessage(TOAST_TYPE.success,'Sign Out Successfully')
+      this.commonService.showToastMessage(
+        TOAST_TYPE.success,
+        'Sign Out Successfully'
+      );
     }
   }
 
   changeLanguage(languageCode: any) {
     console.log(languageCode);
-    document.cookie = 'googtrans=' + `/en/${languageCode}`
+    document.cookie = 'googtrans=' + `/en/${languageCode}`;
     location.reload();
   }
-  
 }

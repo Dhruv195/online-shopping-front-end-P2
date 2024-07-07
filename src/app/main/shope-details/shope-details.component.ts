@@ -5,9 +5,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
-import { ProdcutCardComponent } from 'src/app/shared/components/prodcut-card/prodcut-card.component';
+import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   animate,
@@ -25,11 +25,12 @@ import { reviewList, shareList } from 'src/app/shared/constant/common-function';
   standalone: true,
   imports: [
     CommonModule,
-    ProdcutCardComponent,
+    ProductCardComponent,
     CarouselModule,
     CarouselModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
@@ -113,8 +114,8 @@ export class ShopeDetailsComponent {
         }
       },
     });
-    this.getProduct(this.productId);
-    this.getRelatedProduct(this.productId);
+    // this.getProduct(this.productId);
+    // this.getRelatedProduct(this.productId);
   }
   /**
    * call breadcrumb service

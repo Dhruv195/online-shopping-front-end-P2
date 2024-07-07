@@ -5,13 +5,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProdcutCardComponent } from 'src/app/shared/components/prodcut-card/prodcut-card.component';
+import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 import { ProductService } from 'src/app/shared/service/product.service';
 
 @Component({
   selector: 'app-featured-product-section',
   standalone: true,
-  imports: [CommonModule, ProdcutCardComponent],
+  imports: [CommonModule, ProductCardComponent],
   templateUrl: './featured-product-section.component.html',
   styleUrls: ['./featured-product-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

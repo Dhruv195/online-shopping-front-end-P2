@@ -22,7 +22,9 @@
         <div class="bg-light" *ngIf="products.images.length == 0">
           <img
             class="w-100 h-100"
-            src="assets/img/not-image-found.jpg"
+            [src]="
+              products.images[0] || '../../../assets/img/not-image-found.jpg'
+            "
             alt="Image"
           />
         </div>
@@ -128,7 +130,11 @@
           <strong class="text-dark mr-2">Share on:</strong>
           <div class="d-inline-flex">
             <ng-container *ngFor="let share of shareList">
-              <a class="text-dark px-2" href="{{ share.link }}" target="_blank">
+              <a
+                class="text-dark px-2"
+                routerLink="{{ share.link }}"
+                target="_blank"
+              >
                 <i class="fab" [ngClass]="share.icon"></i>
               </a>
             </ng-container>
@@ -143,22 +149,16 @@
     <div class="col">
       <div class="bg-light p-30">
         <div class="nav nav-tabs mb-4">
-          <a
-            class="nav-item nav-link text-dark active"
-            data-toggle="tab"
-            href="#tab-pane-description-{{ products._id }}"
+          <a class="nav-item nav-link text-dark active" data-toggle="tab"
             >Description</a
           >
-          <a
-            class="nav-item nav-link text-dark"
-            data-toggle="tab"
-            href="#tab-pane-information-{{ products._id }}"
+          <a class="nav-item nav-link text-dark" data-toggle="tab"
             >Information</a
           >
           <a
             class="nav-item nav-link text-dark"
             data-toggle="tab"
-            href="#tab-pane-reviews-{{ products._id }}"
+            routerLink="#tab-pane-reviews-{{ products._id }}"
             >Reviews ({{ products.reviews }})</a
           >
         </div>
@@ -273,23 +273,6 @@
 </div>
 
 <!-- Products Start -->
-<!-- <div class="container-fluid py-5">
-  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-    <span class="bg-secondary pr-3">You May Also Like</span>
-  </h2>
-  <div class="row px-xl-5">
-    <div class="col">
-      <div class="owl-carousel related-carousel">
-        <ng-container *ngFor="let item of productList">
-          <app-prodcut-card [product]="item"></app-prodcut-card>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- Products End -->
-
-<!-- Products Start -->
 <div class="container-fluid py-5">
   <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
     <span class="bg-secondary pr-3">You May Also Like</span>
@@ -299,7 +282,7 @@
       <owl-carousel-o [options]="customOptions">
         <ng-container *ngFor="let product of productList">
           <ng-template carouselSlide>
-            <app-prodcut-card [product]="product"></app-prodcut-card>
+            <app-product-card [product]="product"></app-product-card>
           </ng-template>
         </ng-container>
       </owl-carousel-o>

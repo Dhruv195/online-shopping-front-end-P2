@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './order-view.component.html',
-  styleUrls: ['./order-view.component.scss']
+  styleUrls: ['./order-view.component.scss'],
 })
-export class OrderViewComponent {
-
-}
+export class OrderViewComponent {}

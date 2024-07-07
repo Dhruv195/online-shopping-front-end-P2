@@ -1,51 +1,31 @@
 <ng-container *ngFor="let order of orderList">
-    <div class="container">
-        <div class="row bg-light border border-1 gap-2">
-            <div class="row p-2">
-                <div class="col-6">
-                    <div class="btn btn-dark text-light">{{order._id|uppercase}}</div>
-                </div>
-                <div class="col-6 text-end">
-                    <button class="btn btn-dark" [routerLink]="['/order-view',order._id]">View Order</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <span>Ordered On {{order.createdAt|date}}</span>
-                </div>
-                <div class="col-6 text-end">
-                    <span>Order Total {{order.totalAmount |currency}}</span>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row bg-light border border-1 gap-2">
+      <div class="row p-2">
+        <div class="col-6">
+          <div class="btn btn-dark text-light">{{ order._id | uppercase }}</div>
         </div>
-        <div class="product-item row bg-light mb-4">
-            <div class="col-4 shadow-sm bg-light">
-                <div class=" position-relative overflow-hidden">
-                    <img class="img-fluid w-100 " [src]="order.products[0].image || 'assets/img/not-image-found.jpg'"
-                        alt="" />
-                </div>
-            </div>
-            <div class="col-8">
-                <div class="text-start py-4">
-                    <a class="h3 text-decoration-none text-truncate" routerLink="/shop-detail">{{
-                        order.products[0].productName |titlecase
-                        }}</a>
-                    <div class="d-flex  mt-2 align-items-center ">
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="mt-0"> ({{ order.products[0].reviews || 0 }})</small>
-                    </div>
-                    <div class="d-flex   mt-3">
-                        <h5>${{ order.products[0].price }}</h5>
-                    </div>
-
-                </div>
-            </div>
-
+        <div class="col-6 text-end">
+          <button
+            class="btn btn-dark"
+            [routerLink]="['/order-view', order._id]"
+          >
+            View Order
+          </button>
         </div>
-
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <span>Ordered On {{ order.createdAt | date }}</span>
+        </div>
+        <div class="col-6 text-end">
+          <span>Order Total {{ order.totalAmount | currency }}</span>
+        </div>
+      </div>
     </div>
+    <div class="product-item row bg-light mb-4">
+      <div class="col-4 shadow-sm bg-light"></div>
+      <div class="col-8"></div>
+    </div>
+  </div>
 </ng-container>
