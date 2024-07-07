@@ -97,8 +97,14 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+  onClickCategory(){
+    this.collapseCategory=!this.collapseCategory;
+
+  }
 
   onCategoryClick(categoryId:any) {
+    this.collapseCategory=!this.collapseCategory;
+
     let params = {
       'categoryId':categoryId,
     }

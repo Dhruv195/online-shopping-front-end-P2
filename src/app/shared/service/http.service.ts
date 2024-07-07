@@ -13,6 +13,7 @@ export class HttpService {
   constructor(private http:HttpClient ,private injector: Injector) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
+    
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${error.error.message}`;

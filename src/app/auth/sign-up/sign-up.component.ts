@@ -45,7 +45,6 @@ export class SignUpComponent {
         if(res){
           this.authService.saveToken(res.data.token)
           this.route.navigate(['home/']);
-          this.userService.updateUserDetails$.next(true);
           this.cd.markForCheck();
         }
       },

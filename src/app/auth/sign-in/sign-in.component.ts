@@ -28,7 +28,7 @@ export class SignInComponent {
    * login FormGroup initialize
    */
   ngOnInit(): void {
-    this.signInFormGroup();
+      this.signInFormGroup();
   }
 
   signInFormGroup() {
@@ -47,7 +47,6 @@ export class SignInComponent {
     this.authService.signInUser(this.signInForm.value).subscribe({
       next:(res:any)=>{
         this.authService.saveToken(res.data.token);
-        this.userService.updateUserDetails$.next(true)
         this.commonService.showToastMessage(TOAST_TYPE.success,'User LogIn Successfully')
         this.router.navigate(['/home']);
         this.cd.markForCheck()
@@ -59,8 +58,13 @@ export class SignInComponent {
     })
    }
   }
+  
+  
   //hidden password and show password
   showPass() {
     this.hiddenPassword = !this.hiddenPassword;
   }
+
+
+  
 }

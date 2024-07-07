@@ -14,7 +14,7 @@
       <div class="d-inline-flex align-items-center">
         <div class="btn-group" >
           <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
-            My Account
+            {{userDetails!==null ? userDetails?.firstName: 'My Account'}}
           </button>
           <ng-container >
             <div #dropdownMenu class="dropdown-menu dropdown-menu-right">

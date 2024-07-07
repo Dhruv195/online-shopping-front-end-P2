@@ -77,18 +77,6 @@ export const PROFILE_ITEMS=[
       
     },
     {
-      title: 'Shopping Cart',
-      link: '/user-profile/shopping-cart',
-      icon:'bi bi-cart-fill fs-4 text-primary'
-      
-    },
-    {
-      title: 'Wish List',
-      link: '/user-profile/wish-list',
-      icon:'bi bi-list-stars fs-4 text-primary'
-      
-    },
-    {
       title: 'Order List',
       link: '/user-profile/order-list',
       icon:'bi bi-card-checklist fs-4 text-primary'

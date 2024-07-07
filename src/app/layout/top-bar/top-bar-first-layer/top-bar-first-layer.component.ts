@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -63,40 +63,21 @@ export class TopBarFirstLayerComponent implements OnInit {
     }
   ]
 
+  userDetails:any;
+
 
 
   constructor(public authService:AuthService,public userService:UserService,public commonService:CommonService){}
   ngOnInit(): void {
+    this.getUserDetails();
   }
-  onLanguageChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedLanguage = this.languages.find(
-      (lang) => lang.label === selectElement.value
-    );
-    if (selectedLanguage) {
-      this.loadGoogleFont(selectedLanguage.subset);
-    }
-  }
-  loadGoogleFont(subset: string) {
-    // Remove existing font link if any
-    const existingLinkElement = document.getElementById('google-font-link');
-    if (existingLinkElement) {
-      existingLinkElement.remove();
-    }
-
-    console.log(subset);
-
-    // Create new font link
-    const linkElement = document.createElement('link');
-    linkElement.id = 'google-font-link';
-    linkElement.rel = 'stylesheet';
-    linkElement.href = `https://fonts.googleapis.com/css2?family=Roboto&subset=${subset}`;
-    document.head.appendChild(linkElement);
-  }
+  
+ 
 
   clickOnProfileItem(profile:any) {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
+      localStorage.removeItem('userDetails');
       this.commonService.showToastMessage(TOAST_TYPE.success,'Sign Out Successfully')
     }
   }
@@ -106,5 +87,17 @@ export class TopBarFirstLayerComponent implements OnInit {
     document.cookie = 'googtrans=' + `/en/${languageCode}`
     location.reload();
   }
-  
+  getUserDetails(){
+    if(this.authService.getToken()){
+      this.userService.getUser().subscribe({
+        next:(res:any)=>{
+          this.userDetails=res.data;
+        }
+      })
+    }
+    else{
+      this.userDetails=null;
+    }
+    
+  }
 }
