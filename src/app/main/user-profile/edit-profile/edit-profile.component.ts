@@ -98,8 +98,10 @@ export class EditProfileComponent implements OnInit {
       
       this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
+          console.log(res,"Edit")
           this.onEdit();
-          this.userService.updateUserDetails$.next(true);
+          // this.userService.updateUserDetails$.next(true);
+          this.userService.userDetails$.next(res.data);
           this.cd.markForCheck()
         },
         error: (res: any) => {
@@ -110,18 +112,27 @@ export class EditProfileComponent implements OnInit {
   }
 
   getUserDetails(){
+    // this.userService.getUser().subscribe({
+    //   next:(res:any)=>{
+    //     this.handleUserProfileData(res);
+        
+    //     this.userService.updateUserDetails$.next(true);
+    //     this.cd.markForCheck();
+    //   }
+    // })
+
     this.userService.getUser().subscribe({
       next:(res:any)=>{
-        this.handleUserProfileData(res);
-        
-        this.userService.updateUserDetails$.next(true);
+        console.log("Res of get ",res)
+        this.handleUserProfileData(res.data);
         this.cd.markForCheck();
+
       }
     })
   }
 
   handleUserProfileData(res: any) {
-    this.userDetails = res.data;
+    this.userDetails = res;
         this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
         this.userDetails.dob=this.datePipe.transform (this.userDetails.dob,'YYYY-MM-dd')
         this.editProfileForm.patchValue({

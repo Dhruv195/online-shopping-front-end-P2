@@ -10,6 +10,7 @@ export class UserService {
 
   constructor(public httpService: HttpService) { }
   updateUserDetails$ = new BehaviorSubject<any>(false);
+  userDetails$=new BehaviorSubject<any>({});
   getUser(){
     return this.httpService.get(API.USER_GET);
   }

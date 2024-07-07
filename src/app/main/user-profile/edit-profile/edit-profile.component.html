@@ -1,93 +1,101 @@
-<div class="container-fluid pl-xl-0 pr-xl-5">
-    <h2 class="">Profile
-      <a class="pl-30" (click)="onEdit()" >
-        <i class="bi bi-pencil-square fs-4 text-primary " *ngIf="disabledEdit" ></i>
-        <i class="bi bi-x-circle-fill" *ngIf="!disabledEdit" ></i>
-      </a>
-    </h2>
-    <p class="mt-3 fs-5">Your Email : {{userDetails?.email}}</p>
-    
-    <form [formGroup]="editProfileForm" (ngSubmit)="onEditProfileSubmit()" >
+<h2 class="">Profile
+  <a class="pl-30" (click)="onEdit()">
+      <i class="bi bi-pencil-square fs-4 text-primary" *ngIf="disabledEdit"></i>
+      <i class="bi bi-x-circle-fill" *ngIf="!disabledEdit"></i>
+  </a>
+</h2>
+<!-- <p class="mt-3 fs-5">Your Email : {{userDetails?.email}}</p> -->
 
-      <div class="form-group mb-3 mt-4">
-            <div class="d-flex align-items-center" style="gap: 20px;">
-              <img [src]="profileImage ? profileImage : defaultProfileImg" class="w-px-70 h-auto rounded-circle" alt="">
-              <ng-container *ngIf="!disabledEdit" >
+<form [formGroup]="editProfileForm" (ngSubmit)="onEditProfileSubmit()">
+  <div class="form-group mb-3 mt-4">
+      <!-- <div class="d-flex align-items-center" style="gap: 20px;">
+          <ng-container *ngIf="!disabledEdit">
+            <label for="imgaeUpload" class="form-label">Upload Profile Image</label>
               <input 
-                      type="file" 
-                      id="imgeUpload" 
-                      accept="image/png, image/jpeg" 
-                      class="form-control w-25" 
-                      (change)="submitImage($event)"
-                      formControlName="profilePic"
-                      
-                > 
-              </ng-container>
-            </div>
-        
-    </div>
+                  type="file" 
+                  id="imgeUpload" 
+                  accept="image/png, image/jpeg" 
+                  class="form-control w-50 w-md-25" 
+                  (change)="submitImage($event)"
+                  formControlName="profilePic">
+          </ng-container>
+      </div> -->
+      
+  </div>
 
+  <div class="mb-3 row">
+    <ng-container *ngIf="!disabledEdit">
       <div class="mb-3 row">
-        <div class="col-3 ">
+        <div class="col-12 col-md-8">
+            <label for="profileImage" class="form-label">Profile Image </label>
+            <div class="d-flex">
+              <div class="profile-img-wrapper">
+              
+                <img [src]="profileImage ? profileImage : defaultProfileImg" alt="Admin" class="profile-img" width="150">
+                </div>
+                <input type="file"
+                    formControlName="phone" 
+                    id="profileImage"
+                    accept="image/png, image/jpeg" 
+                    class="form-control w-50 w-md-25" 
+                    (change)="submitImage($event)"
+                    formControlName="profilePic">
+            </div>
+            
+          </div>
+      </div>
+      </ng-container>
+      <div class="col-6 col-md-4">
           <label for="username" class="form-label">First Name <span class="text-danger">*</span></label>
           <input 
-                type="text" 
-                formControlName="firstName" 
-                class="form-control" 
-                id="username"
-                [ngClass]="{'error':editProfileForm.get('firstName')?.invalid && (editProfileForm.get('firstName')?.touched || submitted)}"
-
-          >
+              type="text" 
+              formControlName="firstName" 
+              class="form-control" 
+              id="username"
+              [ngClass]="{'error':editProfileForm.get('firstName')?.invalid && (editProfileForm.get('firstName')?.touched || submitted)}">
           <span class="text-danger" *ngIf="editProfileForm.get('firstName')?.hasError('required') && ( editProfileForm.get('firstName')?.dirty || editProfileForm.get('firstName')?.touched || submitted)" >First Name is Required</span>
-
-        </div>
-        <div class="col-3">
+      </div>
+      <div class="col-6 col-md-4">
           <label for="username" class="form-label">Last Name <span class="text-danger">*</span></label>
           <input 
-                type="text" 
-                formControlName="lastName" 
-                class="form-control" id="username"
-                [ngClass]="{'error':editProfileForm.get('lastName')?.invalid && (editProfileForm.get('lastName')?.touched || submitted)}"
-              
-          >
+              type="text" 
+              formControlName="lastName" 
+              class="form-control" id="username"
+              [ngClass]="{'error':editProfileForm.get('lastName')?.invalid && (editProfileForm.get('lastName')?.touched || submitted)}">
           <span class="text-danger" *ngIf="editProfileForm.get('lastName')?.hasError('required') && ( editProfileForm.get('lastName')?.dirty || editProfileForm.get('lastName')?.touched || submitted)" >Last Name is Required</span>
+      </div>
+  </div>
 
-        </div>
-      </div> 
-      
-      <div class="mb-3 row">
-        <div class="col-3">
+  <div class="mb-3 row">
+      <div class="col-6 col-md-4">
           <label for="gender" class="form-label">Gender</label>
           <select name="" id="" 
-                  formControlName="gender" 
-                  class="form-control" 
-                  >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+              formControlName="gender" 
+              class="form-control">
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
           </select>
-        </div>
-        <div class="col-3">
-          <label for="dob"  class="form-label">Date Of Birth</label>
-          <input 
-          type="date" 
-          formControlName="dob" 
-           class="form-control">
-        </div>
       </div>
+      <div class="col-6 col-md-4">
+          <label for="dob" class="form-label">Date Of Birth</label>
+          <input 
+              type="date" 
+              formControlName="dob" 
+              class="form-control">
+      </div>
+  </div>
 
-      <div class="mb-3 row">
-        <div class="col-3">
+  <div class="mb-3 row">
+      <div class="col-12 col-md-8">
           <label for="dob" class="form-label">Phone <span class="text-danger">*</span></label>
           <input type="text" 
-                  formControlName="phone" 
-                  [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched  || submitted)}"
-                   class="form-control">
+              formControlName="phone" 
+              [ngClass]="{'error':editProfileForm.get('phone')?.invalid && (editProfileForm.get('phone')?.touched  || submitted)}"
+              class="form-control">
           <span class="text-danger" *ngIf="editProfileForm.get('phone')?.hasError('required') && ( editProfileForm.get('phone')?.dirty || editProfileForm.get('phone')?.touched || submitted )" >Phone Number is Required</span>
-        </div>
       </div>
-    
-      <button type="submit" *ngIf="!disabledEdit"  class="btn btn-primary">Save Changes</button>
-    </form>
-</div>
-  
+  </div>
+
+  <button type="submit" *ngIf="!disabledEdit" class="btn btn-primary">Save Changes</button>
+</form>

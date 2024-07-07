@@ -1,25 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CommonService } from 'src/app/shared/service/common.service';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import { UserService } from 'src/app/shared/service/user.service';
+import { API } from 'src/app/shared/constant/api.constant';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule,SidebarComponent,EditProfileComponent,RouterModule],
+  imports: [CommonModule,EditProfileComponent,RouterModule],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-
-  constructor(private commonService:CommonService){}
+  userDetails:any;
+  defaultProfileImg:any;
+  constructor(private commonService:CommonService,private userService:UserService){}
   /**
    * BreadCrumb Data Set
    */
   ngOnInit(): void {
-    this.changeBreadCrumbData();
+    // this.changeBreadCrumbData();
+    this.getUserDetails();
   }
   
   changeBreadCrumbData() {
@@ -31,5 +34,14 @@ export class UserProfileComponent implements OnInit {
         { label: 'Edit Profile', link: '/edit-profile' },
       ],
     });
+  }
+  getUserDetails(){
+    this.userService.getUser().subscribe({
+      next:(res:any)=>{
+        this.userDetails=res.data;
+        this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
+        console.log(this.userDetails,"msy")
+      }
+    })
   }
 }
