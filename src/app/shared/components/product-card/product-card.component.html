@@ -1,0 +1,42 @@
+<div class="product-item bg-light mb-4">
+  <div class="product-img position-relative overflow-hidden">
+    <img
+      class="img-fluid custom-img"
+      [src]="product.images[0] || 'assets/img/not-image-found.jpg'"
+      alt=""
+    />
+    <div class="product-action">
+      <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"
+        ><i class="far fa-heart"></i
+      ></a>
+      <a
+        class="btn btn-outline-dark btn-square"
+        [routerLink]="['/shop-detail/', product._id]"
+        ><i class="fa fa-search"></i
+      ></a>
+    </div>
+  </div>
+  <div class="text-center py-4">
+    <a
+      class="h6 text-decoration-none text-truncate"
+      routerLink="/shop-detail"
+      >{{ product.productName | titlecase }}</a
+    >
+    <div class="d-flex align-items-center justify-content-center mt-2">
+      {{ product.sellingPrice | currency : "USD" : "symbol" : "1.2-2" }}
+      <h6 class="text-muted ml-2">
+        <del>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</del>
+      </h6>
+    </div>
+    <div class="d-flex align-items-center justify-content-center mb-1">
+      <small
+        class="fas fa-star"
+        *ngFor="let star of [].constructor(product.reviewRating)"
+      ></small>
+      <small
+        class="far fa-star"
+        *ngFor="let star of [].constructor(5 - product.reviewRating || 4)"
+      ></small>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+    .order-details {
+      flex-direction: column;
+    }
+    .order-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .order-address, .order-total {
+      border-start: none !important; /* Remove borders for smaller screens */
+    }
+  }
+  

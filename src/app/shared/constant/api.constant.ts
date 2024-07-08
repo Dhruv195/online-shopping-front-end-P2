@@ -1,5 +1,4 @@
-import { environment } from "src/environments/environment.development";
-
+import { environment } from 'src/environments/environment.development';
 
 export const API = {
   SIGN_UP: 'user/registration',
@@ -7,7 +6,8 @@ export const API = {
   USER_GET: 'user',
   USER_UPDATE: 'user/update',
   USER_CART: 'cart',
-  USER_NAME_PROFILE_IMG: environment.urlProfileUrl+ '/api/&background=FFD333?name=',
+  USER_NAME_PROFILE_IMG:
+    environment.urlProfileUrl + '/api/&background=FFD333?name=',
   CATEGORY_LIST: 'category/list',
   PRODUCT_LIST: 'product/list',
   PRODUCT_BY_ID: 'product/',
@@ -18,9 +18,13 @@ export const API = {
   ORDER_CHECKOUT: 'order/checkout',
   GET_ORDER_LIST: 'order/list',
   ENQUIRY: 'enquiry',
+  GET_ORDER_BY_ID: 'order/',
   CHANGE_PASSWORD: 'user/changePassword',
   FORGOT_PASSWORD: 'user/forget-password/',
   CONFIRM_EMAIL:'user/confirm-email',
   WISHLIST:'wishlist',
-  REVIEW:'review'
+  REVIEW:'review',
+  SITE_CONFIG: 'siteConfigs',
+  LANGUAGE: 'language',
+  COLOR: 'product/color',
 };

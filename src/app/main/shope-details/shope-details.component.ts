@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
-import { ProdcutCardComponent } from 'src/app/shared/components/prodcut-card/prodcut-card.component';
+import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   standalone: true,
   imports: [
     CommonModule,
-    ProdcutCardComponent,
+    ProductCardComponent,
     CarouselModule,
     CarouselModule,
     FormsModule,
@@ -58,6 +58,7 @@ export class ShopeDetailsComponent {
     size: '',
     color: '',
   };
+  products: any = {};
 
   addProductData = {
     productId: '',
@@ -88,7 +89,7 @@ export class ShopeDetailsComponent {
     margin: 29,
     nav: false,
     items: 4,
-    dots:false,
+    dots: false,
     smartSpeed: 500,
     autoplay: true,
     responsive: {
@@ -218,82 +219,5 @@ export class ShopeDetailsComponent {
       this.commonService.setLocalStorage('cartProductList', this.cartList);
     }
     this.router.navigate(['/shopping-cart']);
-  }
-
-  
-
-
-  //   {
-  //     images:[ 'assets/img/product-1.jpg'],
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     sellingPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     images: ['assets/img/product-2.jpg'],
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     sellingPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     images: ['assets/img/product-3.jpg'],
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     sellingPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     images: ['assets/img/product-4.jpg'],
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     sellingPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     images: ['assets/img/product-5.jpg'],
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     sellingPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  // ];
-
-  
+  }
 }

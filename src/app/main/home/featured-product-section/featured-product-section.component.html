@@ -4,10 +4,12 @@
     <span class="bg-secondary pr-3">Featured Products</span>
   </h2>
   <div class="row px-xl-5">
-    <ng-container *ngFor="let product of products">
-      <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-        <app-prodcut-card [product]="product"></app-prodcut-card>
-      </div>
+    <ng-container *ngIf="products.length <= 8">
+      <ng-container *ngFor="let product of products">
+        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+          <app-product-card [product]="product"></app-product-card>
+        </div>
+      </ng-container>
     </ng-container>
   </div>
 </div>

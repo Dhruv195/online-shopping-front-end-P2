@@ -7,27 +7,13 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule,TopBarFirstLayerComponent,TopBarSecondLayerComponent,FormsModule],
+  imports: [
+    CommonModule,
+    TopBarFirstLayerComponent,
+    TopBarSecondLayerComponent,
+    FormsModule,
+  ],
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.scss']
+  styleUrls: ['./top-bar.component.scss'],
 })
-export class TopBarComponent {
-
-  links = [
-    { name: "About", url: "#" },
-    { name: "Contact", url: "#" },
-    { name: "Help", url: "#" },
-    { name: "FAQs", url: "#" },
-  ];
-
-  languages = ["EN", "FR", "AR", "RU"];
-
-  searchQuery: string = "";
-  customerServiceNumber: string = "+012 345 6789";
-
-  onSearch(): void {
-    // Implement search functionality here
-    console.log(this.searchQuery);
-  }
-
-}
+export class TopBarComponent {}

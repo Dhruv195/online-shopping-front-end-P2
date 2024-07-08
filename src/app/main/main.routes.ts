@@ -60,13 +60,13 @@ export const routes: Routes = [
           import('./product-checkout/product-checkout.component').then(
             (m) => m.ProductCheckoutComponent
           ),
-        canActivate:[authGuard]
+        canActivate: [authGuard],
       },
       {
         path: 'user-profile',
         loadChildren: () =>
           import('./user-profile/user-profile.routes').then((m) => m.routes),
-        canActivate:[authGuard]
+        canActivate: [authGuard],
       },
       {
         path: 'contact',
@@ -79,7 +79,7 @@ export const routes: Routes = [
           import('./product-wishlist/product-wishlist.component').then(
             (m) => m.ProductWishlistComponent
           ),
-        canActivate:[authGuard]
+        canActivate: [authGuard],
       },
       {
         path: 'wish-list/:id',

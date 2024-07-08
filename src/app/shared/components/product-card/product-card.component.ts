@@ -4,15 +4,12 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-prodcut-card',
+  selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, RouterModule,NgbModule],
-  templateUrl: './prodcut-card.component.html',
-  styleUrls: ['./prodcut-card.component.scss'],
+  imports: [CommonModule, RouterModule],
+  templateUrl: './product-card.component.html',
+  styleUrls: ['./product-card.component.scss'],
 })
-export class ProdcutCardComponent implements OnInit {
+export class ProductCardComponent {
   @Input() product: any;
-
-  ngOnInit(): void {
-  }
 }

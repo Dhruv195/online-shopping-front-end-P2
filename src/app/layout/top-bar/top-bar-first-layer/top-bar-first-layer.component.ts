@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -11,73 +16,76 @@ import { CommonService } from 'src/app/shared/service/common.service';
 @Component({
   selector: 'app-top-bar-first-layer',
   standalone: true,
-  imports: [CommonModule, RouterModule,DropdownDirective],
+  imports: [CommonModule, RouterModule, DropdownDirective],
   templateUrl: './top-bar-first-layer.component.html',
   styleUrls: ['./top-bar-first-layer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopBarFirstLayerComponent implements OnInit {
   links = [
     { name: 'About', url: '#' },
     { name: 'Contact', url: 'contact' },
-    { name: 'Help', url: '#' },
+    { name: 'Help', url: 'shop-detail' },
     { name: 'FAQs', url: '#' },
   ];
 
   languages = [
-    { label: 'EN', lang: 'English',languageCode:'en', subset: 'latin' },
-    { label: 'HI', lang: 'English',languageCode:'hi', subset: 'latin' },
-    { label: 'FR', lang: 'French',languageCode:'fr',  subset: 'latin-ext' },
-    { label: 'AR', lang: 'Arabic',languageCode:'ar', subset: 'arabic' },
-    { label: 'RU', lang: 'Russian',languageCode:'ru', subset: 'cyrillic' },
+    { label: 'EN', lang: 'English', languageCode: 'en', subset: 'latin' },
+    { label: 'HI', lang: 'English', languageCode: 'hi', subset: 'latin' },
+    { label: 'FR', lang: 'French', languageCode: 'fr', subset: 'latin-ext' },
+    { label: 'AR', lang: 'Arabic', languageCode: 'ar', subset: 'arabic' },
+    { label: 'RU', lang: 'Russian', languageCode: 'ru', subset: 'cyrillic' },
   ];
   profileRoutes = [
     {
       title: 'Edit Profile',
       link: '/user-profile',
-      icon:'bi bi-person-fill text-primary fs-4'
+      icon: 'bi bi-person-fill text-primary fs-4',
     },
     {
       title: 'Change Password',
       link: '/user-profile/change-password',
-      icon:"bi bi-lock-fill fs-4 text-primary"
+      icon: 'bi bi-lock-fill fs-4 text-primary',
     },
     {
       title: 'Cart Item',
       link: '/user-profile/shopping-cart',
-      icon:'bi bi-cart-fill fs-4 text-primary'
+      icon: 'bi bi-cart-fill fs-4 text-primary',
     },
     {
       title: 'Wish List',
       link: '/user-profile/wish-list',
-      icon:'bi bi-list-stars fs-4 text-primary'
+      icon: 'bi bi-list-stars fs-4 text-primary',
     },
     {
       title: 'Order List',
       link: '/user-profile/order-list',
-      icon:'bi bi-card-checklist fs-4 text-primary'
+      icon: 'bi bi-card-checklist fs-4 text-primary',
     },
     {
       title: 'Sign Out',
       link: '/home',
-      icon:'bi bi-box-arrow-right fs-4 text-primary'
-    }
-  ]
+      icon: 'bi bi-box-arrow-right fs-4 text-primary',
+    },
+  ];
 
-  userDetails:any;
-
-
-
-  constructor(public authService:AuthService,public userService:UserService,public commonService:CommonService){}
+  userDetails: any;
+  languageDetails: any[] = [];
+  constructor(
+    public authService: AuthService,
+    public userService: UserService,
+    public commonService: CommonService,
+    private cdr: ChangeDetectorRef
+  ) {}
   ngOnInit(): void {
     this.userService.userDetails$.subscribe(userDetails => {
       this.userDetails = userDetails;
     });
     this.getUserDetails();
+    this.getLanguageDetails();
   }
-  
- 
 
-  clickOnProfileItem(profile:any) {
+  clickOnProfileItem(profile: any) {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
       // localStorage.removeItem('userDetails');
@@ -88,27 +96,37 @@ export class TopBarFirstLayerComponent implements OnInit {
 
   changeLanguage(languageCode: any) {
     console.log(languageCode);
-    document.cookie = 'googtrans=' + `/en/${languageCode}`
+    document.cookie = 'googtrans=' + `/en/${languageCode}`;
     location.reload();
   }
-
-  getUserDetails(){
-    if(this.authService.getToken()){
+  getUserDetails() {
+    if (this.authService.getToken()) {
       this.userService.getUser().subscribe({
-        next:(res:any)=>{
-          this.userDetails=res.data;
-          // this.userService.updateUserDetails(res.data);
-          this.userService.userDetails$.next(res.data);
+        next: (res: any) => {
+          this.userDetails = res.data;
+          this.cdr.markForCheck();
         },
-        error: () => {
-          // this.userService.updateUserDetails(null);
+      });
+    } else {
+      this.userDetails = null;
+    }
+  }
+
+  getLanguageDetails() {
+    this.commonService.getLanguage().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          res.data.data.forEach((element: any) => {
+            const language = {
+              label: element.name,
+              languageCode: element.code,
+            };
+            this.languageDetails.push(language);
+          });
+          this.cdr.markForCheck();
+          // this.languages = res.data;
         }
-      })
-    }
-    else{
-      // this.userService.updateUserDetails(null);
-      
-    }
-    
+      },
+    });
   }
 }

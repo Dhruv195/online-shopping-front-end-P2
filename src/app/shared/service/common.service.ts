@@ -12,6 +12,7 @@ export class CommonService {
   cartProductList: any;
 
   breadCrumbData$ = new BehaviorSubject<any>({});
+  siteConfig$ = new BehaviorSubject<any>({});
   toastType$ = new BehaviorSubject<any>('');
   toastMsg$ = new BehaviorSubject<any>('');
   toastShow$ = new BehaviorSubject<any>(false);
@@ -72,5 +73,16 @@ export class CommonService {
 
   closeToast() {
     this.toastShow$.next(false);
+  }
+
+  getSiteConfig() {
+    return this.httpService.get(API.SITE_CONFIG);
+  }
+
+  getLanguage() {
+    return this.httpService.get(API.LANGUAGE);
+  }
+  getColor() {
+    return this.httpService.get(API.COLOR);
   }
 }

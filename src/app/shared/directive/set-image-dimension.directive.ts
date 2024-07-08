@@ -1,20 +1,26 @@
-import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appSetImageDimension]',
-  standalone: true
+  standalone: true,
 })
 export class SetImageDimensionDirective implements OnInit {
+  @Input() appFitImage!: string; // Input to specify image URL
 
-  constructor(public elementRef:ElementRef,public renderer:Renderer2) { }
+  constructor(
+    private el: ElementRef<HTMLImageElement>,
+    private renderer: Renderer2
+  ) {}
 
-  ngOnInit(): void {
-    this.setImageDimension()
+  ngOnInit() {
+    this.renderer.setStyle(this.el.nativeElement, 'object-fit', 'cover');
+    this.renderer.setStyle(this.el.nativeElement, 'width', '100%');
+    this.renderer.setStyle(this.el.nativeElement, 'height', '100%');
+
+    if (this.appFitImage) {
+      this.el.nativeElement.src = this.appFitImage;
+    } else {
+      this.el.nativeElement.src = '../../../assets/img/not-image-found.jpg';
+    }
   }
-  setImageDimension() {
-    this.renderer.setStyle(this.elementRef.nativeElement,'width','200px')
-    this.renderer.setStyle(this.elementRef.nativeElement,'height','900px')
-  }
-
-
 }
