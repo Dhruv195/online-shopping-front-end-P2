@@ -23,7 +23,11 @@ export class FooterComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
+  
+  /**
+   * Set Website Config Data
+   */
   ngOnInit(): void {
     this.setSiteConfig();
   }

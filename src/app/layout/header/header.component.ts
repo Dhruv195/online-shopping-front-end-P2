@@ -7,6 +7,7 @@ import { AuthService } from '../../shared/service/auth.service';
 import { UserService } from '../../shared/service/user.service';
 import { API } from '../../shared/constant/api.constant';
 import { ProductService } from '../../shared/service/product.service';
+import { HEADER_ROUTES_ITEM, PROFILE_ROUTES_ITEM } from 'src/app/shared/constant/common-function';
 
 @Component({
   selector: 'app-header',
@@ -18,81 +19,30 @@ import { ProductService } from '../../shared/service/product.service';
 export class HeaderComponent implements OnInit {
   collapseCategory = false;
   categories: any;
-  headerNav = [
-    {
-      title: 'Home',
-      link: '/home',
-    },
-    {
-      title: 'Shop',
-      link: '/shop',
-    },
-  ];
-  profileRoutes = [
-    {
-      title: 'Edit Profile',
-      link: '/user-profile',
-      icon: 'bi bi-person-fill text-primary fs-4',
-    },
-    {
-      title: 'Change Password',
-      link: '/user-profile/change-password',
-      icon: 'bi bi-lock-fill fs-4 text-primary',
-    },
-    {
-      title: 'Cart Item',
-      link: '/user-profile/shopping-cart',
-      icon: 'bi bi-cart-fill fs-4 text-primary',
-    },
-    {
-      title: 'Wish List',
-      link: '/user-profile/wish-list',
-      icon: 'bi bi-list-stars fs-4 text-primary',
-    },
-    {
-      title: 'Sign Out',
-      link: '/home',
-      icon: 'bi bi-box-arrow-right fs-4 text-primary',
-    },
-  ];
-  profileImage: any;
-  defaultProfileImg: any;
-  userDetails: any;
-  subscription: any;
+  headerNav = HEADER_ROUTES_ITEM;
+  profileRoutes = PROFILE_ROUTES_ITEM;
 
   constructor(
     public commonService: CommonService,
-    public authService: AuthService,
     public userService: UserService,
     private productService: ProductService,
     private router: Router
-  ) {}
+  ) { }
+  /**
+   * get Category API Call
+   */
   ngOnInit(): void {
     this.getCategory();   
   }
-  doSignOut() {
-    localStorage.removeItem('token');
-  }
-
-  onSelectCategory() {
-    this.collapseCategory = true;
-  }
-  clickOnProfileItem(profile: any) {
-    if (profile.title == 'Sign Out') {
+  /**
+   * InProfile DropDown in Click 
+   * @param profileTypeOfItem if Sign Out than remove token and redirect to home 
+   */
+  clickOnProfileItem(profileTypeOfItem: any) {
+    if (profileTypeOfItem.title == 'Sign Out') {
       localStorage.removeItem('token');
+      this.router.navigate(['/home']);
     }
-  }
-
-  getUserDetails() {
-    this.userService.getUser().subscribe({
-      next: (res: any) => {
-        this.userDetails = res.data;
-        this.profileImage = this.userDetails.profilePic;
-        this.defaultProfileImg =
-          API.USER_NAME_PROFILE_IMG +
-          `${this.userDetails?.firstName}+${this.userDetails?.lastName}`;
-      },
-    });
   }
   getCategory() {
     this.productService.getCategoryList().subscribe({

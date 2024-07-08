@@ -18,14 +18,23 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
   
   constructor(private authService:AuthService,private router:Router){}
 
+  /**
+   * initialize forgot Password  Confirmation Form
+   */
   ngOnInit(): void {
     this.initializeForgotPasswordForm();
   }
+  /**
+   * forgot Password Confirmation Form
+   */
   initializeForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
       email: new FormControl('',[Validators.required]),
     })
   }
+  /**
+   * submit Forgot Password Confirmation 
+   */
   doForgotPassword() {
     this.submitted = true;
     if (this.forgotPasswordForm.valid) {

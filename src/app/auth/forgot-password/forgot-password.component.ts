@@ -21,29 +21,46 @@ export class ForgotPasswordComponent implements OnInit {
   token: any;
 
   constructor(private activatedRoute:ActivatedRoute,private authService:AuthService,private commonService:CommonService,private router:Router){}
-
+  /**
+   * initializeForgotPasswordForm 
+   * getParams fetch token
+   */
   ngOnInit(): void {
     this.initializeForgotPasswordForm();
     this.getParams()
   }
+  /**
+   * fetch token to prams
+   */
   getParams() {
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.token = params.params.token;
     })
   }
+  /**
+   * initialize Forgot Password Form Data
+   */
   initializeForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
       password: new FormControl('',Validators.required),
       confirmPassword:new FormControl('',Validators.required)
     })
   }
-  //hidden password and show password
+  /**
+   * hidden password and show password icon
+   */
   showPassword() {
     this.hiddenPassword = !this.hiddenPassword;
   }
+  /**
+   * hidden Confirm password and show password icon
+   */
   showConfirmPassword() {
     this.hiddenConfirmPassword = !this.hiddenConfirmPassword;
   }
+  /**
+   * forgot password form submit to call API and New Password
+   */
   doForgotPassword() {
     this.submitted = true;
     if (this.forgotPasswordForm.valid) {

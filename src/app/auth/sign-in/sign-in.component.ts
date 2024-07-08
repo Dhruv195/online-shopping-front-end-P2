@@ -22,7 +22,7 @@ export class SignInComponent {
   submitted = false;
 
 
-  constructor(public userService:UserService ,public authService:AuthService,public router:Router,public commonService:CommonService,private cd:ChangeDetectorRef){}
+  constructor(private userService:UserService ,private authService:AuthService,private router:Router,private commonService:CommonService,private cd:ChangeDetectorRef){}
 
   /**
    * login FormGroup initialize
@@ -60,7 +60,9 @@ export class SignInComponent {
   }
   
   
-  //hidden password and show password
+  /**
+   * hidden password and show password
+   */
   showPass() {
     this.hiddenPassword = !this.hiddenPassword;
   }

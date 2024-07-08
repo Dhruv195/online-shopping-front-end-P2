@@ -32,12 +32,16 @@ export class SignUpComponent {
     public userService:UserService,
     public cd:ChangeDetectorRef
   ) {}
-
+  /**
+   * sign Up form Initialize
+   */
   ngOnInit(): void {
     this.signInFormGroup();
   }
 
-  
+  /**
+   * sign up form 
+   */
   signInFormGroup() {
     this.signUpForm = new FormGroup({
       firstName: new FormControl(null, Validators.required),
@@ -47,7 +51,9 @@ export class SignUpComponent {
     });
   }
 
-  //hidden password and show password
+  /**
+   * hidden password and show password
+   */
   showPassword() {
     this.hiddenPassword = !this.hiddenPassword;
   }
@@ -55,15 +61,17 @@ export class SignUpComponent {
     this.hiddenConfirmPassword = !this.hiddenConfirmPassword;
   }
 
-
+  /**
+   * submit on SignUp to call Sign API
+   * activeUserDetails behavior subject to pass true to active
+   */
   doSignUp() {
     this.submitted = true;
     this.authService.signUpUser(this.signUpForm.value).subscribe({
       next:(res:any)=>{
         if(res){
           this.authService.saveToken(res.data.token);
-        this.userService.activeUserDetails.next(true);
-
+          this.userService.activeUserDetails.next(true);
           this.route.navigate(['home/']);
           this.cd.markForCheck();
         }

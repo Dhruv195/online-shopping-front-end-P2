@@ -5,7 +5,7 @@
       <a
         class="btn d-flex align-items-center justify-content-between bg-primary w-100"
         data-toggle="collapse"
-        (click)="onClickCategory()"
+        (click)="collapseCategory = !collapseCategory;"
         style="height: 65px; padding: 0 30px"
       >
         <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
@@ -37,8 +37,6 @@
           *ngIf="commonService.siteConfig$ | async as sitInfo"
         >
           <img [src]="sitInfo.logo" alt="Site Logo" />
-          <!-- <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
-                    <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span> -->
         </a>
         <button
           type="button"

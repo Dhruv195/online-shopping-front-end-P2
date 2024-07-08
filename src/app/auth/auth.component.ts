@@ -14,7 +14,9 @@ export class AuthComponent implements OnInit {
 
   constructor(public authService:AuthService,public route:Router){}
   ngOnInit(): void {
-    //if token in localStorage than redirect to main module
+    /**
+     * if token in localStorage than redirect to main module
+     */
     if (this.authService.getToken()) {
       this.route.navigate(['/home']);
     }

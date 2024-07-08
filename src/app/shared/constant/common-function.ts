@@ -1,36 +1,5 @@
 export const FILTER = [
   {
-    title: 'FILTER BY PRICE',
-    type: 'price',
-    price: [
-      {
-        title: 'All Price',
-        total: '1000',
-      },
-      {
-        title: '0-100',
-        total: '150',
-      },
-      {
-        title: '100-200',
-        total: '290',
-      },
-      {
-        title: '200-300',
-        total: '234',
-      },
-      {
-        title: '300-400',
-        total: '300',
-      },
-      {
-        title: '400-500',
-        total: '230',
-      },
-    ],
-  },
-
-  {
     title: 'FILTER BY COLOR',
     type: 'color',
     color: [
@@ -240,5 +209,49 @@ export const shareList = [
   {
     icon: 'fa-pinterest',
     link: 'https://in.pinterest.com/',
+  },
+];
+
+
+export const HEADER_ROUTES_ITEM=[
+  {
+    title: 'Home',
+    link: '/home',
+  },
+  {
+    title: 'Shop',
+    link: '/shop',
+  },
+  {
+    title: 'Contact',
+    link:'/contact'
+  }
+];
+
+export const PROFILE_ROUTES_ITEM=[
+  {
+    title: 'Edit Profile',
+    link: '/user-profile',
+    icon: 'bi bi-person-fill text-primary fs-4',
+  },
+  {
+    title: 'Change Password',
+    link: '/user-profile/change-password',
+    icon: 'bi bi-lock-fill fs-4 text-primary',
+  },
+  {
+    title: 'Cart Item',
+    link: '/user-profile/shopping-cart',
+    icon: 'bi bi-cart-fill fs-4 text-primary',
+  },
+  {
+    title: 'Wish List',
+    link: '/user-profile/wish-list',
+    icon: 'bi bi-list-stars fs-4 text-primary',
+  },
+  {
+    title: 'Sign Out',
+    link: '/home',
+    icon: 'bi bi-box-arrow-right fs-4 text-primary',
   },
 ];
