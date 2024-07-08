@@ -118,12 +118,15 @@ export class ShopeComponent implements OnInit  {
   }
   //filter Card to get selected filter items
   onFilterChanged(selectedFilters: any) {
+    console.log("Slected ")
     // Clear previous filters
     Object.keys(this.params).forEach(key => {
       if (key.includes('price[') || key.includes('color[') || key.includes('size[') ) {
         delete this.params[key];
       }
     });
+
+    console.log("Delete params ",this.params)
 
      
     //handle params for API multiple select price,size 

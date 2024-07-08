@@ -21,6 +21,7 @@ export class CommonInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
     let token=this.authService.getToken();
+
     if(token){
       request=request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
     }
@@ -38,7 +39,7 @@ export class CommonInterceptor implements HttpInterceptor {
             errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
           }
           this.commonService.showToastMessage(TOAST_TYPE.danger,errorMsg)
-          this.router.navigate(['auth/sign-in']);
+          // this.router.navigate(['auth/sign-in']);
          return throwError(() => new Error(errorMsg));
       })
 );

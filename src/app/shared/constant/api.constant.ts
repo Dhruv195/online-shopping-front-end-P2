@@ -20,5 +20,7 @@ export const API = {
   ENQUIRY: 'enquiry',
   CHANGE_PASSWORD: 'user/changePassword',
   FORGOT_PASSWORD: 'user/forget-password/',
-  CONFIRM_EMAIL:'user/confirm-email'
+  CONFIRM_EMAIL:'user/confirm-email',
+  WISHLIST:'wishlist',
+  REVIEW:'review'
 };

@@ -52,6 +52,8 @@ export class ChangePasswordComponent implements OnInit {
       this.authService.changePassword(this.changePasswordForm.value).subscribe({
         next: (res: any) => {
           this.commonService.showToastMessage(TOAST_TYPE.success,'Password Change Successfully')
+          this.changePasswordForm.reset();
+          this.submitted=false;
         },
         error: (err: any) => {  
           this.commonService.showToastMessage(TOAST_TYPE.danger,'Old Password is InCorrect')

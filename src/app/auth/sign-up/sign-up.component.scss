@@ -9,6 +9,14 @@
 .bgColor{
   background-color:#FFEA80;
 }
+.horizontal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px; /* Adjust the gap between columns */
+  padding: 0;
+  list-style-type: none;
+  justify-items: start; /* Align items to start of columns */
+}
 .width{ 
     width: 350px;
 }

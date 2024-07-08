@@ -23,16 +23,29 @@ export const routes: Routes = [
           import('./shope/shope.component').then((m) => m.ShopeComponent),
       },
       {
-        path: 'shop-detail',
-        loadComponent: () =>
-          import('./shope-details/shope-details.component').then(
-            (m) => m.ShopeDetailsComponent
-          ),
-      },
-      {
         path: 'shop-detail/:id',
         loadComponent: () =>
           import('./shope-details/shope-details.component').then((m) => m.ShopeDetailsComponent),
+        children: [
+          {
+            path: '',
+            redirectTo: 'product-description',
+            pathMatch: 'full'
+          },
+          {
+            path: 'product-description',
+            loadComponent: () => import('./shope-details/product-description/product-description.component').then((m) => m.ProductDescriptionComponent),
+          },
+          {
+            path: 'product-information',
+            loadComponent: () => import('./shope-details/product-information/product-information.component').then((m) => m.ProductInformationComponent),
+          },
+          {
+            path: 'product-reviews',
+            loadComponent: () => import('./shope-details/product-reviews/product-reviews.component').then((m) => m.ProductReviewsComponent),
+          }
+        ]
+       
       },
       {
         path: 'shopping-cart',
@@ -62,6 +75,14 @@ export const routes: Routes = [
       },
       {
         path: 'wish-list',
+        loadComponent: () =>
+          import('./product-wishlist/product-wishlist.component').then(
+            (m) => m.ProductWishlistComponent
+          ),
+        canActivate:[authGuard]
+      },
+      {
+        path: 'wish-list/:id',
         loadComponent: () =>
           import('./product-wishlist/product-wishlist.component').then(
             (m) => m.ProductWishlistComponent

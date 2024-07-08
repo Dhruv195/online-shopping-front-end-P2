@@ -37,20 +37,7 @@ export class SignUpComponent {
     this.signInFormGroup();
   }
 
-  doSignUp() {
-    this.submitted = true;
-    console.log('Res ', this.signUpForm.value);
-    this.authService.signUpUser(this.signUpForm.value).subscribe({
-      next:(res:any)=>{
-        if(res){
-          this.authService.saveToken(res.data.token)
-          this.route.navigate(['home/']);
-          this.cd.markForCheck();
-        }
-      },
-      error: (err) => {},
-    });
-  }
+  
   signInFormGroup() {
     this.signUpForm = new FormGroup({
       firstName: new FormControl(null, Validators.required),
@@ -66,5 +53,21 @@ export class SignUpComponent {
   }
   showConfirmPassword() {
     this.hiddenConfirmPassword = !this.hiddenConfirmPassword;
+  }
+
+
+  doSignUp() {
+    this.submitted = true;
+    console.log('Res ', this.signUpForm.value);
+    this.authService.signUpUser(this.signUpForm.value).subscribe({
+      next:(res:any)=>{
+        if(res){
+          this.authService.saveToken(res.data.token)
+          this.route.navigate(['home/']);
+          this.cd.markForCheck();
+        }
+      },
+      error: (err) => {},
+    });
   }
 }

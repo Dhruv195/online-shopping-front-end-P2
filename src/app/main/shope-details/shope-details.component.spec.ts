@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShopeDetailsComponent } from './shope-details.component';
 
 describe('ShopeDetailsComponent', () => {
+  
   let component: ShopeDetailsComponent;
   let fixture: ComponentFixture<ShopeDetailsComponent>;
 

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProdcutCardComponent } from 'src/app/shared/components/prodcut-card/prodcut-card.component';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   animate,
@@ -14,6 +14,7 @@ import {
 } from '@angular/animations';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-shope-details',
@@ -25,6 +26,8 @@ import { AuthService } from 'src/app/shared/service/auth.service';
     CarouselModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
+    NgbModule
   ],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
@@ -35,6 +38,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
       transition('false <=> true', animate('300ms ease-in-out')),
     ]),
   ],
+  changeDetection:ChangeDetectionStrategy.OnPush,
 })
 export class ShopeDetailsComponent {
   constructor(
@@ -42,8 +46,11 @@ export class ShopeDetailsComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cd:ChangeDetectorRef
   ) {}
+
+  
   addProductCart = {
     productId: 0,
     quantity: 1,
@@ -60,90 +67,22 @@ export class ShopeDetailsComponent {
     totalProductPrice: 0,
     Images: [],
   };
-
-  cartList: any[] = [];
-  productId: any;
-  ngOnInit(): void {
-    this.changeBreadCrumbData();
-    this.activatedRoute.params.subscribe({
-      next: (res: any) => {
-        console.log(res);
-
-        if (res.id) {
-          this.productId = res.id;
-        }
-      },
-    });
-    this.getProduct(this.productId);
-    this.getRelatedProduct(this.productId);
-    console.log(this.productId);
-  }
-  changeBreadCrumbData() {
-    this.commonService.breadCrumbData$.next({
-      pageTitle: 'Shop Detail',
-      linkList: [
-        { label: 'Home', link: '/' },
-        { label: 'Shop', link: '/shop' },
-        { label: 'Shop Detail', link: '/shop-detail' },
-      ],
-    });
-  }
-
-  getProduct(productId: any) {
-    this.productService.getProductById(productId).subscribe({
-      next: (res: any) => {
-        this.products = res.data;
-        console.log(this.products, 'Good');
-      },
-    });
-  }
-
-  getRelatedProduct(productId: any) {
-    this.productService.getRelatedProducts(productId).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          this.productList = res.data.products;
-        }
-      },
-    });
-  }
-
-  quantityMinus() {
-    if (this.addProductCart.quantity > 1) {
-      this.addProductCart.quantity -= 1;
+  
+//////
+  routerOfProductInformation: any[] = [
+    {
+      title: 'Description',
+      link: 'product-description'
+    },
+    {
+      title: 'Information',
+      link: 'product-information'
+    },
+    {
+      title: 'Reviews (0)',
+      link: 'product-reviews'
     }
-  }
-  quantityPlus() {
-    this.addProductCart.quantity += 1;
-  }
-  addToCart() {
-    (this.addProductCart.productId = this.addProductData.productId =
-      this.productId),
-      (this.addProductCart.price = this.addProductData.price =
-        this.products.sellingPrice);
-    if (this.authService.loggedIn()) {
-      console.log(this.addProductCart);
-      this.productService
-        .addProductToCart({ product: this.addProductCart })
-        .subscribe({
-          next: (res: any) => {
-            console.log('response', res);
-          },
-        });
-    } else {
-      this.addProductData.Images = this.products.images;
-      this.addProductData.productName = this.products.productName;
-      this.addProductData.quantity = this.addProductCart.quantity;
-      this.addProductData.totalProductPrice =this.addProductCart.price * this.addProductCart.quantity;
-      console.log(this.addProductData);
-      this.cartList =this.commonService.getLocalStorage('cartProductList') || [];
-      this.cartList.push(this.addProductData);
-      this.commonService.setLocalStorage('cartProductList', this.cartList);
-    }
-
-    this.router.navigate(['/shopping-cart']);
-  }
-
+  ];
   customOptions: OwlOptions = {
     loop: true,
     margin: 29,
@@ -167,145 +106,6 @@ export class ShopeDetailsComponent {
       },
     },
   };
-
-  products: any = {
-    // products: [
-    //   {
-    //     _id: '667a93516a95e65e828409cc',
-    //     productName: 'Nike Running Shoes',
-    //     images: [
-    //       'assets/img/product-1.jpg',
-    //       'assets/img/product-2.jpg',
-    //       'assets/img/product-3.jpg',
-    //     ],
-    //     price: 120,
-    //     sellingPrice: 100,
-    //     colors: ['Red', 'Blue'],
-    //     size: ['8', '9', '10'],
-    //     mainDescription: 'Comfortable running shoes from Nike',
-    //     subDescription: 'Perfect for runners looking for a lightweight shoe.',
-    //     tags: ['shoes', 'nike', 'running'],
-    //     ratings: 3,
-    //     reviews: 3,
-    //     information: {
-    //       description: 'Breathable and lightweight running shoes',
-    //       infoPoints: ['Lightweight', 'Breathable', 'Comfortable'],
-    //     },
-    //     isFeatured: true,
-    //     isActive: true,
-    //     category: {
-    //       categoryName: 'Sports',
-    //       bannerImage: 'https://example.com/banner/sports.jpg',
-    //       image: 'https://example.com/image/sports.jpg',
-    //       banner: false,
-    //       isActive: true,
-    //     },
-    //   },
-    // ],
-    // page: 1,
-    // items: 1,
-    // total_count: 10,
-  };
-
-  reviewList = {
-    _id: '667a93516a95e65e828409cc',
-    productName: 'Nike Running Shoes',
-
-    reviews: [
-      {
-        user_profile_pic: 'assets/img/user.jpg',
-        firstName: 'Dhruv',
-        lastName: 'Joshi',
-        reviewMessage:
-          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-        reviewRating: 4,
-        reviewDate: '01/01/2045',
-      },
-      {
-        user_profile_pic: 'assets/img/user.jpg',
-        firstName: 'Vishal',
-        lastName: 'Joshi',
-        reviewMessage:
-          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-        reviewRating: 2,
-        reviewDate: '01/01/20',
-      },
-    ],
-  };
-
-  productList: any[] = [
-    // {
-    //   images:[ 'assets/img/product-1.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-2.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-3.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-4.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-    // {
-    //   images: ['assets/img/product-5.jpg'],
-    //   links: {
-    //     cart: '#',
-    //     wishlist: '#',
-    //     compare: '#',
-    //     view: '#',
-    //   },
-    //   name: 'Product Name Goes Here',
-    //   price: '123.00',
-    //   sellingPrice: '123.00',
-    //   rating: 5,
-    //   reviews: 99,
-    // },
-  ];
-
   shareList = [
     {
       icon: 'fa-facebook-f',
@@ -324,4 +124,176 @@ export class ShopeDetailsComponent {
       link: 'https://in.pinterest.com/',
     },
   ];
+  cartList: any[] = [];
+  productId: any;
+  product:any;
+  productList:any;
+  
+  ngOnInit(): void {
+    this.changeBreadCrumbData();
+    this.getParams();
+    if(this.productId){
+      this.getProduct(this.productId);
+      this.getRelatedProduct(this.productId);
+    }
+  }
+  changeBreadCrumbData() {
+    this.commonService.breadCrumbData$.next({
+      pageTitle: 'Shop Detail',
+      linkList: [
+        { label: 'Home', link: '/' },
+        { label: 'Shop', link: '/shop' },
+        { label: 'Shop Detail', link: '/shop-detail' },
+      ],
+    });
+  }
+
+  getParams(){
+    this.activatedRoute.params.subscribe({
+      next: (res: any) => {
+        console.log(res,'params of shop')
+          this.productId = res.id;
+          this.cd.markForCheck();
+        },
+      });
+  }
+
+  getProduct(productId: any) {
+    this.productService.getProductById(productId).subscribe({
+      next: (res: any) => {
+        this.product = res.data;
+        console.log("PRoduct ",this.product)
+        this.productService.productDetails$.next(this.product);
+
+        this.cd.markForCheck();
+
+      },
+    });
+  }
+
+  getRelatedProduct(productId: any) {
+    this.productService.getRelatedProducts(productId).subscribe({
+      next: (res: any) => {
+          this.productList = res.data.products;
+          this.cd.markForCheck();
+
+        }
+    });
+  }
+
+  quantityMinus() {
+    if (this.addProductCart.quantity > 1) {
+      this.addProductCart.quantity -= 1;
+    }
+  }
+  quantityPlus() {
+    this.addProductCart.quantity += 1;
+  }
+  addToCart() {
+    (this.addProductCart.productId = this.addProductData.productId =
+      this.productId),
+      (this.addProductCart.price = this.addProductData.price =
+        this.product.sellingPrice);
+    if (this.authService.loggedIn()) {
+      console.log(this.addProductCart);
+      this.productService
+        .addProductToCart({ product: this.addProductCart })
+        .subscribe({
+          next: (res: any) => {
+            console.log('response', res);
+            this.router.navigate(['/shopping-cart']);
+            this.cd.markForCheck();
+          },
+        });
+    } else {
+      this.addProductData.Images = this.product.images;
+      this.addProductData.productName = this.product.productName;
+      this.addProductData.quantity = this.addProductCart.quantity;
+      this.addProductData.totalProductPrice =
+        this.addProductCart.price * this.addProductCart.quantity;
+      console.log(this.addProductData);
+      this.cartList =
+        this.commonService.getLocalStorage('cartProductList') || [];
+      this.cartList.push(this.addProductData);
+      this.commonService.setLocalStorage('cartProductList', this.cartList);
+    }
+    this.router.navigate(['/shopping-cart']);
+  }
+
+  
+
+
+  //   {
+  //     images:[ 'assets/img/product-1.jpg'],
+  //     links: {
+  //       cart: '#',
+  //       wishlist: '#',
+  //       compare: '#',
+  //       view: '#',
+  //     },
+  //     name: 'Product Name Goes Here',
+  //     price: '123.00',
+  //     sellingPrice: '123.00',
+  //     rating: 5,
+  //     reviews: 99,
+  //   },
+  //   {
+  //     images: ['assets/img/product-2.jpg'],
+  //     links: {
+  //       cart: '#',
+  //       wishlist: '#',
+  //       compare: '#',
+  //       view: '#',
+  //     },
+  //     name: 'Product Name Goes Here',
+  //     price: '123.00',
+  //     sellingPrice: '123.00',
+  //     rating: 5,
+  //     reviews: 99,
+  //   },
+  //   {
+  //     images: ['assets/img/product-3.jpg'],
+  //     links: {
+  //       cart: '#',
+  //       wishlist: '#',
+  //       compare: '#',
+  //       view: '#',
+  //     },
+  //     name: 'Product Name Goes Here',
+  //     price: '123.00',
+  //     sellingPrice: '123.00',
+  //     rating: 5,
+  //     reviews: 99,
+  //   },
+  //   {
+  //     images: ['assets/img/product-4.jpg'],
+  //     links: {
+  //       cart: '#',
+  //       wishlist: '#',
+  //       compare: '#',
+  //       view: '#',
+  //     },
+  //     name: 'Product Name Goes Here',
+  //     price: '123.00',
+  //     sellingPrice: '123.00',
+  //     rating: 5,
+  //     reviews: 99,
+  //   },
+  //   {
+  //     images: ['assets/img/product-5.jpg'],
+  //     links: {
+  //       cart: '#',
+  //       wishlist: '#',
+  //       compare: '#',
+  //       view: '#',
+  //     },
+  //     name: 'Product Name Goes Here',
+  //     price: '123.00',
+  //     sellingPrice: '123.00',
+  //     rating: 5,
+  //     reviews: 99,
+  //   },
+  // ];
+
+  
 }

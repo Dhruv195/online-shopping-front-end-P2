@@ -1,0 +1,21 @@
+
+    <h4 class="mb-3">Additional Information</h4>
+<ng-container *ngIf="productService.productDetails$ | async as product" >
+
+    <p>{{product?.information?.description}}</p>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let points of product?.information?.infoPoints" >
+                    <li class="list-group-item px-0">
+                        {{points}}
+                    </li>
+                </ng-container>
+                
+                
+              </ul> 
+        </div>
+       
+    </div>
+
+</ng-container>

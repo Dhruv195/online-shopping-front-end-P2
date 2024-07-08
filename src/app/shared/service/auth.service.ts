@@ -21,11 +21,13 @@ export class AuthService {
   getToken() {
     let token = localStorage.getItem('token');
     return token ? JSON.parse(token) : null;
+    // return localStorage.getItem('token');
   }
   //if user is loggedIn mean token is exist in localStorage to return true
   loggedIn() {
     let token = this.getToken();
     return token ? true : false;
+    // return !!this.getToken();
   }
   //Change Password API Call
   changePassword(dataChangePassword:any) {

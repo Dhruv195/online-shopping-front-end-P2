@@ -13,7 +13,7 @@ export class HttpService {
   constructor(private http:HttpClient ,private injector: Injector) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    
+
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${error.error.message}`;
@@ -30,8 +30,8 @@ export class HttpService {
     return this.http.get<T>(`${this.baseUrl}/${url}`,{params: params}).pipe(catchError(this.handleError.bind(this)));
   }
 
-  post<T>(url: string, body: any): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}/${url}`, body).pipe(catchError(this.handleError.bind(this)));
+  post<T>(url: string, body: any,params?:HttpParams): Observable<T> {
+    return this.http.post<T>(`${this.baseUrl}/${url}`, body,{params:params}).pipe(catchError(this.handleError.bind(this)));
   }
 
   put<T>(url: string, body: any): Observable<T> {
@@ -43,6 +43,6 @@ export class HttpService {
   }
 
   delete<T>(url: string, params?: HttpParams): Observable<T> {
-    return this.http.delete<T>(`${this.baseUrl}/${url}`).pipe(catchError(this.handleError.bind(this)));
+    return this.http.delete<T>(`${this.baseUrl}/${url}`,{params:params}).pipe(catchError(this.handleError.bind(this)));
   }
 }

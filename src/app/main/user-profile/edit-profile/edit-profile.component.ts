@@ -40,7 +40,7 @@ export class EditProfileComponent implements OnInit {
       profilePic: new FormControl(''),
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      gender: new FormControl(''),
+      gender: new FormControl(' '),
       dob: new FormControl(''),
       phone: new FormControl('', Validators.required),
     })
@@ -101,7 +101,8 @@ export class EditProfileComponent implements OnInit {
           console.log(res,"Edit")
           this.onEdit();
           // this.userService.updateUserDetails$.next(true);
-          this.userService.userDetails$.next(res.data);
+          // this.userService.userDetails$.next(res.data);
+          
           this.cd.markForCheck()
         },
         error: (res: any) => {
@@ -112,19 +113,12 @@ export class EditProfileComponent implements OnInit {
   }
 
   getUserDetails(){
-    // this.userService.getUser().subscribe({
-    //   next:(res:any)=>{
-    //     this.handleUserProfileData(res);
-        
-    //     this.userService.updateUserDetails$.next(true);
-    //     this.cd.markForCheck();
-    //   }
-    // })
+   
 
-    this.userService.getUser().subscribe({
+    this.userService.userDetails$.subscribe({
       next:(res:any)=>{
         console.log("Res of get ",res)
-        this.handleUserProfileData(res.data);
+        this.handleUserProfileData(res);
         this.cd.markForCheck();
 
       }

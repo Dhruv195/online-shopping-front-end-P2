@@ -69,6 +69,9 @@ export class TopBarFirstLayerComponent implements OnInit {
 
   constructor(public authService:AuthService,public userService:UserService,public commonService:CommonService){}
   ngOnInit(): void {
+    this.userService.userDetails$.subscribe(userDetails => {
+      this.userDetails = userDetails;
+    });
     this.getUserDetails();
   }
   
@@ -77,7 +80,8 @@ export class TopBarFirstLayerComponent implements OnInit {
   clickOnProfileItem(profile:any) {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
-      localStorage.removeItem('userDetails');
+      // localStorage.removeItem('userDetails');
+      // this.userService.updateUserDetails(null); 
       this.commonService.showToastMessage(TOAST_TYPE.success,'Sign Out Successfully')
     }
   }
@@ -87,16 +91,23 @@ export class TopBarFirstLayerComponent implements OnInit {
     document.cookie = 'googtrans=' + `/en/${languageCode}`
     location.reload();
   }
+
   getUserDetails(){
     if(this.authService.getToken()){
       this.userService.getUser().subscribe({
         next:(res:any)=>{
           this.userDetails=res.data;
+          // this.userService.updateUserDetails(res.data);
+          this.userService.userDetails$.next(res.data);
+        },
+        error: () => {
+          // this.userService.updateUserDetails(null);
         }
       })
     }
     else{
-      this.userDetails=null;
+      // this.userService.updateUserDetails(null);
+      
     }
     
   }

@@ -1,0 +1,5 @@
+<h4 class="mb-3">Product Description</h4>
+<ng-container *ngIf="productService.productDetails$ | async as product" >
+    <p>{{product?.mainDescription}}</p>
+    <p>{{product?.subDescription}}</p>
+</ng-container>

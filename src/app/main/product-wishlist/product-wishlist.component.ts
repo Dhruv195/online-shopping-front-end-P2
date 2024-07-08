@@ -1,56 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
   selector: 'app-product-wishlist',
   standalone: true,
   imports: [CommonModule,RouterModule],
   templateUrl: './product-wishlist.component.html',
-  styleUrls: ['./product-wishlist.component.scss']
+  styleUrls: ['./product-wishlist.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ProductWishlistComponent  {
   productWishList: any;
+  productId:any;
 
-  someAddedWishList=[
-    {
-      name:'Product Name',
-      price:150,
-      total:150,
-      img: 'assets/img/product-1.jpg',
-      description:"Lorem asdfalsfjsf aslkdfjlaks fasdfl  asdf sdjkkla"
-    },
-    {
-      name:'Product Name',
-      price:150,
-      total:150,
-      img: 'assets/img/product-1.jpg',
-      description:"Lorem asdfalsfjsf aslkdfjlaks fasdfl  asdf sdjkkla"
-      
-    },
-    {
-      name:'Product Name',
-      price:150,
-      total:150,
-      img:'assets/img/product-1.jpg',
-      description:"Lorem asdfalsfjsf aslkdfjlaks fasdfl  asdf sdjkkla"
-      
-    }
-  ]
-  constructor(public commonService:CommonService){}
+ 
+  constructor(private commonService:CommonService,private userService:UserService,private acitveRoute:ActivatedRoute,private cd:ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
-
-    this.productWishList= this.getLocalStorage('productWishList');
-    if(this.productWishList==undefined){
-      this.productWishList=[];
-      this.setLocalStorage('productWishList',this.productWishList);
+    this.getParams();
+    if(this.productId==undefined){
+      this.getWishList();
     }
-    this.commonService.totalWishListItem$.next(this.productWishList.length);
-
   }
+  
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Wis List',
@@ -62,18 +38,54 @@ export class ProductWishlistComponent  {
     });
   }
 
-  setLocalStorage(typeOfString:any,storeData:any) {
-    localStorage.setItem(typeOfString, JSON.stringify(storeData));
+  getParams(){
+    this.acitveRoute.params.subscribe({
+      next:(res:any)=>{
+        this.productId=res.id;
+        if(this.productId){
+          this.addProductInWishList();
+        }
+        this.cd.markForCheck();
+      },
+      error:(err:any)=>{
+        this.productId=null;
+      }
+    })
   }
-  getLocalStorage(typeOfString:any) { 
-    let localStorageData = localStorage.getItem(typeOfString);
-    if (localStorageData) {
-      return JSON.parse(localStorageData);
-    }
+  
+
+  getWishList(){
+    this.userService.getWishList().subscribe({
+      next:(res:any)=>{
+        this.productWishList=res.data.products;
+        this.cd.markForCheck();
+      },
+      error:(err:any)=>{
+        this.productWishList=[];
+      }
+    })
   }
-  deleteProductInWishList(index: any) {
-    this.productWishList.splice(index, 1);
-    this.setLocalStorage('productWishList', this.productWishList);
-    this.commonService.totalWishListItem$.next(this.productWishList.length);
+
+  addProductInWishList(){
+    this.userService.postWishList(this.productId).subscribe({
+      next:(res:any)=>{
+        this.getWishList();
+        this.cd.markForCheck();
+      },
+      error:(err:any)=>{}
+    })
   }
+
+  deleteProductInWishList(productId:any){
+    console.log('product Id',productId);
+    this.userService.deleteWishList(productId).subscribe({
+      next:(res:any)=>{
+        this.getWishList();
+        this.cd.markForCheck();
+      },
+      error:(err:any)=>{}
+    })
+
+  }
+  
 }

@@ -2,7 +2,7 @@
   <div class="product-img position-relative overflow-hidden">
     <img class="img-fluid custom-img" [src]="product.images[0] || 'assets/img/not-image-found.jpg'" alt="" />
     <div class="product-action">
-      <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"><i class="far fa-heart"></i></a>
+      <a class="btn btn-outline-dark btn-square" [routerLink]="['/wish-list/',product._id]"><i class="far fa-heart"></i></a>
       <a class="btn btn-outline-dark btn-square" [routerLink]="['/shop-detail/', product._id]"><i
           class="fa fa-search"></i></a>
     </div>
@@ -16,11 +16,8 @@
       </h6>
     </div>
     <div class="d-flex align-items-center justify-content-center mb-1">
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
+      <ngb-rating   [disabled]="true" [(rate)]="product.ratings" [max]="5" class="fs-5" >
+      </ngb-rating>
       <small> ({{ product.reviews || 0}})</small>
     </div>
   </div>

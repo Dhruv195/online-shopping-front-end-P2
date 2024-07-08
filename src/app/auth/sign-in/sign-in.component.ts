@@ -48,6 +48,7 @@ export class SignInComponent {
       next:(res:any)=>{
         this.authService.saveToken(res.data.token);
         this.commonService.showToastMessage(TOAST_TYPE.success,'User LogIn Successfully')
+        this.userService.activeUserDetails$.next(true);
         this.router.navigate(['/home']);
         this.cd.markForCheck()
       },
