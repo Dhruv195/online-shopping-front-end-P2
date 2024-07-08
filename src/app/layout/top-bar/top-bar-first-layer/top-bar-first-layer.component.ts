@@ -19,6 +19,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
   imports: [CommonModule, RouterModule, DropdownDirective],
   templateUrl: './top-bar-first-layer.component.html',
   styleUrls: ['./top-bar-first-layer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopBarFirstLayerComponent implements OnInit {
   links = [
@@ -69,14 +70,16 @@ export class TopBarFirstLayerComponent implements OnInit {
   ];
 
   userDetails: any;
-
+  languageDetails: any[] = [];
   constructor(
     public authService: AuthService,
     public userService: UserService,
-    public commonService: CommonService
+    public commonService: CommonService,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
     this.getUserDetails();
+    this.getLanguageDetails();
   }
 
   clickOnProfileItem(profile: any) {
@@ -100,10 +103,29 @@ export class TopBarFirstLayerComponent implements OnInit {
       this.userService.getUser().subscribe({
         next: (res: any) => {
           this.userDetails = res.data;
+          this.cdr.markForCheck();
         },
       });
     } else {
       this.userDetails = null;
     }
+  }
+
+  getLanguageDetails() {
+    this.commonService.getLanguage().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          res.data.data.forEach((element: any) => {
+            const language = {
+              label: element.name,
+              languageCode: element.code,
+            };
+            this.languageDetails.push(language);
+          });
+          this.cdr.markForCheck();
+          // this.languages = res.data;
+        }
+      },
+    });
   }
 }

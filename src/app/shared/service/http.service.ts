@@ -18,7 +18,6 @@ export class HttpService {
   constructor(private http: HttpClient, private injector: Injector) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${error.error.message}`;
@@ -27,7 +26,6 @@ export class HttpService {
     }
     let commonService = this.injector.get(CommonService);
     commonService.showToastMessage(TOAST_TYPE.danger, errorMessage);
-
     return throwError(() => new Error(errorMessage));
   }
 

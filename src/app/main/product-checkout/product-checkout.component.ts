@@ -13,7 +13,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AddressFormComponent } from 'src/app/shared/components/address-form/address-form.component';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { NgbRefDirective } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
@@ -23,12 +22,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-product-checkout',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AddressFormComponent,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './product-checkout.component.html',
   styleUrls: ['./product-checkout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,12 +36,14 @@ export class ProductCheckoutComponent {
   formData: any = {
     orderTotal: {
       products: [],
-      subtotal: 80,
+      subtotal: 0,
       shipping: 10,
-      total: 90,
+      total: 10,
     },
   };
-  paymentMethodList = ['Paytm', 'Google-Pay', 'Paypal'];
+  countries = ['USA', 'Canada', 'UK'];
+
+  paymentMethodList = ['Paytm', 'Google Pay', 'Paypal'];
 
   constructor(
     public commonService: CommonService,
@@ -64,8 +60,8 @@ export class ProductCheckoutComponent {
    */
   ngOnInit(): void {
     this.changeBreadCrumbData();
-    this.billingAddressForm = this.createAddressForm();
-    this.shippingAddressForm = this.createAddressForm();
+    this.createAddressForm();
+
     this.getUserCartDetail();
   }
   /**
@@ -86,29 +82,47 @@ export class ProductCheckoutComponent {
    *
    * @returns Forms with multiple FormControls
    */
-  createAddressForm(): FormGroup {
-    return this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobileNo: ['', Validators.required],
-      addressLine1: ['', Validators.required],
-      addressLine2: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zipcode: ['', Validators.required,Validators.pattern('^[0-9]')],
-      country: ['', Validators.required],
+  createAddressForm() {
+    this.billingAddressForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      mobileNo: new FormControl('', Validators.required),
+      addressLine1: new FormControl('', Validators.required),
+      addressLine2: new FormControl(''),
+      city: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      zipcode: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      country: new FormControl('', Validators.required),
+    });
+
+    this.shippingAddressForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      mobileNo: new FormControl('', Validators.required),
+      addressLine1: new FormControl('', Validators.required),
+      addressLine2: new FormControl(''),
+      city: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      zipcode: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+      country: new FormControl('', Validators.required),
     });
   }
 
   /**
    * Toggle the shipping address
    */
-  toggleShippingAddress(): void {
-    this.showShippingAddress = !this.showShippingAddress;
+  toggleShippingAddress(event: any) {
+    this.showShippingAddress = event.target.checked;
     if (!this.showShippingAddress) {
       this.shippingAddressForm.reset();
-      this.submitted = false;
     }
   }
 
@@ -129,7 +143,7 @@ export class ProductCheckoutComponent {
           });
           this.formData.orderTotal.subtotal = res.data.totalAmount;
           this.formData.orderTotal.total =
-            res.data.totalAmount + this.formData.orderTotal.shipping; 
+            res.data.totalAmount + this.formData.orderTotal.shipping;
         }
         this.cdr.markForCheck();
       },
@@ -137,18 +151,22 @@ export class ProductCheckoutComponent {
   }
 
   /**
-   * 
+   *
    * @returns Valid the form and call get post API
    */
   onSubmit(): void {
     this.submitted = true;
-
-    if (this.billingAddressForm.invalid) {
-      return;
-    }
-
-    if (this.showShippingAddress && this.shippingAddressForm.invalid) {
-      return;
+    if (
+      this.billingAddressForm.valid &&
+      (this.showShippingAddress ? this.shippingAddressForm.valid : true)
+    ) {
+      // console.log('Order Placed!', {
+      //   billingAddress: this.billingAddressForm.value,
+      //   shippingAddress: this.showShippingAddress
+      //     ? this.shippingAddressForm.value
+      //     : null,
+      //   paymentMethod: this.paymentMethod,
+      // });
     }
 
     const billingAddress = this.billingAddressForm.value;
@@ -157,21 +175,20 @@ export class ProductCheckoutComponent {
       : billingAddress;
     const orderData: any = {
       billingAddress: shippingAddress,
-      shippingCharge:this.formData.orderTotal.shipping,
+      shippingCharge: this.formData.orderTotal.shipping,
       paymentMethod: this.paymentMethod,
     };
     this.addToCheckout(orderData);
   }
 
   /**
-   * 
+   *
    * @param orderData Add post data in addToCart API
    */
   addToCheckout(orderData: any) {
     this.orderService.addCheckoutOrder(orderData).subscribe({
       next: (res: any) => {
         console.log(res);
-
         if (res.success) {
           this.router.navigate(['/home']);
         }

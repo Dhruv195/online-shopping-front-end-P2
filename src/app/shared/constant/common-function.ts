@@ -171,6 +171,59 @@ export const reviewList = {
   ],
 };
 
+export const navigationList = [
+  {
+    navigationLabel: 'QUICK SHOP',
+    navigationLinks: [
+      {
+        label: 'Home',
+        link: '/home',
+      },
+      {
+        label: 'Our Shop',
+        link: '/shop',
+      },
+      {
+        label: 'Shopping Cart',
+        link: '/shopping-cart',
+      },
+      {
+        label: 'Checkout',
+        link: '/checkout',
+      },
+      {
+        label: 'Contact Us',
+        link: '/contact',
+      },
+    ],
+  },
+  {
+    navigationLabel: 'My Account',
+    navigationLinks: [
+      {
+        label: 'Home',
+        link: '/home',
+      },
+      {
+        label: 'Our Shop',
+        link: '/shop',
+      },
+      {
+        label: 'Shopping Cart',
+        link: '/shopping-cart',
+      },
+      {
+        label: 'Checkout',
+        link: '/checkout',
+      },
+      {
+        label: 'Contact Us',
+        link: '/contact',
+      },
+    ],
+  },
+];
+
 export const shareList = [
   {
     icon: 'fa-facebook-f',

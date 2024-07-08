@@ -114,8 +114,8 @@ export class ShopeDetailsComponent {
         }
       },
     });
-    // this.getProduct(this.productId);
-    // this.getRelatedProduct(this.productId);
+    this.getProduct(this.productId);
+    this.getRelatedProduct(this.productId);
   }
   /**
    * call breadcrumb service

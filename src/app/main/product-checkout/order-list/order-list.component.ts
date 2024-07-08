@@ -26,6 +26,9 @@ export class OrderListComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  /**
+   * Call
+   */
   ngOnInit(): void {
     this.getOrder();
     this.changeBreadCrumbData();

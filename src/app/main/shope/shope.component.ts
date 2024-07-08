@@ -38,9 +38,10 @@ import { ProductListViewComponent } from 'src/app/shared/components/product-list
 })
 export class ShopeComponent implements OnInit {
   filters = FILTER;
+  colorList: any[] = [];
   pageItemArray = [10, 20, 30];
   filterForm: any;
-  pageSize = 5;
+  pageSize = 9;
   page = 1;
   totalProduct: any;
   params: any;
@@ -83,6 +84,7 @@ export class ShopeComponent implements OnInit {
     this.changeBreadCrumbData();
     this.getProductListAndTotalProduct();
     this.fetchQueryParams();
+    this.getColors();
   }
   fetchQueryParams() {
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
@@ -208,5 +210,25 @@ export class ShopeComponent implements OnInit {
       maxPrice: this.maxValue,
     };
     this.getProductList(this.params);
+  }
+
+  getColors() {
+    this.commonService.getColor().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          res.data.forEach((element: any) => {
+            const color = {
+              title: element,
+              total: 100,
+            };
+            this.colorList.push(color);
+          });
+          // this.filters[1].color = this.colorList;
+          console.log(this.colorList);
+
+          this.cd.markForCheck();
+        }
+      },
+    });
   }
 }

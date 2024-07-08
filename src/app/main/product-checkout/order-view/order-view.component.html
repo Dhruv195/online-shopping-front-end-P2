@@ -1,1 +1,85 @@
-<p>order-view works!</p>
+<div class="order-details container bg-white p-4 mt-4 shadow">
+  <div class="row mt-3 mb-3 text-end">
+    <div class="col-12">
+      <button
+        class="btn btn-primary"
+        [routerLink]="['/user-profile/order-list']"
+        routerLinkActive="router-link-active"
+      >
+        Go Home
+      </button>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="order-header col-12 col-md-4 mb-3 mb-md-0">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">Order Details</h2>
+          <p>Order ID: {{ order._id }} ({{ order.products.length }} items)</p>
+          <p>Order Date: {{ order.createdAt | date }}</p>
+          <p>Total Amount: {{ order.totalAmount | currency }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="order-address col-12 col-md-4 mb-3 mb-md-0">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3 class="card-title">Address</h3>
+          <p>
+            {{
+              order.billingAddress.firstName +
+                " " +
+                order.billingAddress.lastName
+            }}
+          </p>
+          <p>
+            {{ order.billingAddress.addressLine1 }}<br />
+            {{ order.billingAddress.city }}, {{ order.billingAddress.state }},
+            {{ order.billingAddress.country }}<br />
+            {{ order.billingAddress.zipcode }}
+          </p>
+          <p>Phone: {{ order.billingAddress.mobileNo }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="order-total col-12 col-md-4 mb-3 mb-md-0">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3 class="card-title">Manage Order</h3>
+          <p>Payment: {{ order.paymentMethod }}</p>
+          <p>
+            Order Status:
+            <span class="bg-primary text-white p-1 rounded">{{
+              order.orderStatus
+            }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h3>Products</h3>
+      <div
+        class="row product-item border p-3 mb-3"
+        *ngFor="let product of order.products"
+      >
+        <div class="col-12 col-md-3 mb-3">
+          <img
+            [src]="product.image || 'assets/img/not-image-found.jpg'"
+            alt=""
+            class="img-fluid"
+          />
+        </div>
+        <div class="col-12 col-md-9">
+          <p><strong>Product Name:</strong> {{ product.productName }}</p>
+          <p><strong>Size:</strong> {{ product.size }}</p>
+          <p><strong>Color:</strong> {{ product.color }}</p>
+          <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+          <p><strong>Price:</strong> {{ product.price | currency }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

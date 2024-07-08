@@ -23,18 +23,20 @@
       >{{ product.productName | titlecase }}</a
     >
     <div class="d-flex align-items-center justify-content-center mt-2">
-      <h5>${{ product.sellingPrice }}</h5>
+      {{ product.sellingPrice | currency : "USD" : "symbol" : "1.2-2" }}
       <h6 class="text-muted ml-2">
-        <del>${{ product.price }}</del>
+        <del>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</del>
       </h6>
     </div>
     <div class="d-flex align-items-center justify-content-center mb-1">
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small class="fa fa-star text-primary mr-1"></small>
-      <small> ({{ product.reviews || 0 }})</small>
+      <small
+        class="fas fa-star"
+        *ngFor="let star of [].constructor(product.reviewRating)"
+      ></small>
+      <small
+        class="far fa-star"
+        *ngFor="let star of [].constructor(5 - product.reviewRating || 4)"
+      ></small>
     </div>
   </div>
 </div>

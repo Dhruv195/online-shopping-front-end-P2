@@ -6,28 +6,22 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
-import { ShoppingCartListComponent } from './shopping-cart-list/shopping-cart-list.component';
 import { TotalOrderCardComponent } from 'src/app/shared/components/total-order-card/total-order-card.component';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [
-    CommonModule,
-    ShoppingCartListComponent,
-    TotalOrderCardComponent,
-    FormsModule,
-  ],
+  imports: [CommonModule, TotalOrderCardComponent, FormsModule, RouterModule],
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingCartComponent implements OnInit {
-  subTotal = 0;
+  subTotal = 10;
   cartProductList: any[] = [];
 
   someAddedCart = [
@@ -65,6 +59,7 @@ export class ShoppingCartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.changeBreadCrumbData();
     if (this.authService.loggedIn()) {
       this.getUserCartDetail();
     } else {

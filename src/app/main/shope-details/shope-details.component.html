@@ -7,10 +7,7 @@
         class="carousel slide"
         data-ride="carousel"
       >
-        <div
-          class="carousel-inner bg-light"
-          *ngIf="products.images.length !== 0"
-        >
+        <div class="carousel-inner bg-light">
           <div
             class="carousel-item"
             *ngFor="let image of products.images; let i = index"
@@ -190,7 +187,7 @@
                   {{ products.reviews }} Review(s) for
                   {{ products.productName }}
                 </h3>
-                <ng-container *ngIf="reviewList.reviews.length > 0">
+                <ng-container>
                   <ng-container *ngFor="let review of reviewList.reviews">
                     <div class="media mb-4">
                       <img

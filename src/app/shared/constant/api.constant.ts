@@ -22,4 +22,7 @@ export const API = {
   CHANGE_PASSWORD: 'user/changePassword',
   FORGOT_PASSWORD: 'user/forget-password/',
   CONFIRM_EMAIL: 'user/confirm-email',
+  SITE_CONFIG: 'siteConfigs',
+  LANGUAGE: 'language',
+  COLOR: 'product/color',
 };

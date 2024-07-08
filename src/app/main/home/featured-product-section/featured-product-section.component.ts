@@ -17,122 +17,6 @@ import { ProductService } from 'src/app/shared/service/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedProductSectionComponent implements OnInit {
-  //   {
-  //     image: 'assets/img/product-1.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-2.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-3.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-4.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-1.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-2.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-3.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-  //   {
-  //     image: 'assets/img/product-3.jpg',
-  //     links: {
-  //       cart: '#',
-  //       wishlist: '#',
-  //       compare: '#',
-  //       view: '#',
-  //     },
-  //     name: 'Product Name Goes Here',
-  //     price: '123.00',
-  //     oldPrice: '123.00',
-  //     rating: 5,
-  //     reviews: 99,
-  //   },
-
-  //   // Add more products as needed
-  // ];
-
   constructor(
     private productService: ProductService,
     private cdr: ChangeDetectorRef
@@ -149,7 +33,11 @@ export class FeaturedProductSectionComponent implements OnInit {
   getProduct() {
     this.productService.getProductList('').subscribe({
       next: (res: any) => {
-        this.products = res.data.products;
+        res.data.products.forEach((element: any) => {
+          if (element.isFeatured) {
+            this.products.push(element);
+          }
+        });
         this.cdr.markForCheck();
       },
       error: (err: any) => {

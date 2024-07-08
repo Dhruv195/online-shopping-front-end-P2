@@ -40,7 +40,7 @@
               </button>
             </div>
             <div class="ml-2">
-              <div class="btn-group">
+              <!-- <div class="btn-group">
                 <button
                   type="button"
                   class="btn btn-sm btn-light dropdown-toggle"
@@ -53,7 +53,7 @@
                   <a class="dropdown-item">Popularity</a>
                   <a class="dropdown-item">Best Rating</a>
                 </div>
-              </div>
+              </div> -->
               <div class="btn-group ml-2">
                 <button
                   type="button"
@@ -102,15 +102,17 @@
           </div>
         </ng-container>
         <div class="col-12">
-          <nav *ngIf="productList.length != 0">
-            <ngb-pagination
-              [(page)]="page"
-              [pageSize]="pageSize"
-              [maxSize]="4"
-              [collectionSize]="totalProduct"
-              (pageChange)="changePageOfProduct(page)"
-            />
-          </nav>
+          <div class="d-flex justify-content-center">
+            <nav *ngIf="productList.length != 0">
+              <ngb-pagination
+                [(page)]="page"
+                [pageSize]="pageSize"
+                [maxSize]="4"
+                [collectionSize]="totalProduct"
+                (pageChange)="changePageOfProduct(page)"
+              ></ngb-pagination>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
