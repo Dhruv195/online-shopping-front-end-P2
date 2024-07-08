@@ -29,7 +29,6 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
   doForgotPassword() {
     this.submitted = true;
     if (this.forgotPasswordForm.valid) {
-      console.log("Email ", this.forgotPasswordForm.value);
 
       this.authService.confirmEmail(this.forgotPasswordForm.value).subscribe({
         next: (res: any) => {

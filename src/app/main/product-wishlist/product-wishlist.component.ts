@@ -33,7 +33,7 @@ export class ProductWishlistComponent  {
       linkList: [
         { label: 'Home', link: '/' },
         { label: 'Shop', link: '/shop' },
-        { label: 'Wis List', link: '/wish-list' },
+        { label: 'Wish List', link: '/wish-list' },
       ]
     });
   }
@@ -77,7 +77,6 @@ export class ProductWishlistComponent  {
   }
 
   deleteProductInWishList(productId:any){
-    console.log('product Id',productId);
     this.userService.deleteWishList(productId).subscribe({
       next:(res:any)=>{
         this.getWishList();

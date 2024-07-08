@@ -27,7 +27,7 @@
                     product.productName | titlecase
                   }}
                 </td>
-                <td class="align-middle">${{ product.price }}</td>
+                <td class="align-middle">{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</td>
                 <td class="align-middle">
                   <div
                     class="input-group quantity mx-auto"
@@ -57,7 +57,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="align-middle">${{ product.totalProductPrice }}</td>
+                <td class="align-middle">{{ product.totalProductPrice | currency : "USD" : "symbol" : "1.2-2" }}</td>
                 <td class="align-middle">
                   <button
                     class="btn btn-sm btn-danger"

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,7 +22,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
   styleUrls: ['./top-bar-first-layer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TopBarFirstLayerComponent implements OnInit {
+export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
   links = [
     { name: 'About', url: '#' },
     { name: 'Contact', url: 'contact' },
@@ -70,6 +71,7 @@ export class TopBarFirstLayerComponent implements OnInit {
   ];
 
   userDetails: any;
+  subscription: any;
   languageDetails: any[] = [];
   constructor(
     public authService: AuthService,
@@ -81,8 +83,15 @@ export class TopBarFirstLayerComponent implements OnInit {
     this.userService.userDetails$.subscribe(userDetails => {
       this.userDetails = userDetails;
     });
-    this.getUserDetails();
+    // this.getUserDetails();
     this.getLanguageDetails();
+     this.subscription = this.userService.activeUserDetails.subscribe({
+      next: (response) => {
+        if (response) {
+          this.getUserDetails();
+        }
+      },
+    });
   }
 
   clickOnProfileItem(profile: any) {
@@ -95,7 +104,6 @@ export class TopBarFirstLayerComponent implements OnInit {
   }
 
   changeLanguage(languageCode: any) {
-    console.log(languageCode);
     document.cookie = 'googtrans=' + `/en/${languageCode}`;
     location.reload();
   }
@@ -128,5 +136,11 @@ export class TopBarFirstLayerComponent implements OnInit {
         }
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

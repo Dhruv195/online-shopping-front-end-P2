@@ -33,7 +33,6 @@ export class CategorySectionComponent implements OnInit {
     let params = {
       'categoryId':categoryId,
     }
-    console.log("Search Bar params ",params)
     this.router.navigate(
       ['/shop'],
       {

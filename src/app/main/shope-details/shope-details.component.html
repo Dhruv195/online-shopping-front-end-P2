@@ -5,11 +5,11 @@
         <ng-container *ngIf="product?.images?.length>1" >
           <div id="product-carousel"  id="product-carousel-{{ product._id }}"
           class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner bg-light">
+              <div class="carousel-inner bg-light ">
 
                 <ng-container *ngFor="let image of product?.images, let i = index" >
-                  <div class="carousel-item " [ngClass]="{ active: i === 0 }">
-                    <img class="w-100 h-100"  [src]="image" alt="Image">
+                  <div class="carousel-item  " [ngClass]="{ active: i === 0 }" [ngStyle]="{'height':'600px' }"  >
+                    <img class="w-100 h-100"  [src]="image " appSetImageDimension alt="Image">
                 </div>
                 </ng-container>
                
@@ -34,11 +34,14 @@
               <h3>{{product?.productName  | titlecase}}</h3>
               <div class="d-flex mb-3 align-items-center">
                   <ngb-rating   [disabled]="true" [(rate)]="product.ratings" [max]="5" class="fs-5" >
+                    <ng-template let-fill="fill" let-index="index">
+                      <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < product.ratings"></i>
+                  </ng-template>
                   </ngb-rating>
                 
                 <small class="">{{'('+ product?.reviews +' Reviews)'}}</small>
               </div>
-              <h3 class="font-weight-semi-bold mb-4">${{product?.price}}</h3>
+              <h3 class="font-weight-semi-bold mb-4">{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</h3>
               <p class="mb-4">{{product?.mainDescription}}</p>
               <div class="d-flex mb-3">
                   <strong class="text-dark mr-3">Sizes:</strong>
@@ -75,6 +78,7 @@
                         [id]="'color-' + color"
                         name="color"
                         [value]="color"
+                        [checked]="product.colors[0]"
                         [(ngModel)]="addProductCart.color"
                       />
                       <label class="custom-control-label" [for]="'color-' + color">{{

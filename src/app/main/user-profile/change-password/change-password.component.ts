@@ -48,7 +48,6 @@ export class ChangePasswordComponent implements OnInit {
   onSubmitChangePassword() {
     this.submitted = true;
     if (this.changePasswordForm.valid) {
-      console.log(this.changePasswordForm.value)
       this.authService.changePassword(this.changePasswordForm.value).subscribe({
         next: (res: any) => {
           this.commonService.showToastMessage(TOAST_TYPE.success,'Password Change Successfully')

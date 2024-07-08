@@ -77,7 +77,7 @@
           <p><strong>Size:</strong> {{ product.size }}</p>
           <p><strong>Color:</strong> {{ product.color }}</p>
           <p><strong>Quantity:</strong> {{ product.quantity }}</p>
-          <p><strong>Price:</strong> {{ product.price | currency }}</p>
+          <p><strong>Price:</strong>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</p>
         </div>
       </div>
     </div>

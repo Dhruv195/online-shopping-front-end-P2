@@ -119,7 +119,6 @@ export class ShoppingCartComponent implements OnInit {
   getUserCartDetail() {
     this.productService.getUserCart().subscribe({
       next: (res: any) => {
-        console.log('res', res);
         if (res.success) {
           this.cartProductList = res.data.products;
           this.commonService.subTotalAmount$.next(res.data.totalAmount);
@@ -138,7 +137,6 @@ export class ShoppingCartComponent implements OnInit {
   removeProductCart(productId: any) {
     this.productService.deleteProductCart(productId).subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
         if (res.success) {
           this.getUserCartDetail();
         }
@@ -162,7 +160,6 @@ export class ShoppingCartComponent implements OnInit {
     this.subTotal = subTotal;
   }
   checkOutOrder() {
-    console.log(this.cartProductList[0]);
     const cartList: any[] = [];
     this.cartProductList.forEach((element: any) => {
       const cartItem = {
@@ -174,7 +171,6 @@ export class ShoppingCartComponent implements OnInit {
       cartList.push(cartItem);
     });
 
-    console.log(cartList, 'sfsdf');
 
     this.addCartList(cartList);
 
@@ -184,7 +180,6 @@ export class ShoppingCartComponent implements OnInit {
   addCartList(cartList: any[]) {
     this.productService.addProductToCart({ product: cartList }).subscribe({
       next: (res: any) => {
-        console.log('response', res);
         this.router.navigate(['/checkout']);
         this.cdr.markForCheck();
       },

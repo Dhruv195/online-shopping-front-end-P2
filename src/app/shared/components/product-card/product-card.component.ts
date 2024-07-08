@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,NgbModule],
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss'],
 })

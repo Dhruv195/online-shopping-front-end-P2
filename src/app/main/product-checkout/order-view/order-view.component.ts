@@ -61,7 +61,6 @@ export class OrderViewComponent implements OnInit {
     this.orderService.getOrderById(orderId).subscribe({
       next: (res: any) => {
         this.order = res.data;
-        console.log(this.order, 'Good');
         this.cdr.markForCheck();
       },
       error: (err: any) => {

@@ -5,8 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, catchError, of, tap, throwError } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { API } from '../constant/api.constant';
 import { CommonService } from '../service/common.service';
@@ -32,19 +33,6 @@ export class CommonInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMsg = '';
-        if (error.status === 401 || error.status === 403) {
-          localStorage.removeItem('token');
-          errorMsg = error.error.message;
-        } else {
-          errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-        }
-        this.commonService.showToastMessage(TOAST_TYPE.danger, errorMsg);
-        this.router.navigate(['auth/sign-in']);
-        return throwError(() => new Error(errorMsg));
-      })
-    );
+    return next.handle(request);
   }
 }

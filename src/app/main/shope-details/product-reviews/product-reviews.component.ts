@@ -5,40 +5,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/service/user.service';
+import { SetImageDimensionDirective } from 'src/app/shared/directive/set-image-dimension.directive';
 
 @Component({
   selector: 'app-product-reviews',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,NgbModule],
+  imports: [CommonModule,ReactiveFormsModule,NgbModule,],
   templateUrl: './product-reviews.component.html',
   styleUrls: ['./product-reviews.component.scss']
 })
 export class ProductReviewsComponent implements OnInit {
-  reviewList = {
-    _id: '667a93516a95e65e828409cc',
-    productName: 'Nike Running Shoes',
-
-    reviews: [
-      {
-        user_profile_pic: 'assets/img/user.jpg',
-        firstName: 'Dhruv',
-        lastName: 'Joshi',
-        reviewMessage:
-          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-        reviewRating: 4,
-        reviewDate: '01/01/2045',
-      },
-      {
-        user_profile_pic: 'assets/img/user.jpg',
-        firstName: 'Vishal',
-        lastName: 'Joshi',
-        reviewMessage:
-          'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-        reviewRating: 2,
-        reviewDate: '01/01/20',
-      },
-    ],
-  };
+  reviewList: any;
   reviewForm:any;
   productId:any;
   submitted:any;
@@ -47,12 +24,13 @@ export class ProductReviewsComponent implements OnInit {
     public commonService: CommonService,
     private activatedRoute: ActivatedRoute,
     private cd:ChangeDetectorRef,
-    private  userService:UserService,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
     this.inititalizeReviewForm();
-    this.getParams()
+    this.getParams();
+    this.getTotalReviewList(this.productId);
   }
   inititalizeReviewForm(){
     this.reviewForm=new FormGroup({
@@ -62,24 +40,28 @@ export class ProductReviewsComponent implements OnInit {
   }
 
   getParams(){
-    this.activatedRoute.params.subscribe({
+    this.activatedRoute.parent?.params.subscribe({
       next: (res: any) => {
-        console.log(res,'params of shop')
-          this.productId = res.id;
-          this.cd.markForCheck();
+        this.productId = res.id;
         },
       });
   }
   onSubmitReview(){
     this.submitted=true;
     if(this.reviewForm.valid){
-      console.log(this.reviewForm.value);
-      console.log("id",this.productId)
       this.userService.addReview(this.reviewForm.value,this.productId).subscribe({
         next:(res:any)=>{
-          console.log(res,'review')
+          this.getTotalReviewList(this.productId);
         }
       })
     }
+  }
+
+  getTotalReviewList(productId:any) {
+    this.userService.getReviewList(productId).subscribe({
+      next: (res: any) => {
+        this.reviewList = res.data;
+      }
+    })
   }
 }

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TopBarComponent } from './layout/top-bar/top-bar.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { UserService } from './shared/service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,17 @@ import { ToastComponent } from './shared/components/toast/toast.component';
     TopBarComponent,
     HeaderComponent,
     FooterComponent,
-    ToastComponent
+    ToastComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'online-shopping-front-end-P2';
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.activeUserDetails.next(true);
+  }
 }

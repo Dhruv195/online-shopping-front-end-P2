@@ -132,7 +132,6 @@ export class ProductCheckoutComponent {
   getUserCartDetail() {
     this.productService.getUserCart().subscribe({
       next: (res: any) => {
-        console.log('Res ', res);
         if (res.data) {
           res.data.products.forEach((element: any) => {
             const newProduct = {
@@ -160,13 +159,7 @@ export class ProductCheckoutComponent {
       this.billingAddressForm.valid &&
       (this.showShippingAddress ? this.shippingAddressForm.valid : true)
     ) {
-      // console.log('Order Placed!', {
-      //   billingAddress: this.billingAddressForm.value,
-      //   shippingAddress: this.showShippingAddress
-      //     ? this.shippingAddressForm.value
-      //     : null,
-      //   paymentMethod: this.paymentMethod,
-      // });
+
     }
 
     const billingAddress = this.billingAddressForm.value;
@@ -188,7 +181,6 @@ export class ProductCheckoutComponent {
   addToCheckout(orderData: any) {
     this.orderService.addCheckoutOrder(orderData).subscribe({
       next: (res: any) => {
-        console.log(res);
         if (res.success) {
           this.router.navigate(['/home']);
         }

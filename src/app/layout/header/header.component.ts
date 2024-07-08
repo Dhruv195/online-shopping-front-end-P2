@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -32,46 +32,52 @@ export class HeaderComponent implements OnInit {
     {
       title: 'Edit Profile',
       link: '/user-profile',
-      icon:'bi bi-person-fill text-primary fs-4'
+      icon: 'bi bi-person-fill text-primary fs-4',
     },
     {
       title: 'Change Password',
       link: '/user-profile/change-password',
-      icon:"bi bi-lock-fill fs-4 text-primary"
+      icon: 'bi bi-lock-fill fs-4 text-primary',
     },
     {
       title: 'Cart Item',
       link: '/user-profile/shopping-cart',
-      icon:'bi bi-cart-fill fs-4 text-primary'
+      icon: 'bi bi-cart-fill fs-4 text-primary',
     },
     {
       title: 'Wish List',
       link: '/user-profile/wish-list',
-      icon:'bi bi-list-stars fs-4 text-primary'
+      icon: 'bi bi-list-stars fs-4 text-primary',
     },
     {
       title: 'Sign Out',
       link: '/home',
-      icon:'bi bi-box-arrow-right fs-4 text-primary'
-    }
-  ]
+      icon: 'bi bi-box-arrow-right fs-4 text-primary',
+    },
+  ];
   profileImage: any;
   defaultProfileImg: any;
   userDetails: any;
+  subscription: any;
 
-  constructor(public commonService: CommonService,public authService:AuthService,public userService:UserService,private productService:ProductService,private router:Router) {}
+  constructor(
+    public commonService: CommonService,
+    public authService: AuthService,
+    public userService: UserService,
+    private productService: ProductService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
-    this.getCategory()
+    this.getCategory();   
   }
   doSignOut() {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
 
   onSelectCategory() {
-    console.log('cate');
     this.collapseCategory = true;
   }
-  clickOnProfileItem(profile:any) {
+  clickOnProfileItem(profile: any) {
     if (profile.title == 'Sign Out') {
       localStorage.removeItem('token');
     }
@@ -82,39 +88,34 @@ export class HeaderComponent implements OnInit {
       next: (res: any) => {
         this.userDetails = res.data;
         this.profileImage = this.userDetails.profilePic;
-        this.defaultProfileImg = API.USER_NAME_PROFILE_IMG + `${this.userDetails?.firstName}+${this.userDetails?.lastName}`
-      }
+        this.defaultProfileImg =
+          API.USER_NAME_PROFILE_IMG +
+          `${this.userDetails?.firstName}+${this.userDetails?.lastName}`;
+      },
     });
-    
   }
   getCategory() {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {
         if (res.data) {
           this.categories = res.data.categories;
-          console.log("cat ",res.data)
         }
       },
     });
   }
-  onClickCategory(){
-    this.collapseCategory=!this.collapseCategory;
-
+  onClickCategory() {
+    this.collapseCategory = !this.collapseCategory;
   }
 
-  onCategoryClick(categoryId:any) {
-    this.collapseCategory=!this.collapseCategory;
+  onCategoryClick(categoryId: any) {
+    this.collapseCategory = !this.collapseCategory;
 
     let params = {
-      'categoryId':categoryId,
-    }
-    console.log("Search Bar params ",params)
-    this.router.navigate(
-      ['/shop'],
-      {
-        queryParams: params,
-        queryParamsHandling: 'merge',
-      }
-    );
+      categoryId: categoryId,
+    };
+    this.router.navigate(['/shop'], {
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
   }
 }

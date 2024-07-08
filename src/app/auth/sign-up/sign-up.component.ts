@@ -58,11 +58,12 @@ export class SignUpComponent {
 
   doSignUp() {
     this.submitted = true;
-    console.log('Res ', this.signUpForm.value);
     this.authService.signUpUser(this.signUpForm.value).subscribe({
       next:(res:any)=>{
         if(res){
-          this.authService.saveToken(res.data.token)
+          this.authService.saveToken(res.data.token);
+        this.userService.activeUserDetails.next(true);
+
           this.route.navigate(['home/']);
           this.cd.markForCheck();
         }

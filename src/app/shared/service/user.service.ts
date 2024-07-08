@@ -10,6 +10,7 @@ export class UserService {
   constructor(public httpService: HttpService) {}
   updateUserDetails$ = new BehaviorSubject<any>(false);
   userDetails$ = new BehaviorSubject<any>({});
+  activeUserDetails = new BehaviorSubject<any>(false)
   getUser() {
     return this.httpService.get(API.USER_GET);
   }
@@ -27,5 +28,8 @@ export class UserService {
   }
   addReview(data:any,productId:any){
     return this.httpService.post(API.REVIEW+`/${productId}`,data);
+  }
+  getReviewList(productId:any) {
+    return this.httpService.get(API.REVIEW_LIST + `/${productId}`);
   }
 }

@@ -133,7 +133,6 @@ export class ShopeComponent implements OnInit {
   }
   //filter Card to get selected filter items
   onFilterChanged(selectedFilters: any) {
-    console.log("Slected ")
     // Clear previous filters
     Object.keys(this.params).forEach((key) => {
       if (
@@ -145,7 +144,6 @@ export class ShopeComponent implements OnInit {
       }
     });
 
-    console.log("Delete params ",this.params)
 
      
     //handle params for API multiple select price,size 
@@ -158,7 +156,6 @@ export class ShopeComponent implements OnInit {
     });
 
     this.handlePrams();
-    console.log('parma select check ', this.params);
     // this.getProductList(this.params);
   }
   //grid View and list View For change View Mode
@@ -167,7 +164,6 @@ export class ShopeComponent implements OnInit {
   }
   //API Call Of ProductList
   getProductList(params: any) {
-    console.log('Get Product List Params +=====> ', params);
     this.productService.getProductList(params).subscribe({
       next: (res: any) => {
         //pass in Behaviour Subject
@@ -221,8 +217,7 @@ export class ShopeComponent implements OnInit {
             };
             this.colorList.push(color);
           });
-          // this.filters[1].color = this.colorList;
-          console.log(this.colorList);
+          this.filters[1].color = this.colorList;
 
           this.cd.markForCheck();
         }

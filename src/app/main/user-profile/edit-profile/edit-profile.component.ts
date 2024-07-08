@@ -81,7 +81,6 @@ export class EditProfileComponent implements OnInit {
   onEditProfileSubmit() {
     this.submitted = true;
     if (this.editProfileForm.valid) {
-      console.log("value ", this.editProfileForm.value)
       let formData = new FormData();
       formData.append('firstName', this.editProfileForm.get('firstName')?.value);
       formData.append('lastName', this.editProfileForm.get('lastName')?.value);
@@ -98,7 +97,6 @@ export class EditProfileComponent implements OnInit {
       
       this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
-          console.log(res,"Edit")
           this.onEdit();
           // this.userService.updateUserDetails$.next(true);
           // this.userService.userDetails$.next(res.data);
@@ -117,7 +115,6 @@ export class EditProfileComponent implements OnInit {
 
     this.userService.userDetails$.subscribe({
       next:(res:any)=>{
-        console.log("Res of get ",res)
         this.handleUserProfileData(res);
         this.cd.markForCheck();
 

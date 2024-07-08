@@ -25,7 +25,7 @@ export class HttpService {
       errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
     }
     let commonService = this.injector.get(CommonService);
-    commonService.showToastMessage(TOAST_TYPE.danger, errorMessage);
+    commonService.showToastMessage(TOAST_TYPE.danger, error.error.message);
     return throwError(() => new Error(errorMessage));
   }
 

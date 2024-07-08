@@ -47,10 +47,8 @@ export class ForgotPasswordComponent implements OnInit {
   doForgotPassword() {
     this.submitted = true;
     if (this.forgotPasswordForm.valid) {
-      console.log(this.forgotPasswordForm.value);
       this.authService.forgotPassword(this.forgotPasswordForm.value, this.token).subscribe({
         next: (res: any) => {
-          console.log(res)
         this.commonService.showToastMessage(TOAST_TYPE.success,'Changed Password Successfully')
           this.router.navigate(['auth/sign-in']);
         }

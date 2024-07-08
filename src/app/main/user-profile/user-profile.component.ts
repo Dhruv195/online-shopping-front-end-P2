@@ -40,7 +40,6 @@ export class UserProfileComponent implements OnInit {
       next:(res:any)=>{
         this.userDetails=res;
         this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
-        console.log(this.userDetails,"msy")
       }
     })
   }

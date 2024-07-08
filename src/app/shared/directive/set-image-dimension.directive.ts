@@ -16,9 +16,9 @@ export class SetImageDimensionDirective implements OnInit {
     this.renderer.setStyle(this.el.nativeElement, 'object-fit', 'cover');
     this.renderer.setStyle(this.el.nativeElement, 'width', '100%');
     this.renderer.setStyle(this.el.nativeElement, 'height', '100%');
-
-    if (this.appFitImage) {
-      this.el.nativeElement.src = this.appFitImage;
+  
+    if (this.el.nativeElement.src) {
+      this.el.nativeElement.src = this.el.nativeElement.src;
     } else {
       this.el.nativeElement.src = '../../../assets/img/not-image-found.jpg';
     }

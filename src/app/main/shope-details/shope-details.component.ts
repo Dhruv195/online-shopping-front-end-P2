@@ -15,6 +15,7 @@ import {
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SetImageDimensionDirective } from 'src/app/shared/directive/set-image-dimension.directive';
 
 @Component({
   selector: 'app-shope-details',
@@ -27,7 +28,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    SetImageDimensionDirective,
   ],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
@@ -152,7 +154,6 @@ export class ShopeDetailsComponent {
   getParams(){
     this.activatedRoute.params.subscribe({
       next: (res: any) => {
-        console.log(res,'params of shop')
           this.productId = res.id;
           this.cd.markForCheck();
         },
@@ -163,9 +164,9 @@ export class ShopeDetailsComponent {
     this.productService.getProductById(productId).subscribe({
       next: (res: any) => {
         this.product = res.data;
-        console.log("PRoduct ",this.product)
         this.productService.productDetails$.next(this.product);
-
+        this.addProductCart.size = this.product.size[0];
+        this.addProductCart.color = this.product.colors[0];
         this.cd.markForCheck();
 
       },
@@ -196,12 +197,10 @@ export class ShopeDetailsComponent {
       (this.addProductCart.price = this.addProductData.price =
         this.product.sellingPrice);
     if (this.authService.loggedIn()) {
-      console.log(this.addProductCart);
       this.productService
         .addProductToCart({ product: this.addProductCart })
         .subscribe({
           next: (res: any) => {
-            console.log('response', res);
             this.router.navigate(['/shopping-cart']);
             this.cd.markForCheck();
           },
@@ -212,7 +211,6 @@ export class ShopeDetailsComponent {
       this.addProductData.quantity = this.addProductCart.quantity;
       this.addProductData.totalProductPrice =
         this.addProductCart.price * this.addProductCart.quantity;
-      console.log(this.addProductData);
       this.cartList =
         this.commonService.getLocalStorage('cartProductList') || [];
       this.cartList.push(this.addProductData);
