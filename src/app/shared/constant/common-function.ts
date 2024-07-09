@@ -251,3 +251,10 @@ export const PROFILE_ROUTES_ITEM=[
     icon: 'bi bi-box-arrow-right fs-4 text-primary',
   },
 ];
+
+export const TOP_BAR_ROUTES_ITEM=[
+  { name: 'About', url: 'about' },
+  { name: 'Contact', url: 'contact' },
+  { name: 'Help', url: '/help' },
+  { name: 'FAQs', url: '/faq' },
+]

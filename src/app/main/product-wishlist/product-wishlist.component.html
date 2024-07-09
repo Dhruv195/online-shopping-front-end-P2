@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">My Wishlist</span></h2>
     <div class="row px-xl-5">
-      @for (product of productWishList; track product) {
+      @for (product of productWishList; track product._id) {
         <div class="card mb-3 shadow-lg border-0 rounded-0">
           <div class="row g-0">
             <div class="col-md-2">

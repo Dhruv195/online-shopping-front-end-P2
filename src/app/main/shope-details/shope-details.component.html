@@ -28,7 +28,16 @@
 
     <div class="col-lg-7 h-auto mb-30">
       <div class="h-100 bg-light p-30">
-        <h3>{{product?.productName  | titlecase}}</h3>
+        <div class="row">
+          <div class="col-10">
+            <h3>{{product?.productName | titlecase}}</h3>
+    
+          </div>
+          <div class="col-2 col-md-2 text-end"> 
+            <button class="btn btn-primary rounded-2 " appCopyLink  [copyLink]="currentUrl" ><i
+                class="bi bi-box-arrow-up text-dark"></i></button>
+          </div>
+        </div>
         <div class="d-flex mb-3 align-items-center">
           <ngb-rating   [disabled]="true" [(rate)]="product.ratings" [max]="5" class="fs-5" >
             <ng-template let-fill="fill" let-index="index">

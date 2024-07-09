@@ -6,7 +6,7 @@
         <nav
           class="breadcrumb bg-light mb-30"
           >
-          @for (item of breadcrumb.linkList; track item; let last = $last) {
+          @for (item of breadcrumb.linkList;let i=$index ; track i; let last = $last) {
             <a
               class="breadcrumb-item"
               [routerLink]="item.link"

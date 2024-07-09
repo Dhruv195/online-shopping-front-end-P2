@@ -16,6 +16,7 @@ import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SetImageDimensionDirective } from 'src/app/shared/directive/set-image-dimension.directive';
+import { CopyLinkDirective } from 'src/app/shared/directive/copy-link.directive';
 
 @Component({
   selector: 'app-shope-details',
@@ -30,6 +31,7 @@ import { SetImageDimensionDirective } from 'src/app/shared/directive/set-image-d
     RouterModule,
     NgbModule,
     SetImageDimensionDirective,
+    CopyLinkDirective
   ],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
@@ -61,6 +63,7 @@ export class ShopeDetailsComponent {
     color: '',
   };
   products: any = {};
+  currentUrl =  window.location.href;
 
   addProductData = {
     productId: '',
@@ -139,6 +142,7 @@ export class ShopeDetailsComponent {
       this.getProduct(this.productId);
       this.getRelatedProduct(this.productId);
     }
+    console.log("uRL ",)
   }
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({

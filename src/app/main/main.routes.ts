@@ -68,11 +68,7 @@ export const routes: Routes = [
           import('./user-profile/user-profile.routes').then((m) => m.routes),
         canActivate: [authGuard],
       },
-      {
-        path: 'contact',
-        loadComponent: () =>
-          import('../shared/pages/contact/contact.component').then((m) => m.ContactComponent),
-      },
+      
       {
         path: 'wish-list',
         loadComponent: () =>
@@ -88,6 +84,26 @@ export const routes: Routes = [
             (m) => m.ProductWishlistComponent
           ),
         canActivate:[authGuard]
+      },
+      {
+        path: 'contact',
+        loadComponent: () =>
+          import('../shared/pages/contact/contact.component').then((m) => m.ContactComponent),
+      },
+      {
+        path: 'help',
+        loadComponent: () =>
+          import('../shared/pages/about-help-slug/about-help-slug.component').then((m) => m.AboutHelpSlugComponent),
+      },
+      {
+        path: 'faq',
+        loadComponent: () =>
+          import('../shared/pages/faq/faq.component').then((m) => m.FaqComponent),
+      },
+      {
+        path: 'about',
+        loadComponent: () =>
+          import('../shared/pages/about-help-slug/about-help-slug.component').then((m) => m.AboutHelpSlugComponent),
       },
     ],
   },

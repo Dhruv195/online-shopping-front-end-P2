@@ -2,7 +2,7 @@
   <div class="row bg-secondary py-1 px-xl-5">
     <div class="col-lg-6 d-none d-lg-block">
       <div class="d-inline-flex align-items-center h-100">
-        @for (link of links; track link) {
+        @for (link of topBarRoutes; track link) {
           <a class="text-body mr-3" [routerLink]="link.url" routerLinkActive="text-decoration-underline" >{{
             link.name
           }}</a>

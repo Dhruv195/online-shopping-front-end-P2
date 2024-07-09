@@ -1,1 +1,41 @@
-<p>faq works!</p>
+<div class="container-fluid">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+      <span class="bg-secondary pr-3">Frequently Asked Questions</span>
+    </h2>
+  <div class="row px-xl-5">
+    
+
+    <div class="col-lg-3 py-5 py-lg-0 order-2 order-lg-1 bg-light w-100 h-100" >
+        <div class="mt-4">
+            <ng-container *ngFor="let category of allCategory" >
+                <div class="m-3">
+                    <button type="button"  class="btn btn-dark w-100" (click)="selectCategoryOfFaq(category._id)" [ngClass]="{'btnBg':categoryType== category._id }" >{{category?.name}}</button>
+                </div>
+            </ng-container>
+        </div>
+        
+    </div>
+    <div class="col-lg-9 order-1 order-lg-2 "  >
+        <ng-container *ngFor="let faq of categoryFaq">
+                <div ngbAccordion >
+                    <div ngbAccordionItem [collapsed]="true" class="mb-2">
+                        <h2 ngbAccordionHeader  >
+                            <button ngbAccordionButton    >{{faq?.question}}</button>
+                        </h2>
+                        <div ngbAccordionCollapse>
+                            <div ngbAccordionBody>
+                                <ng-template>
+                                    {{faq?.answer}}
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+            
+        </ng-container>
+    
+    </div>
+
+  </div>
+</div>

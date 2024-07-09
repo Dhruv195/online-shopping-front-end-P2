@@ -85,4 +85,24 @@ export class CommonService {
   getColor() {
     return this.httpService.get(API.COLOR);
   }
+  /**
+   * Get Category API
+   */
+  getCategory() {
+    return this.http.get(API.GET_CATEGORY);
+  }
+  /**
+   * Get Category Of Faq 
+   */
+  getCategoryOfFaq(categoryId: any) {
+    return this.http.get(API.GEt_CATEGORY_FAQ+`/${categoryId}`);
+  }
+
+  /**
+   * Get Help and About Information Api
+   */
+  getHelpAndAboutInformation(typeOfInformation:any) {
+    return this.http.get(API.ABOUT_HELP_US+typeOfInformation);
+  }
+
 }

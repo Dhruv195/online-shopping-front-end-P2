@@ -6,7 +6,7 @@
       alt=""
     />
     <div class="product-action">
-      <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"
+      <a class="btn btn-outline-dark btn-square" [routerLink]="['/wish-list',product._id]"
         ><i class="far fa-heart"></i
       ></a>
       <a
@@ -25,12 +25,6 @@
     <div class="d-flex align-items-center justify-content-center mt-2 text-dark ">
         <h5>{{ product.sellingPrice | currency : "USD" : "symbol" : "1.2-2" }}</h5><h6 class="text-muted ml-2"><del>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</del></h6>
     </div>
-    <!-- <div class="d-flex align-items-center justify-content-center mt-2">
-      {{ product.sellingPrice | currency : "USD" : "symbol" : "1.2-2" }}
-      <h6 class="text-muted ml-2">
-        <del>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</del>
-      </h6>
-    </div> -->
     <div class="d-flex align-items-center justify-content-center mb-1 ">
       <ngb-rating   [disabled]="true" [(rate)]="product.ratings" [max]="5" class="fs-5" >
         <ng-template let-fill="fill" let-index="index">

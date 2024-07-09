@@ -8,9 +8,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
   constructor(public httpService: HttpService) {}
-  updateUserDetails$ = new BehaviorSubject<any>(false);
   userDetails$ = new BehaviorSubject<any>({});
-  activeUserDetails = new BehaviorSubject<any>(false)
+  activeUserDetails = new BehaviorSubject<any>(false);
+
+
   getUser() {
     return this.httpService.get(API.USER_GET);
   }

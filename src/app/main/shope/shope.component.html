@@ -74,7 +74,7 @@
         </div>
       </div>
       @if (productList) {
-        @for (product of productList; track product) {
+        @for (product of productList; track product._id) {
           @if (displayMode == 'grid') {
             <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
               <app-product-card [product]="product"></app-product-card>

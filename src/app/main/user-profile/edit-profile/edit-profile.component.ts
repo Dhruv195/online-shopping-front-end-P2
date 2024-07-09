@@ -98,9 +98,7 @@ export class EditProfileComponent implements OnInit {
       this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
           this.onEdit();
-          // this.userService.updateUserDetails$.next(true);
-          // this.userService.userDetails$.next(res.data);
-          
+          this.userService.activeUserDetails.next(true);
           this.cd.markForCheck()
         },
         error: (res: any) => {
@@ -111,11 +109,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   getUserDetails(){
-   
-
     this.userService.userDetails$.subscribe({
-      next:(res:any)=>{
-        this.handleUserProfileData(res);
+      next: (res: any) => {
+        this.handleUserProfileData(res.data);
         this.cd.markForCheck();
 
       }

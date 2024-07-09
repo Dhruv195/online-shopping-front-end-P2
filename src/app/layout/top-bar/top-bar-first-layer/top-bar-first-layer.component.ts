@@ -13,6 +13,7 @@ import { API } from 'src/app/shared/constant/api.constant';
 import { DropdownDirective } from 'src/app/shared/directive/dropdown.directive';
 import { TOAST_TYPE } from 'src/app/shared/constant/toast';
 import { CommonService } from 'src/app/shared/service/common.service';
+import {  TOP_BAR_ROUTES_ITEM } from 'src/app/shared/constant/common-function';
 
 @Component({
   selector: 'app-top-bar-first-layer',
@@ -23,12 +24,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
-  links = [
-    { name: 'About', url: '#' },
-    { name: 'Contact', url: 'contact' },
-    { name: 'Help', url: 'shop-detail' },
-    { name: 'FAQs', url: '#' },
-  ];
+  topBarRoutes = TOP_BAR_ROUTES_ITEM ;
 
   languages = [
     { label: 'EN', lang: 'English', languageCode: 'en', subset: 'latin' },
@@ -112,6 +108,7 @@ export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
       this.userService.getUser().subscribe({
         next: (res: any) => {
           this.userDetails = res.data;
+          this.userService.userDetails$.next(res);
           this.cdr.markForCheck();
         },
       });

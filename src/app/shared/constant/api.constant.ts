@@ -28,4 +28,7 @@ export const API = {
   SITE_CONFIG: 'siteConfigs',
   LANGUAGE: 'language',
   COLOR: 'product/color',
+  GET_CATEGORY: 'http://192.168.1.234:9000/faq/category',
+  GEt_CATEGORY_FAQ: 'http://192.168.1.234:9000/faq',
+  ABOUT_HELP_US:'http://192.168.1.196:9000/pages'
 };
