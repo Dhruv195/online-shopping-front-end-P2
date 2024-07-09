@@ -1,157 +1,156 @@
- <!-- Shop Detail Start -->
- <div class="container-fluid pb-5">
+<!-- Shop Detail Start -->
+<div class="container-fluid pb-5">
   <div class="row px-xl-5">
-      <div class="col-lg-5 mb-30">
-        <ng-container *ngIf="product?.images?.length>1" >
-          <div id="product-carousel"  id="product-carousel-{{ product._id }}"
+    <div class="col-lg-5 mb-30">
+      @if (product?.images?.length>1) {
+        <div id="product-carousel"  id="product-carousel-{{ product._id }}"
           class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner bg-light ">
-
-                <ng-container *ngFor="let image of product?.images, let i = index" >
-                  <div class="carousel-item  " [ngClass]="{ active: i === 0 }" [ngStyle]="{'height':'600px' }"  >
-                    <img class="w-100 h-100"  [src]="image " appSetImageDimension alt="Image">
-                </div>
-                </ng-container>
-               
+          <div class="carousel-inner bg-light ">
+            @for (image of product?.images; track image; let i = $index) {
+              <div class="carousel-item  " [ngClass]="{ active: i === 0 }" [ngStyle]="{'height':'600px' }"  >
+                <img class="w-100 h-100"  [src]="image " appSetImageDimension alt="Image">
               </div>
-            
-              <a class="carousel-control-prev" data-slide="prev">
-                  <i class="fa fa-2x fa-angle-left text-dark"></i>
-              </a>
-              <a class="carousel-control-next"  data-slide="next">
-                  <i class="fa fa-2x fa-angle-right text-dark"></i>
-              </a>
+            }
           </div>
-        </ng-container>
-
-          <ng-container *ngIf="product?.images?.length==1" >
-            <img class="w-100 h-100" [src]="product?.images[0]" alt="Image">
-          </ng-container>
-      </div>
-
-      <div class="col-lg-7 h-auto mb-30">
-          <div class="h-100 bg-light p-30">
-              <h3>{{product?.productName  | titlecase}}</h3>
-              <div class="d-flex mb-3 align-items-center">
-                  <ngb-rating   [disabled]="true" [(rate)]="product.ratings" [max]="5" class="fs-5" >
-                    <ng-template let-fill="fill" let-index="index">
-                      <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < product.ratings"></i>
-                  </ng-template>
-                  </ngb-rating>
-                
-                <small class="">{{'('+ product?.reviews +' Reviews)'}}</small>
-              </div>
-              <h3 class="font-weight-semi-bold mb-4">{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</h3>
-              <p class="mb-4">{{product?.mainDescription}}</p>
-              <div class="d-flex mb-3">
-                  <strong class="text-dark mr-3">Sizes:</strong>
-                  <form>
-                    <div
-                      *ngFor="let size of product.size"
-                      class="custom-control custom-radio custom-control-inline"
-                    >
-                      <input
-                        type="radio"
-                        class="custom-control-input"
-                        [id]="'size-' + size"
-                        name="size"
-                        [value]="size"
-                        [(ngModel)]="addProductCart.size"
-                      />
-                      <label class="custom-control-label" [for]="'size-' + size">{{
-                        size
-                      }}</label>
-                    </div>
-                  </form>
-        
-              </div>
-              <div class="d-flex mb-4">
-                  <strong class="text-dark mr-3">Colors:</strong>
-                  <form>
-                    <div
-                      *ngFor="let color of product.colors"
-                      class="custom-control custom-radio custom-control-inline"
-                    >
-                      <input
-                        type="radio"
-                        class="custom-control-input"
-                        [id]="'color-' + color"
-                        name="color"
-                        [value]="color"
-                        [checked]="product.colors[0]"
-                        [(ngModel)]="addProductCart.color"
-                      />
-                      <label class="custom-control-label" [for]="'color-' + color">{{
-                        color
-                      }}</label>
-                    </div>
-                  </form>
-              </div>
-              <div class="d-flex align-items-center mb-4 pt-2">
-                  <div class="input-group quantity mr-3" style="width: 130px;">
-                      <div class="input-group-btn">
-                          <button class="btn btn-primary btn-minus"  (click)="quantityMinus()"
-                          >
-                              <i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <input type="text" class="form-control bg-secondary border-0 text-center" [(ngModel)]="addProductCart.quantity" readonly
-                      >
-                      <div class="input-group-btn" (click)="quantityPlus()">
-                          <button class="btn btn-primary btn-plus">
-                              <i class="fa fa-plus"></i>
-                          </button>
-                      </div>
-                  </div>
-                  <button class="btn btn-primary px-3"  (click)="addToCart()" ><i class="fa fa-shopping-cart mr-1"></i> Add To
-                      Cart</button>
-              </div>
-              <div class="d-flex pt-2">
-                  <strong class="text-dark mr-2">Share on:</strong>
-                  <div class="d-inline-flex">
-                    <ng-container *ngFor="let share of shareList">
-                      <a
-                        class="text-dark px-2"
-                        routerLink="{{ share.link }}"
-                        target="_blank"
-                      >
-                        <i class="fab" [ngClass]="share.icon"></i>
-                      </a>
-                    </ng-container>
-        
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="row px-xl-5">
-    <div class="col">
-      <div class="bg-light p-30">
-        <div class="nav nav-tabs mb-4">
-          <a 
-            *ngFor="let tab of routerOfProductInformation"
-            class="nav-item nav-link text-dark"
-            [routerLink]="[tab.link]"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            {{ tab.title }}
-            
+          <a class="carousel-control-prev" data-slide="prev">
+            <i class="fa fa-2x fa-angle-left text-dark"></i>
+          </a>
+          <a class="carousel-control-next"  data-slide="next">
+            <i class="fa fa-2x fa-angle-right text-dark"></i>
           </a>
         </div>
-        <div class="tab-content">
-          <div class="tab-pane fade show active">
-            <router-outlet></router-outlet>
+      }
+
+      @if (product?.images?.length==1) {
+        <img class="w-100 h-100" [src]="product?.images[0]" alt="Image">
+      }
+    </div>
+
+    <div class="col-lg-7 h-auto mb-30">
+      <div class="h-100 bg-light p-30">
+        <h3>{{product?.productName  | titlecase}}</h3>
+        <div class="d-flex mb-3 align-items-center">
+          <ngb-rating   [disabled]="true" [(rate)]="product.ratings" [max]="5" class="fs-5" >
+            <ng-template let-fill="fill" let-index="index">
+              <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < product.ratings"></i>
+            </ng-template>
+          </ngb-rating>
+
+          <small class="">{{'('+ product?.reviews +' Reviews)'}}</small>
+        </div>
+        <h3 class="font-weight-semi-bold mb-4">{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</h3>
+        <p class="mb-4">{{product?.mainDescription}}</p>
+        <div class="d-flex mb-3">
+          <strong class="text-dark mr-3">Sizes:</strong>
+          <form>
+            @for (size of product.size; track size) {
+              <div
+                class="custom-control custom-radio custom-control-inline"
+                >
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  [id]="'size-' + size"
+                  name="size"
+                  [value]="size"
+                  [(ngModel)]="addProductCart.size"
+                  />
+                <label class="custom-control-label" [for]="'size-' + size">{{
+                  size
+                }}</label>
+              </div>
+            }
+          </form>
+
+        </div>
+        <div class="d-flex mb-4">
+          <strong class="text-dark mr-3">Colors:</strong>
+          <form>
+            @for (color of product.colors; track color) {
+              <div
+                class="custom-control custom-radio custom-control-inline"
+                >
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  [id]="'color-' + color"
+                  name="color"
+                  [value]="color"
+                  [checked]="product.colors[0]"
+                  [(ngModel)]="addProductCart.color"
+                  />
+                <label class="custom-control-label" [for]="'color-' + color">{{
+                  color
+                }}</label>
+              </div>
+            }
+          </form>
+        </div>
+        <div class="d-flex align-items-center mb-4 pt-2">
+          <div class="input-group quantity mr-3" style="width: 130px;">
+            <div class="input-group-btn">
+              <button class="btn btn-primary btn-minus"  (click)="quantityMinus()"
+                >
+                <i class="fa fa-minus"></i>
+              </button>
+            </div>
+            <input type="text" class="form-control bg-secondary border-0 text-center" [(ngModel)]="addProductCart.quantity" readonly
+              >
+            <div class="input-group-btn" (click)="quantityPlus()">
+              <button class="btn btn-primary btn-plus">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
           </div>
+          <button class="btn btn-primary px-3"  (click)="addToCart()" ><i class="fa fa-shopping-cart mr-1"></i> Add To
+        Cart</button>
+      </div>
+      <div class="d-flex pt-2">
+        <strong class="text-dark mr-2">Share on:</strong>
+        <div class="d-inline-flex">
+          @for (share of shareList; track share) {
+            <a
+              class="text-dark px-2"
+              routerLink="{{ share.link }}"
+              target="_blank"
+              >
+              <i class="fab" [ngClass]="share.icon"></i>
+            </a>
+          }
+
         </div>
       </div>
     </div>
   </div>
 </div>
+<div class="row px-xl-5">
+  <div class="col">
+    <div class="bg-light p-30">
+      <div class="nav nav-tabs mb-4">
+        @for (tab of routerOfProductInformation; track tab) {
+          <a
+            class="nav-item nav-link text-dark"
+            [routerLink]="[tab.link]"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ tab.title }}
+          </a>
+        }
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane fade show active">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <!-- Shop Detail End -->
 
 
 <!-- Products Start -->
-<ng-container *ngIf="productList?.length>=1">
+@if (productList?.length>=1) {
   <div class="container-fluid py-5">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
       <span class="bg-secondary pr-3">You May Also Like</span>
@@ -159,15 +158,15 @@
     <div class="row px-xl-5">
       <div class="col">
         <owl-carousel-o [options]="customOptions">
-          <ng-container *ngFor="let product of productList">
+          @for (product of productList; track product) {
             <ng-template carouselSlide>
               <app-product-card [product]="product"></app-product-card>
             </ng-template>
-          </ng-container>
+          }
         </owl-carousel-o>
       </div>
-    </div>
+    </div>
   </div>
-</ng-container>
+}
 
 <!-- Products End -->

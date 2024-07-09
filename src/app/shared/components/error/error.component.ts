@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-error',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss']
 })

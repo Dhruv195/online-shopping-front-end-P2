@@ -1,62 +1,68 @@
 
 
-<div  *ngFor="let filter of filters">
+@for (filter of filters; track filter) {
+  <div >
     <h5 class="section-title position-relative text-uppercase mb-3">
       <span class="bg-secondary pr-3">{{ filter.title }}</span>
     </h5>
     <div class="bg-light p-4 mb-30">
-      <ng-container *ngIf="filter.price" >
+      @if (filter.price) {
         <form>
-          <div *ngFor="let item of filter.price">
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                [checked]="selectedFilters['price'].includes(item.title)"
-                (change)="onFilterChange(filter.type, item, $event)"
-                id="{{ filter.title }}-{{ item.title }}"
-              />
-              <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
-              <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
+          @for (item of filter.price; track item) {
+            <div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [checked]="selectedFilters['price'].includes(item.title)"
+                  (change)="onFilterChange(filter.type, item, $event)"
+                  id="{{ filter.title }}-{{ item.title }}"
+                  />
+                <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
+                <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
+              </div>
             </div>
-          </div>
+          }
         </form>
-    </ng-container>
-    <ng-container *ngIf="filter.color" >
-      <form>
-        <div *ngFor="let item of filter.color">
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              [checked]="selectedFilters['color'].includes(item.title)"
-              
-              (change)="onFilterChange(filter.type, item, $event)"
-              id="{{ filter.title }}-{{ item.title }}"
-            />
-            <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
-            <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
-          </div>
-        </div>
-      </form>
-  </ng-container>
-  <ng-container *ngIf="filter.size" >
-    <form>
-      <div *ngFor="let item of filter.size">
-        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            [checked]="selectedFilters['size'].includes(item.title)"
-
-            (change)="onFilterChange(filter.type, item, $event)"
-            id="{{ filter.title }}-{{ item.title }}"
-          />
-          <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
-          <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
-        </div>
-      </div>
-    </form>
-</ng-container> 
+      }
+      @if (filter.color) {
+        <form>
+          @for (item of filter.color; track item) {
+            <div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [checked]="selectedFilters['color'].includes(item.title)"
+                  (change)="onFilterChange(filter.type, item, $event)"
+                  id="{{ filter.title }}-{{ item.title }}"
+                  />
+                <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
+                <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
+              </div>
+            </div>
+          }
+        </form>
+      }
+      @if (filter.size) {
+        <form>
+          @for (item of filter.size; track item) {
+            <div>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [checked]="selectedFilters['size'].includes(item.title)"
+                  (change)="onFilterChange(filter.type, item, $event)"
+                  id="{{ filter.title }}-{{ item.title }}"
+                  />
+                <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
+                <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
+              </div>
+            </div>
+          }
+        </form>
+      }
     </div>
   </div>
+}

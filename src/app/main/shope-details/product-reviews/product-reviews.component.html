@@ -1,47 +1,47 @@
 <div>
-    <div class="row">
-        <div class="col-md-6">
-            <h4 class="mb-4">{{reviewList.item}} review for ProductName </h4>
-            <ng-container *ngFor="let review of reviewList.reviews" >         
-                <div class="media mb-4">
-                    <img [src]="review.profilePic ?  review.profilePic :'assets/img/not-image-found.jpg'" alt="Image"  class="img-fluid mr-3 mt-1"  style="width: 45px;">
-                    <div class="media-body">
-                        <h6>{{review.name}}<small> - <i>{{review.createdAt | date}}</i></small></h6>
-                        <ngb-rating   [disabled]="true" [(rate)]="review.rating" [max]="5" class="fs-5" >
-                            <ng-template let-fill="fill" let-index="index">
-                                <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < review.rating"></i>
-                            </ng-template>
-                        </ngb-rating>
-                        <p>{{review.review}}</p>
-                    </div>
-                </div>
-            </ng-container>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="mb-4">{{reviewList.item}} review for ProductName </h4>
+      @for (review of reviewList.reviews; track review) {
+        <div class="media mb-4">
+          <img [src]="review.profilePic ?  review.profilePic :'assets/img/not-image-found.jpg'" alt="Image"  class="img-fluid mr-3 mt-1"  style="width: 45px;">
+          <div class="media-body">
+            <h6>{{review.name}}<small> - <i>{{review.createdAt | date}}</i></small></h6>
+            <ngb-rating   [disabled]="true" [(rate)]="review.rating" [max]="5" class="fs-5" >
+              <ng-template let-fill="fill" let-index="index">
+                <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < review.rating"></i>
+              </ng-template>
+            </ngb-rating>
+            <p>{{review.review}}</p>
+          </div>
         </div>
-        
-        <div class="col-md-6">
-            <h4 class="mb-4">Leave a review</h4>
-            <small>Your email address will not be published. Required fields are marked *</small>
-            <div class="d-flex my-3">
-
-            </div>
-            <form [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()">
-                <div class="d-flex align-items-center">
-                    <p class="mb-0 mr-2">Your Rating * :</p>
-                    <ngb-rating formControlName="rating" [max]="5" class="fs-5">
-                        <ng-template let-fill="fill" let-index="index">
-                            <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < reviewForm.get('rating').value "></i>
-                        </ng-template>
-                    </ngb-rating>
-                </div>
-                <div class="form-group">
-                    <label for="message">Your Review *</label>
-                    <textarea id="message" formControlName="review" cols="30" rows="5" class="form-control"></textarea>
-                </div>
-
-                <div class="form-group mb-0">
-                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                </div>
-            </form>
-        </div>
+      }
     </div>
+
+    <div class="col-md-6">
+      <h4 class="mb-4">Leave a review</h4>
+      <small>Your email address will not be published. Required fields are marked *</small>
+      <div class="d-flex my-3">
+
+      </div>
+      <form [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()">
+        <div class="d-flex align-items-center">
+          <p class="mb-0 mr-2">Your Rating * :</p>
+          <ngb-rating formControlName="rating" [max]="5" class="fs-5">
+            <ng-template let-fill="fill" let-index="index">
+              <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < reviewForm.get('rating').value "></i>
+            </ng-template>
+          </ngb-rating>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Review *</label>
+          <textarea id="message" formControlName="review" cols="30" rows="5" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group mb-0">
+          <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { TopBarComponent } from './layout/top-bar/top-bar.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -11,13 +11,12 @@ import { UserService } from './shared/service/user.service';
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     TopBarComponent,
     HeaderComponent,
     FooterComponent,
-    ToastComponent,
-  ],
+    ToastComponent
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

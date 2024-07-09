@@ -3,14 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { ProductService } from 'src/app/shared/service/product.service';
 
 @Component({
   selector: 'app-category-carousul-section',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './category-carousul-section.component.html',
   styleUrls: ['./category-carousul-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

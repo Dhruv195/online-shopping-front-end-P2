@@ -1,4 +1,4 @@
-<ng-container *ngFor="let order of orderList">
+@for (order of orderList; track order) {
   <div class="order-details container border p-3 my-3">
     <div class="row mb-4">
       <div class="order-header col-12 col-md-4 mb-3 mb-md-0">
@@ -17,9 +17,9 @@
             <h3 class="card-title">Address</h3>
             <p>
               {{
-                order.billingAddress.firstName +
-                  " " +
-                  order.billingAddress.lastName
+              order.billingAddress.firstName +
+              " " +
+              order.billingAddress.lastName
               }}
             </p>
             <p>
@@ -47,7 +47,7 @@
               class="btn btn-primary"
               [routerLink]="['/order-view', order._id]"
               routerLinkActive="router-link-active"
-            >
+              >
               View Order
             </button>
           </div>
@@ -55,4 +55,4 @@
       </div>
     </div>
   </div>
-</ng-container>
+}

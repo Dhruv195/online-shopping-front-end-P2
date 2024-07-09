@@ -1,53 +1,49 @@
-<ng-container  *ngIf="productWishList && productWishList.length > 0; else noFound">
-<div class="container-fluid">
+@if (productWishList && productWishList.length > 0) {
+  <div class="container-fluid">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">My Wishlist</span></h2>
     <div class="row px-xl-5">
-
-        <ng-container *ngFor="let product of productWishList" >
-            <div class="card mb-3 shadow-lg border-0 rounded-0">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        <img [src]="product.images[0]" class="img-fluid rounded-start" alt="Product Image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{product?.productName}}</h5>
-                            <h6 class="card-title">{{product?.description}}</h6>
-                            <div class="d-flex align-items-center mb-1">
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small> {{ '('+ product.reviews +')' }} </small>
-                              </div>
-                            <div class="d-flex align-items-center mt-2">
-
-                                <h5>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</h5>
-                                <!-- <h6 class="text-muted ml-2">
-                                    <del>$200</del>
-                                </h6> -->
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="col-md-2 d-flex align-items-center justify-content-center gap">
-                        <button class="btn btn-outline-dark" (click)="deleteProductInWishList(product?.productId)" ><i class="bi bi-trash text-danger" ></i></button>
-                        <button [routerLink]="['/shop-detail/',product?.productId]"  class="btn btn-primary" >
-                           Buy
-                        </button>
-                    </div>
-                </div>
+      @for (product of productWishList; track product) {
+        <div class="card mb-3 shadow-lg border-0 rounded-0">
+          <div class="row g-0">
+            <div class="col-md-2">
+              <img [src]="product.images[0]" class="img-fluid rounded-start" alt="Product Image">
             </div>
-        </ng-container> 
-        </div>    
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{product?.productName}}</h5>
+                <h6 class="card-title">{{product?.description}}</h6>
+                <div class="d-flex align-items-center mb-1">
+                  <small class="fa fa-star text-primary mr-1"></small>
+                  <small class="fa fa-star text-primary mr-1"></small>
+                  <small class="fa fa-star text-primary mr-1"></small>
+                  <small class="fa fa-star text-primary mr-1"></small>
+                  <small class="fa fa-star text-primary mr-1"></small>
+                  <small> {{ '('+ product.reviews +')' }} </small>
+                </div>
+                <div class="d-flex align-items-center mt-2">
+                  <h5>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</h5>
+                  <!-- <h6 class="text-muted ml-2">
+                  <del>$200</del>
+                </h6> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 d-flex align-items-center justify-content-center gap">
+            <button class="btn btn-outline-dark" (click)="deleteProductInWishList(product?.productId)" ><i class="bi bi-trash text-danger" ></i></button>
+            <button [routerLink]="['/shop-detail/',product?.productId]"  class="btn btn-primary" >
+              Buy
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
 </div>
-</ng-container>
-<ng-template #noFound>
+} @else {
   <div class="empty-cart container text-center p-5 shadow">
     <img src="assets/img/image.png" alt="loading" />
     <h2>Your WishList is empty!</h2>
     <p>Add items to it now.</p>
     <a routerLink="/shop" class="btn btn-primary">Shop now</a>
   </div>
-</ng-template>
+}

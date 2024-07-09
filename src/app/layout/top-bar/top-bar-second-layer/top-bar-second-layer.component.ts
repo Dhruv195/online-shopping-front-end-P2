@@ -6,7 +6,7 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ import {
 @Component({
   selector: 'app-top-bar-second-layer',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './top-bar-second-layer.component.html',
   styleUrls: ['./top-bar-second-layer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

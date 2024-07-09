@@ -4,14 +4,14 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 import { ProductService } from 'src/app/shared/service/product.service';
 
 @Component({
   selector: 'app-featured-product-section',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent],
+  imports: [ProductCardComponent],
   templateUrl: './featured-product-section.component.html',
   styleUrls: ['./featured-product-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

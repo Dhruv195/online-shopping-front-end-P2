@@ -2,20 +2,21 @@
 <div class="container-fluid">
   <div class="row px-xl-5">
     <div class="col-12">
-      <nav
-        class="breadcrumb bg-light mb-30"
-        *ngIf="commonService.breadCrumbData$ | async as breadcrumb"
-      >
-        <ng-container *ngFor="let item of breadcrumb.linkList; let last = last">
-          <a
-            class="breadcrumb-item"
-            [routerLink]="item.link"
-            [ngClass]="{ 'de-active-link': last, 'text-dark': !last }"
-            >{{ item.label }}</a
+      @if (commonService.breadCrumbData$ | async; as breadcrumb) {
+        <nav
+          class="breadcrumb bg-light mb-30"
           >
-        </ng-container>
-      </nav>
+          @for (item of breadcrumb.linkList; track item; let last = $last) {
+            <a
+              class="breadcrumb-item"
+              [routerLink]="item.link"
+              [ngClass]="{ 'de-active-link': last, 'text-dark': !last }"
+              >{{ item.label }}</a
+              >
+            }
+          </nav>
+        }
+      </div>
     </div>
   </div>
-</div>
-<!-- Breadcrumb End -->
+  <!-- Breadcrumb End -->

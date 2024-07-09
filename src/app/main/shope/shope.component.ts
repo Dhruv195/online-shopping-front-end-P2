@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,13 +25,12 @@ import { ProductListViewComponent } from 'src/app/shared/components/product-list
   selector: 'app-shope',
   standalone: true,
   imports: [
-    CommonModule,
     ProductCardComponent,
     ProductListViewComponent,
     NgbModule,
     FilterCardComponent,
-    NgxSliderModule,
-  ],
+    NgxSliderModule
+],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
