@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [RouterModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })

@@ -2,12 +2,12 @@
   <div class="row bg-secondary py-1 px-xl-5">
     <div class="col-lg-6 d-none d-lg-block">
       <div class="d-inline-flex align-items-center h-100">
-        <ng-container *ngFor="let link of links">
+        @for (link of links; track link) {
           <a class="text-body mr-3" [routerLink]="link.url" routerLinkActive="text-decoration-underline" >{{
             link.name
           }}</a>
-        </ng-container>
-        
+        }
+
       </div>
     </div>
     <div class="col-lg-6 text-center text-lg-right">
@@ -18,44 +18,44 @@
           </button>
           <ng-container >
             <div #dropdownMenu class="dropdown-menu dropdown-menu-right">
-              <ng-container *ngIf="!authService.loggedIn()" >
-              <button class="dropdown-item" type="button" routerLink="/auth/sign-in">
-                Sign in
-              </button>
-              <button class="dropdown-item" type="button" routerLink="/auth/sign-up">
-                Sign up
-              </button>
-            </ng-container>
-            <ng-container *ngIf="authService.loggedIn()">
-              <ng-container *ngFor="let profile of profileRoutes" >
-                <button class="dropdown-item" type="button" [routerLink]="profile.link" (click)="clickOnProfileItem(profile)"> 
-                  <i [class]="profile.icon"></i> 
+              @if (!authService.loggedIn()) {
+                <button class="dropdown-item" type="button" routerLink="/auth/sign-in">
+                  Sign in
+                </button>
+                <button class="dropdown-item" type="button" routerLink="/auth/sign-up">
+                  Sign up
+                </button>
+              }
+              @if (authService.loggedIn()) {
+                @for (profile of profileRoutes; track profile) {
+                  <button class="dropdown-item" type="button" [routerLink]="profile.link" (click)="clickOnProfileItem(profile)">
+                    <i [class]="profile.icon"></i>
                   {{profile.title}}</button>
-              </ng-container>
-            </ng-container>
+                }
+              }
             </div>
           </ng-container>
         </div>
-            
-        
+
+
         <div class="btn-group" >
           <button
             type="button"
             class="btn btn-sm btn-light dropdown-toggle"
             data-toggle="dropdown"
-          >
+            >
             EN
           </button>
           <div #dropdownMenu class="dropdown-menu dropdown-menu-right" >
-            <ng-container *ngFor="let lang of languages">
-            <button
-              class="dropdown-item"
-              type="button"
-              (click)="changeLanguage(lang.languageCode)"
-            >
-              {{ lang.label }}
-            </button>
-          </ng-container>
+            @for (lang of languages; track lang) {
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="changeLanguage(lang.languageCode)"
+                >
+                {{ lang.label }}
+              </button>
+            }
           </div>
         </div>
       </div>

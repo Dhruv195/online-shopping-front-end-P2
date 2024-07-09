@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { RouterLink, RouterModule } from '@angular/router';
@@ -9,7 +9,7 @@ import { API } from 'src/app/shared/constant/api.constant';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule,EditProfileComponent,RouterModule],
+  imports: [EditProfileComponent, RouterModule],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })

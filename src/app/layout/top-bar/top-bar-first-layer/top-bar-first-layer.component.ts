@@ -4,7 +4,7 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -16,7 +16,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
 @Component({
   selector: 'app-top-bar-first-layer',
   standalone: true,
-  imports: [CommonModule, RouterModule, DropdownDirective],
+  imports: [RouterModule, DropdownDirective],
   templateUrl: './top-bar-first-layer.component.html',
   styleUrls: ['./top-bar-first-layer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

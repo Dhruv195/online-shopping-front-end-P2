@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-filter-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './filter-card.component.html',
   styleUrls: ['./filter-card.component.scss']
 })

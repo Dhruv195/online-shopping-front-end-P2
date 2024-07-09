@@ -20,7 +20,7 @@
                     (billingAddressForm.get('firstName')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">First Name is required.</div>
             </div>
             <div class="form-group col-6">
@@ -36,7 +36,7 @@
                     (billingAddressForm.get('lastName')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">Last Name is required.</div>
             </div>
           </div>
@@ -54,7 +54,7 @@
                     (billingAddressForm.get('email')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">
                 Email is required and must be valid.
               </div>
@@ -72,7 +72,7 @@
                     (billingAddressForm.get('mobileNo')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">Mobile No is required.</div>
             </div>
           </div>
@@ -91,7 +91,7 @@
                       submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">Address Line 1 is required.</div>
             </div>
             <div class="form-group col-6">
@@ -101,7 +101,7 @@
                 class="form-control"
                 placeholder="123 street"
                 formControlName="addressLine2"
-              />
+                />
             </div>
           </div>
           <div class="form-row">
@@ -118,7 +118,7 @@
                     (billingAddressForm.get('city')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">City is required.</div>
             </div>
             <div class="form-group col-6">
@@ -134,7 +134,7 @@
                     (billingAddressForm.get('state')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">State is required.</div>
             </div>
             <div class="form-group col-6">
@@ -150,7 +150,7 @@
                     (billingAddressForm.get('zipcode')?.touched || submitted)
                 }"
                 required
-              />
+                />
               <div class="invalid-feedback">
                 Zipcode is required and must contain only numbers.
               </div>
@@ -166,11 +166,13 @@
                     (billingAddressForm.get('country')?.touched || submitted)
                 }"
                 required
-              >
+                >
                 <option value="" disabled>Select Country</option>
-                <option *ngFor="let country of countries" [value]="country">
-                  {{ country }}
-                </option>
+                @for (country of countries; track country) {
+                  <option [value]="country">
+                    {{ country }}
+                  </option>
+                }
               </select>
               <div class="invalid-feedback">Country is required.</div>
             </div>
@@ -182,193 +184,197 @@
             class="custom-control-input px-3"
             id="shipto"
             (change)="toggleShippingAddress($event)"
-          />
+            />
           <label class="custom-control-label" for="shipto">
             Ship to different address
           </label>
         </div>
       </div>
-      <div *ngIf="showShippingAddress" class="mb-5" id="shipping-address">
-        <h5 class="section-title position-relative text-uppercase mb-3">
-          <span class="bg-secondary pr-3">Shipping Address</span>
-        </h5>
-        <div class="bg-light p-30 mb-5">
-          <form [formGroup]="shippingAddressForm">
-            <div class="form-row">
-              <div class="form-group col-6">
-                <label>First Name</label>
-                <input
-                  type="text"
-                  placeholder="John"
-                  class="form-control"
-                  formControlName="firstName"
+      @if (showShippingAddress) {
+        <div class="mb-5" id="shipping-address">
+          <h5 class="section-title position-relative text-uppercase mb-3">
+            <span class="bg-secondary pr-3">Shipping Address</span>
+          </h5>
+          <div class="bg-light p-30 mb-5">
+            <form [formGroup]="shippingAddressForm">
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label>First Name</label>
+                  <input
+                    type="text"
+                    placeholder="John"
+                    class="form-control"
+                    formControlName="firstName"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('firstName')?.invalid &&
                       (shippingAddressForm.get('firstName')?.touched ||
                         submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">First Name is required.</div>
-              </div>
-              <div class="form-group col-6">
-                <label>Last Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Doe"
-                  formControlName="lastName"
+                    required
+                    />
+                  <div class="invalid-feedback">First Name is required.</div>
+                </div>
+                <div class="form-group col-6">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Doe"
+                    formControlName="lastName"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('lastName')?.invalid &&
                       (shippingAddressForm.get('lastName')?.touched ||
                         submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">Last Name is required.</div>
+                    required
+                    />
+                  <div class="invalid-feedback">Last Name is required.</div>
+                </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <label>Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  formControlName="email"
-                  placeholder="example@email.com"
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="example@email.com"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('email')?.invalid &&
                       (shippingAddressForm.get('email')?.touched || submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">
-                  Email is required and must be valid.
+                    required
+                    />
+                  <div class="invalid-feedback">
+                    Email is required and must be valid.
+                  </div>
                 </div>
-              </div>
-              <div class="form-group col-6">
-                <label>Mobile No</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="mobileNo"
-                  placeholder="+123 456 789"
+                <div class="form-group col-6">
+                  <label>Mobile No</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="mobileNo"
+                    placeholder="+123 456 789"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('mobileNo')?.invalid &&
                       (shippingAddressForm.get('mobileNo')?.touched ||
                         submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">Mobile No is required.</div>
+                    required
+                    />
+                  <div class="invalid-feedback">Mobile No is required.</div>
+                </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <label>Address Line 1</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="123 street"
-                  formControlName="addressLine1"
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label>Address Line 1</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="123 street"
+                    formControlName="addressLine1"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('addressLine1')?.invalid &&
                       (shippingAddressForm.get('addressLine1')?.touched ||
                         submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">Address Line 1 is required.</div>
+                    required
+                    />
+                  <div class="invalid-feedback">Address Line 1 is required.</div>
+                </div>
+                <div class="form-group col-6">
+                  <label>Address Line 2</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="123 street"
+                    formControlName="addressLine2"
+                    />
+                </div>
               </div>
-              <div class="form-group col-6">
-                <label>Address Line 2</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="123 street"
-                  formControlName="addressLine2"
-                />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <label>City</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="New York"
-                  formControlName="city"
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label>City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="New York"
+                    formControlName="city"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('city')?.invalid &&
                       (shippingAddressForm.get('city')?.touched || submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">City is required.</div>
-              </div>
-              <div class="form-group col-6">
-                <label>State</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="New York"
-                  formControlName="state"
+                    required
+                    />
+                  <div class="invalid-feedback">City is required.</div>
+                </div>
+                <div class="form-group col-6">
+                  <label>State</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="New York"
+                    formControlName="state"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('state')?.invalid &&
                       (shippingAddressForm.get('state')?.touched || submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">State is required.</div>
-              </div>
-              <div class="form-group col-6">
-                <label>Zipcode</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="123"
-                  formControlName="zipcode"
+                    required
+                    />
+                  <div class="invalid-feedback">State is required.</div>
+                </div>
+                <div class="form-group col-6">
+                  <label>Zipcode</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="123"
+                    formControlName="zipcode"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('zipcode')?.invalid &&
                       (shippingAddressForm.get('zipcode')?.touched || submitted)
                   }"
-                  required
-                />
-                <div class="invalid-feedback">
-                  Zipcode is required and must contain only numbers.
+                    required
+                    />
+                  <div class="invalid-feedback">
+                    Zipcode is required and must contain only numbers.
+                  </div>
                 </div>
-              </div>
-              <div class="form-group col-6">
-                <label>Country</label>
-                <select
-                  class="custom-select"
-                  formControlName="country"
+                <div class="form-group col-6">
+                  <label>Country</label>
+                  <select
+                    class="custom-select"
+                    formControlName="country"
                   [ngClass]="{
                     'is-invalid':
                       shippingAddressForm.get('country')?.invalid &&
                       (shippingAddressForm.get('country')?.touched || submitted)
                   }"
-                  required
-                >
-                  <option value="" disabled>Select Country</option>
-                  <option *ngFor="let country of countries" [value]="country">
-                    {{ country }}
-                  </option>
-                </select>
-                <div class="invalid-feedback">Country is required.</div>
+                    required
+                    >
+                    <option value="" disabled>Select Country</option>
+                    @for (country of countries; track country) {
+                      <option [value]="country">
+                        {{ country }}
+                      </option>
+                    }
+                  </select>
+                  <div class="invalid-feedback">Country is required.</div>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
+      }
     </div>
     <div class="col-lg-4">
       <h5 class="section-title position-relative text-uppercase mb-3">
@@ -377,21 +383,22 @@
       <div class="bg-light p-30 mb-5">
         <div class="border-bottom">
           <h6 class="mb-3">Products</h6>
-          <div
-            *ngFor="let product of formData.orderTotal.products"
-            class="d-flex justify-content-between"
-          >
-            <p>{{ product.name | titlecase }}</p>
-            <p>${{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</p>
-          </div>
+          @for (product of formData.orderTotal.products; track product) {
+            <div
+              class="d-flex justify-content-between"
+              >
+              <p>{{ product.name | titlecase }}</p>
+              <p>${{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</p>
+            </div>
+          }
         </div>
         <div class="border-bottom pt-3 pb-2">
           <div class="d-flex justify-content-between mb-3">
             <h6>Subtotal</h6>
             <h6>
               {{
-                formData.orderTotal.subtotal
-                  | currency : "USD" : "symbol" : "1.2-2"
+              formData.orderTotal.subtotal
+              | currency : "USD" : "symbol" : "1.2-2"
               }}
             </h6>
           </div>
@@ -399,8 +406,8 @@
             <h6 class="font-weight-medium">Shipping</h6>
             <h6 class="font-weight-medium">
               {{
-                formData.orderTotal.shipping
-                  | currency : "USD" : "symbol" : "1.2-2"
+              formData.orderTotal.shipping
+              | currency : "USD" : "symbol" : "1.2-2"
               }}
             </h6>
           </div>
@@ -410,8 +417,8 @@
             <h5>Total</h5>
             <h5>
               {{
-                formData.orderTotal.total || 0
-                  | currency : "USD" : "symbol" : "1.2-2"
+              formData.orderTotal.total || 0
+              | currency : "USD" : "symbol" : "1.2-2"
               }}
             </h5>
           </div>
@@ -422,7 +429,7 @@
           <span class="bg-secondary pr-3">Payment</span>
         </h5>
         <div class="bg-light p-30">
-          <ng-container *ngFor="let method of paymentMethodList">
+          @for (method of paymentMethodList; track method) {
             <div class="form-group">
               <div class="custom-control custom-radio">
                 <input
@@ -432,18 +439,18 @@
                   name="method"
                   [value]="method"
                   [(ngModel)]="paymentMethod"
-                />
+                  />
                 <label class="custom-control-label" [for]="'payment-' + method">
                   {{ method }}
                 </label>
               </div>
             </div>
-          </ng-container>
+          }
           <button
             (click)="onSubmit()"
             class="btn btn-block btn-primary font-weight-bold py-3"
             [disabled]="submitted"
-          >
+            >
             Place Order
           </button>
         </div>

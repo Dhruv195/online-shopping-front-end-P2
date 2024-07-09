@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-product-related-carosul-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './product-related-carosul-section.component.html',
   styleUrls: ['./product-related-carosul-section.component.scss']
 })
