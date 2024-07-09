@@ -221,10 +221,6 @@ export const HEADER_ROUTES_ITEM=[
   {
     title: 'Shop',
     link: '/shop',
-  },
-  {
-    title: 'Contact',
-    link:'/contact'
   }
 ];
 
