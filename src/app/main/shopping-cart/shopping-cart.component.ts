@@ -23,7 +23,8 @@ import { Router, RouterModule } from '@angular/router';
 export class ShoppingCartComponent implements OnInit {
   subTotal = 10;
   cartProductList: any[] = [];
-
+  couponName: any
+  totalAmount=0
   someAddedCart = [
     {
       productId: '',
@@ -171,10 +172,14 @@ export class ShoppingCartComponent implements OnInit {
       cartList.push(cartItem);
     });
 
-
     this.addCartList(cartList);
 
-    // this.productService.addProductToCart(this.cartProductList)
+    if (this.authService.loggedIn()) {
+      this.addCartList(cartList);
+      this.productService.addProductToCart(this.cartProductList);
+    } else {
+      this.router.navigate(['/checkout']);
+    }
   }
 
   addCartList(cartList: any[]) {
@@ -184,5 +189,30 @@ export class ShoppingCartComponent implements OnInit {
         this.cdr.markForCheck();
       },
     });
+  }
+
+  getCouponDetails() {
+    console.log(this.couponName); 
+    
+    this.commonService.getCoupon(this.couponName).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.commonService.subTotalAmount$.subscribe((total)=>{
+            if (res.data.discountType==="amount") {
+              this.totalAmount = total - res.data.discount 
+            }
+            else {
+              this.totalAmount=(total*res.data.discount)/100
+            }
+            console.log(total);
+          })
+          this.commonService.subTotalAmount$.next(this.totalAmount)
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+        
+      }
+    })
   }
 }

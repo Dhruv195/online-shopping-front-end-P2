@@ -85,4 +85,12 @@ export class CommonService {
   getColor() {
     return this.httpService.get(API.COLOR);
   }
+
+  getSpecialOffer() {
+    return this.httpService.get(API.GET_SPECIAL_OFFER);
+  }
+
+  getCoupon(couponName: any) {
+    return this.httpService.get(API.GET_COUPON_DETAILS+couponName);
+  }
 }

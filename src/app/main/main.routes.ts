@@ -87,8 +87,8 @@ export const routes: Routes = [
           import('./product-wishlist/product-wishlist.component').then(
             (m) => m.ProductWishlistComponent
           ),
-        canActivate:[authGuard]
-      },
+        canActivate: [authGuard]
+      }
     ],
   },
 ];

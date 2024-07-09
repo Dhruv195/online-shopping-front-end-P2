@@ -28,4 +28,6 @@ export const API = {
   SITE_CONFIG: 'siteConfigs',
   LANGUAGE: 'language',
   COLOR: 'product/color',
+  GET_SPECIAL_OFFER: 'http://192.168.1.234:9000/specialOffer',
+  GET_COUPON_DETAILS:'coupon/'
 };
