@@ -91,6 +91,10 @@ export class CommonService {
   }
 
   getCoupon(couponName: any) {
-    return this.httpService.get(API.GET_COUPON_DETAILS+couponName);
+    return this.httpService.get(API.GET_COUPON_DETAILS + couponName);
+  }
+
+  removeOrder(orderId: any) {
+    return this.httpService.post(API.REMOVE_ORDER + `/${orderId}`, {});
   }
 }
