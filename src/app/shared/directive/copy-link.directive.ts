@@ -9,7 +9,11 @@ import { TOAST_TYPE } from '../constant/toast';
 export class CopyLinkDirective {
   @Input() copyLink: any;
   constructor(private commonService:CommonService) { }
-
+/**
+ * CLick to Product Link Copy
+ * @param event click event
+ * @returns 
+ */
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent): void {
 
@@ -17,6 +21,9 @@ export class CopyLinkDirective {
     if (!this.copyLink) {
       return;
     }
+    /**
+     * clipboard to copyLink String
+     */
     navigator.clipboard.writeText(this.copyLink.toString());
     this.commonService.showToastMessage(TOAST_TYPE.success, 'Copy Product Link Successfully');
     

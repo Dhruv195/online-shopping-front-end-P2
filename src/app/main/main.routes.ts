@@ -101,7 +101,7 @@ export const routes: Routes = [
           import('../shared/pages/faq/faq.component').then((m) => m.FaqComponent),
       },
       {
-        path: 'about',
+        path: 'aboutUs',
         loadComponent: () =>
           import('../shared/pages/about-help-slug/about-help-slug.component').then((m) => m.AboutHelpSlugComponent),
       },

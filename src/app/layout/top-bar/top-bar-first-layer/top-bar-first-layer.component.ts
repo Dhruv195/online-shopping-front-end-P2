@@ -107,8 +107,8 @@ export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
     if (this.authService.getToken()) {
       this.userService.getUser().subscribe({
         next: (res: any) => {
-          this.userDetails = res.data;
           this.userService.userDetails$.next(res);
+          this.userDetails = res.data;
           this.cdr.markForCheck();
         },
       });

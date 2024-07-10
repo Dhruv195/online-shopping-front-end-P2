@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { NgbRefDirective } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { OrderService } from 'src/app/shared/service/order.service';
 import { Router } from '@angular/router';
+import { TOAST_TYPE } from 'src/app/shared/constant/toast';
 
 @Component({
   selector: 'app-product-checkout',
@@ -182,7 +183,9 @@ export class ProductCheckoutComponent {
     this.orderService.addCheckoutOrder(orderData).subscribe({
       next: (res: any) => {
         if (res.success) {
-          this.router.navigate(['/home']);
+        this.commonService.showToastMessage(TOAST_TYPE.success,res.message)
+
+          this.router.navigate(['/user-profile/order-list']);
         }
       },
     });

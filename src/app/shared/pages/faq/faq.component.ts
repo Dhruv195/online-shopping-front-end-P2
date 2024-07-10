@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { CommonService } from '../../service/common.service';
 import { NgbAccordionCollapse, NgbCollapse, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [NgbModule,CommonModule],
+  imports: [NgbModule,CommonModule,RouterModule],
   templateUrl: './faq.component.html',
   styleUrl: './faq.component.scss',
   changeDetection:ChangeDetectionStrategy.OnPush
@@ -49,7 +49,10 @@ export class FaqComponent implements OnInit {
     this.commonService.getCategoryOfFaq(categoryId).subscribe({
       next: (res: any) => {
         this.categoryFaq = res.data.faq;
+        console.log("Category Faq",this.categoryFaq)
         this.cd.markForCheck();
+      },
+      error: (err: any) => {
       }
     })
     this.router.navigate(['faq'], {

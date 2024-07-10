@@ -1,21 +1,19 @@
 <div class="container-fluid">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-      <span class="bg-secondary pr-3">{{informationData.title}}</span>
+      <span class="bg-secondary pr-3" [innerHTML]="informationData?.title" ></span>
     </h2>
     <div class="row px-xl-5">
       <div class="col-lg-5 mb-5">
         <div [ngStyle]="{'width':'300px' }">
-            <img [src]="informationData.image" style="width: 700px;height: 500px;" alt="">
+            <img [src]="informationData?.image || 'assets/img/not-image-found.jpg'" style="width: 700px;height: 500px;" alt="">
         </div>
         
       </div>      
       <div class="col-lg-7 mb-5 bg-light">
-        <!-- <div >
-            <h3>{{informationData.shortDescription}}</h3>
-        </div> -->
         <div class="card h-100 shadow-lg border  rounded-0 text-center p-4 d-flex justify-content-center align-items-center">
-            <h2 class="text-primary">{{informationData.shortDescription}}!</h2>
-            <p class="lead">{{informationData.longDescription}} </p>
+            <h2 class="text-primary" [innerHTML]="informationData?.shortDescription" >
+            </h2>
+            <p class="lead" [innerHTML]="informationData?.longDescription" > </p>
     
             <ul class="list-unstyled horizontal-list ">
               <li><i class="bi bi-check-circle-fill text-success"></i> Exclusive deals and offers</li>

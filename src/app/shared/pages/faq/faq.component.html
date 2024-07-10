@@ -9,20 +9,22 @@
         <div class="mt-4">
             <ng-container *ngFor="let category of allCategory" >
                 <div class="m-3">
-                    <button type="button"  class="btn btn-dark w-100" (click)="selectCategoryOfFaq(category._id)" [ngClass]="{'btnBg':categoryType== category._id }" >{{category?.name}}</button>
+                    <button type="button"  class="btn btn-dark w-100 " (click)="selectCategoryOfFaq(category._id)" [ngClass]="{'btnBg':categoryType== category._id }" >{{category?.name}}</button>
                 </div>
             </ng-container>
         </div>
         
     </div>
     <div class="col-lg-9 order-1 order-lg-2 "  >
-        <ng-container *ngFor="let faq of categoryFaq">
+@if (categoryFaq && categoryFaq.length > 0) {
+
+        <ng-container *ngFor="let faq of categoryFaq; first as first$"  >
                 <div ngbAccordion >
-                    <div ngbAccordionItem [collapsed]="true" class="mb-2">
+                    <div ngbAccordionItem [collapsed]="first$ ? false: true"  class="mb-2">
                         <h2 ngbAccordionHeader  >
                             <button ngbAccordionButton    >{{faq?.question}}</button>
                         </h2>
-                        <div ngbAccordionCollapse>
+                        <div ngbAccordionCollapse >
                             <div ngbAccordionBody>
                                 <ng-template>
                                     {{faq?.answer}}
@@ -34,7 +36,14 @@
            
             
         </ng-container>
-    
+    }
+    @else {
+        <div class="empty-cart container text-center p-5 shadow">
+          <img src="assets/img/image.png" alt="loading" />
+          <h2>FAQ is not found !</h2>
+          <a routerLink="/shop" class="btn btn-primary">Shop now</a>
+        </div>
+      }
     </div>
 
   </div>

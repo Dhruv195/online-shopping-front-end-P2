@@ -253,7 +253,7 @@ export const PROFILE_ROUTES_ITEM=[
 ];
 
 export const TOP_BAR_ROUTES_ITEM=[
-  { name: 'About', url: 'about' },
+  { name: 'About', url: 'aboutUs' },
   { name: 'Contact', url: 'contact' },
   { name: 'Help', url: '/help' },
   { name: 'FAQs', url: '/faq' },
