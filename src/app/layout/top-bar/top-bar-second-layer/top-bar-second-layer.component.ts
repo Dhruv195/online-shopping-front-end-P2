@@ -17,11 +17,13 @@ import {
   fromEvent,
   map,
 } from 'rxjs';
+import { CommonService } from 'src/app/shared/service/common.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-top-bar-second-layer',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,AsyncPipe],
   templateUrl: './top-bar-second-layer.component.html',
   styleUrls: ['./top-bar-second-layer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +37,8 @@ export class TopBarSecondLayerComponent {
   constructor(
     public productService: ProductService,
     public router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public commonService:CommonService
   ) {}
 
   onSearch() {

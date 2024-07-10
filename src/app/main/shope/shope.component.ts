@@ -46,7 +46,7 @@ export class ShopeComponent implements OnInit {
   params: any;
   productList: any;
   displayMode: string = 'grid';
-  minValue: number = 100;
+  minValue: number = 0;
   maxValue: number = 400;
   options: Options = {
     floor: 0,
@@ -165,8 +165,12 @@ export class ShopeComponent implements OnInit {
   getProductList(params: any) {
     this.productService.getProductList(params).subscribe({
       next: (res: any) => {
+        this.options.floor= res.data.min_price;
+        this.options.ceil = res.data.max_price;
         //pass in Behaviour Subject
         this.productService.productList.next(res.data.products);
+        console.log(res,'=>>> ')
+        console.log("Opriotn ",this.options)
         this.productService.totalProducts.next(res.data.total_count);
         this.router.navigate(['/shop'], {
           relativeTo: this.activatedRoute,
@@ -208,6 +212,12 @@ export class ShopeComponent implements OnInit {
   getColors() {
     this.commonService.getColor().subscribe({
       next: (res: any) => {
+        const color = {
+          title: 'All Color',
+          total: 1000,
+        };
+        this.colorList.push(color);
+
         if (res.success) {
           res.data.forEach((element: any) => {
             const color = {
@@ -216,7 +226,7 @@ export class ShopeComponent implements OnInit {
             };
             this.colorList.push(color);
           });
-          this.filters[1].color = this.colorList;
+          this.filters[0].color = this.colorList;
 
           this.cd.markForCheck();
         }
