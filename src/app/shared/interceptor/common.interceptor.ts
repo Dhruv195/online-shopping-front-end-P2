@@ -11,7 +11,6 @@ import { Observable, catchError, of, tap, throwError } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { API } from '../constant/api.constant';
 import { CommonService } from '../service/common.service';
-import { TOAST_TYPE } from '../constant/toast';
 import { Router } from '@angular/router';
 
 @Injectable()

@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { CommonService } from 'src/app/shared/service/common.service';
-import { TOAST_TYPE } from 'src/app/shared/constant/toast';
+import { TOAST_TYPE } from 'src/app/shared/constant/common.constant';
 
 @Component({
   selector: 'app-forgot-password',
@@ -66,7 +66,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.forgotPasswordForm.valid) {
       this.authService.forgotPassword(this.forgotPasswordForm.value, this.token).subscribe({
         next: (res: any) => {
-        this.commonService.showToastMessage(TOAST_TYPE.success,'Changed Password Successfully')
+        this.commonService.showToastMessage(TOAST_TYPE.success,res.message)
           this.router.navigate(['auth/sign-in']);
         }
       })

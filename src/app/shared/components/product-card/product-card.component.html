@@ -6,7 +6,7 @@
       alt=""
     />
     <div class="product-action">
-      <a class="btn btn-outline-dark btn-square" routerLink="/wish-list"
+      <a class="btn btn-outline-dark btn-square" [routerLink]="['/wish-list',product._id]" 
         ><i class="far fa-heart"></i
       ></a>
       <a

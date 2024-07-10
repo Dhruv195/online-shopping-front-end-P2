@@ -11,7 +11,7 @@
           #priceMinMax
           [(value)]="minValue"
           [(highValue)]="maxValue"
-          (userChangeEnd)="getMinMaxPrice($event)"
+          (userChangeEnd)="getMinMaxPrice()"
           [options]="options"
         ></ngx-slider>
       </div>
@@ -40,20 +40,7 @@
               </button>
             </div>
             <div class="ml-2">
-              <!-- <div class="btn-group">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-light dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  Sorting
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item">Latest</a>
-                  <a class="dropdown-item">Popularity</a>
-                  <a class="dropdown-item">Best Rating</a>
-                </div>
-              </div> -->
+             
               <div class="btn-group ml-2">
                 <button
                   type="button"

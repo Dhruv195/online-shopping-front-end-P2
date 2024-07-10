@@ -12,6 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { emailValidation } from 'src/app/shared/validation/customeValidation.constant';
 
 @Component({
   selector: 'app-contact',
@@ -63,7 +64,7 @@ export class ContactComponent implements OnInit {
   initializeContactForm() {
     this.contactForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email,emailValidation()]),
       subject: new FormControl('', Validators.required),
       message: new FormControl('', Validators.required),
     });

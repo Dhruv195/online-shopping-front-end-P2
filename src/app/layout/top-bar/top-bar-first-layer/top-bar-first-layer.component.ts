@@ -11,8 +11,8 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import { API } from 'src/app/shared/constant/api.constant';
 import { DropdownDirective } from 'src/app/shared/directive/dropdown.directive';
-import { TOAST_TYPE } from 'src/app/shared/constant/toast';
 import { CommonService } from 'src/app/shared/service/common.service';
+import { TOAST_TYPE } from 'src/app/shared/constant/common.constant';
 
 @Component({
   selector: 'app-top-bar-first-layer',
@@ -93,16 +93,22 @@ export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
       },
     });
   }
-
-  clickOnProfileItem(profile: any) {
-    if (profile.title == 'Sign Out') {
+  /**
+   * 
+   * @param typeProfile profile 
+   */
+  clickOnProfileItem(typeProfile: any) {
+    if (typeProfile.title == 'Sign Out') {
       localStorage.removeItem('token');
       // localStorage.removeItem('userDetails');
       // this.userService.updateUserDetails(null); 
       this.commonService.showToastMessage(TOAST_TYPE.success,'Sign Out Successfully')
     }
   }
-
+  /**
+   * languageCode to  change Language
+   * @param languageCode languageCode 
+   */
   changeLanguage(languageCode: any) {
     document.cookie = 'googtrans=' + `/en/${languageCode}`;
     location.reload();
@@ -111,6 +117,7 @@ export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
     if (this.authService.getToken()) {
       this.userService.getUser().subscribe({
         next: (res: any) => {
+          this.userService.userDetails$.next(res);
           this.userDetails = res.data;
           this.cdr.markForCheck();
         },
@@ -119,7 +126,9 @@ export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
       this.userDetails = null;
     }
   }
-
+  /**
+   * Get Language API Call
+   */
   getLanguageDetails() {
     this.commonService.getLanguage().subscribe({
       next: (res: any) => {
@@ -137,7 +146,9 @@ export class TopBarFirstLayerComponent implements OnInit,OnDestroy {
       },
     });
   }
-
+  /**
+   * onDestroy to usubscibe Behaviour Subject
+   */
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

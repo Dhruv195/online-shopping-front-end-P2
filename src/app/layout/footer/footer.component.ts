@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { navigationList } from 'src/app/shared/constant/common-function';
 import { CommonService } from 'src/app/shared/service/common.service';
+import { FOOTER_NAVIGATION } from 'src/app/shared/constant/common.constant';
 
 @Component({
   selector: 'app-footer',
@@ -18,7 +18,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent implements OnInit {
-  navigationList = navigationList;
+  navigationList = FOOTER_NAVIGATION;
   siteInfo: any;
   constructor(
     private commonService: CommonService,
@@ -31,6 +31,7 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.setSiteConfig();
   }
+  
   setSiteConfig() {
     this.commonService.getSiteConfig().subscribe({
       next: (res: any) => {

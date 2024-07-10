@@ -6,9 +6,9 @@ import {
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { TOAST_TYPE } from '../constant/toast';
 import { CommonService } from './common.service';
 import { environment } from '../../../environments/environment.development';
+import { TOAST_TYPE } from '../constant/common.constant';
 
 @Injectable({
   providedIn: 'root',

@@ -16,6 +16,7 @@ import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SetImageDimensionDirective } from 'src/app/shared/directive/set-image-dimension.directive';
+import { FIRST_SELECTED_PRODUCT_INFO } from 'src/app/shared/constant/common.constant';
 
 @Component({
   selector: 'app-shope-details',
@@ -53,13 +54,7 @@ export class ShopeDetailsComponent {
   ) {}
 
   
-  addProductCart = {
-    productId: 0,
-    quantity: 1,
-    price: 0,
-    size: '',
-    color: '',
-  };
+  addProductCart =FIRST_SELECTED_PRODUCT_INFO;
   products: any = {};
 
   addProductData = {
@@ -71,7 +66,7 @@ export class ShopeDetailsComponent {
     Images: [],
   };
   
-//////
+  
   routerOfProductInformation: any[] = [
     {
       title: 'Description',

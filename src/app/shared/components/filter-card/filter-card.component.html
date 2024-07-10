@@ -5,23 +5,7 @@
       <span class="bg-secondary pr-3">{{ filter.title }}</span>
     </h5>
     <div class="bg-light p-4 mb-30">
-      <ng-container *ngIf="filter.price" >
-        <form>
-          <div *ngFor="let item of filter.price">
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                [checked]="selectedFilters['price'].includes(item.title)"
-                (change)="onFilterChange(filter.type, item, $event)"
-                id="{{ filter.title }}-{{ item.title }}"
-              />
-              <label class="custom-control-label" for="{{ filter.title }}-{{ item.title }}">{{ item.title }}</label>
-              <span class="badge border font-weight-normal text-dark">{{ item.total }}</span>
-            </div>
-          </div>
-        </form>
-    </ng-container>
+      
     <ng-container *ngIf="filter.color" >
       <form>
         <div *ngFor="let item of filter.color">

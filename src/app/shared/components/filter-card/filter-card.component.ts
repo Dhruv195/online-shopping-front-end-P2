@@ -13,7 +13,6 @@ export class FilterCardComponent {
   @Output() filterChanged = new EventEmitter<any>();
 
   selectedFilters: { [key: string]: any[] } =  {
-    price: ['All Price'],
     color: ['All Color'],
     size: ['All Size']
   };

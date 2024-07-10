@@ -1,3 +1,5 @@
+<ng-container  *ngIf="orderList && orderList.length > 0; else noFound">
+
 <ng-container *ngFor="let order of orderList">
   <div class="order-details container border p-3 my-3">
     <div class="row mb-4">
@@ -56,3 +58,13 @@
     </div>
   </div>
 </ng-container>
+</ng-container>
+
+<ng-template #noFound>
+  <div class="empty-cart container text-center p-5 shadow">
+    <img src="assets/img/image.png" alt="loading" />
+    <h2>Your OrderList is empty!</h2>
+    <p>Add items to it now.</p>
+    <a routerLink="/shop" class="btn btn-primary">Shop now</a>
+  </div>
+</ng-template>

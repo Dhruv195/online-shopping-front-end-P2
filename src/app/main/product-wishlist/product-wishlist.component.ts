@@ -19,6 +19,12 @@ export class ProductWishlistComponent  {
  
   constructor(private commonService:CommonService,private userService:UserService,private acitveRoute:ActivatedRoute,private cd:ChangeDetectorRef){}
 
+  /**
+   * change Bread Crumb Data
+   * get Params to product Id 
+   * 
+   * if Product Id is udefined than simple Wish List API Call
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.getParams();
@@ -26,7 +32,9 @@ export class ProductWishlistComponent  {
       this.getWishList();
     }
   }
-  
+  /**
+   * Behaviour Subject using BreadCrumb Data
+   */
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Wis List',
@@ -38,6 +46,11 @@ export class ProductWishlistComponent  {
     });
   }
 
+  /**
+   * prams to fetch Product Id 
+   * if Product Id than AddProductInWishList API Call
+   * err to productId null
+   */
   getParams(){
     this.acitveRoute.params.subscribe({
       next:(res:any)=>{
@@ -53,7 +66,10 @@ export class ProductWishlistComponent  {
     })
   }
   
-
+  /**
+   * Get Wish List API CALL
+   * if Error to Emptu PRoduct List
+   */
   getWishList(){
     this.userService.getWishList().subscribe({
       next:(res:any)=>{
@@ -65,17 +81,23 @@ export class ProductWishlistComponent  {
       }
     })
   }
-
+  /**
+   * Add Product In Wish List
+   */
   addProductInWishList(){
     this.userService.postWishList(this.productId).subscribe({
       next:(res:any)=>{
         this.getWishList();
+        
         this.cd.markForCheck();
       },
       error:(err:any)=>{}
     })
   }
-
+  /**
+   * wish List to remove product using API Call 
+   * @param productId delete Product Id
+   */
   deleteProductInWishList(productId:any){
     this.userService.deleteWishList(productId).subscribe({
       next:(res:any)=>{

@@ -1,5 +1,5 @@
  <!-- Toast Notification -->
-  <div class="row position-relative" *ngIf="(commonService.toastShow$| async)">
+  <div class="row position-fixed fixed-top" *ngIf="(commonService.toastShow$| async)">
     <div class="col-3 position-absolute z-3 top-0 end-0">
         <div class="bottom-0 end-0 p-3">
             <div id="liveToast" class="" role="alert" aria-live="assertive" aria-atomic="true">

@@ -64,10 +64,7 @@
             >
             <span
               class="text-danger"
-              *ngIf="
-                contactForm.get('email').hasError('email') &&
-                (contactForm.get('email').dirty || submitted)
-              "
+              *ngIf="contactForm.get('email').hasError('emailValidation') && (contactForm.get('email').dirty || contactForm.get('email').touched)" class="text-danger"
               >Email is invalid.</span
             >
             <p class="help-block text-danger"></p>

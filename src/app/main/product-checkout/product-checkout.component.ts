@@ -6,7 +6,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -14,10 +13,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ProductService } from 'src/app/shared/service/product.service';
-import { AuthService } from 'src/app/shared/service/auth.service';
-import { NgbRefDirective } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { OrderService } from 'src/app/shared/service/order.service';
 import { Router } from '@angular/router';
+import { COUNTRIES, PAYMENT_METHOD } from 'src/app/shared/constant/common.constant';
 
 @Component({
   selector: 'app-product-checkout',
@@ -41,15 +39,13 @@ export class ProductCheckoutComponent {
       total: 10,
     },
   };
-  countries = ['USA', 'Canada', 'UK'];
+  countries =COUNTRIES;
 
-  paymentMethodList = ['Paytm', 'Google Pay', 'Paypal'];
+  paymentMethodList =PAYMENT_METHOD;
 
   constructor(
     public commonService: CommonService,
-    private fb: FormBuilder,
     private productService: ProductService,
-    private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private orderService: OrderService,
     private router: Router
@@ -61,7 +57,6 @@ export class ProductCheckoutComponent {
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.createAddressForm();
-
     this.getUserCartDetail();
   }
   /**

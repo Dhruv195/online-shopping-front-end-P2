@@ -27,6 +27,10 @@ export class OrderViewComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  /**
+   * BredCrumb Data Pass Data
+   * Actidveted  Route to fetch Params to pass orderId in Get  Order
+   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.activatedRoute.params.subscribe({

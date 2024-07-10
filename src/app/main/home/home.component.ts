@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeaturedCardComponent } from 'src/app/shared/components/featured-card/featured-card.component';
 import { CategoryCarousulSectionComponent } from './category-carousul-section/category-carousul-section.component';
 import { CategorySectionComponent } from './category-section/category-section.component';
 import { FeaturedSectionComponent } from './featured-section/featured-section.component';
@@ -19,6 +18,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.changeBreadCrumbData();
   }
+  /**
+   * BreadCrumb Data Pass
+   */
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next(null);
   }

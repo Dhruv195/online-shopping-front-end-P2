@@ -98,9 +98,7 @@ export class EditProfileComponent implements OnInit {
       this.userService.updateUser(formData).subscribe({
         next:(res:any)=>{
           this.onEdit();
-          // this.userService.updateUserDetails$.next(true);
-          // this.userService.userDetails$.next(res.data);
-          
+          this.userService.activeUserDetails.next(true);
           this.cd.markForCheck()
         },
         error: (res: any) => {
@@ -123,7 +121,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   handleUserProfileData(res: any) {
-    this.userDetails = res;
+    this.userDetails = res.data;
         this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
         this.userDetails.dob=this.datePipe.transform (this.userDetails.dob,'YYYY-MM-dd')
         this.editProfileForm.patchValue({

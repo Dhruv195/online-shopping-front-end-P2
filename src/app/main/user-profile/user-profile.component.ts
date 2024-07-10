@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   getUserDetails(){
     this.userService.userDetails$.subscribe({
       next:(res:any)=>{
-        this.userDetails=res;
+        this.userDetails=res.data;
         this.defaultProfileImg=API.USER_NAME_PROFILE_IMG+`${this.userDetails?.firstName}+${this.userDetails?.lastName}`
       }
     })

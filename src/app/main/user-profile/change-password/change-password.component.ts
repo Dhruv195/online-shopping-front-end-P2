@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/service/auth.service';
-import { TOAST_TYPE } from 'src/app/shared/constant/toast';
+import { TOAST_TYPE } from 'src/app/shared/constant/common.constant';
 const confirmPasswordValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
@@ -50,13 +50,11 @@ export class ChangePasswordComponent implements OnInit {
     if (this.changePasswordForm.valid) {
       this.authService.changePassword(this.changePasswordForm.value).subscribe({
         next: (res: any) => {
-          this.commonService.showToastMessage(TOAST_TYPE.success,'Password Change Successfully')
+          this.commonService.showToastMessage(TOAST_TYPE.success,res.message)
           this.changePasswordForm.reset();
           this.submitted=false;
         },
         error: (err: any) => {  
-          this.commonService.showToastMessage(TOAST_TYPE.danger,'Old Password is InCorrect')
-          
         }
       })
     }

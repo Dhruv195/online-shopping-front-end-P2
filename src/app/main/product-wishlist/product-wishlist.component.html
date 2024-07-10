@@ -5,7 +5,7 @@
 
         <ng-container *ngFor="let product of productWishList" >
             <div class="card mb-3 shadow-lg border-0 rounded-0">
-                <div class="row g-0">
+                <div class="row g-0 align-items-center">
                     <div class="col-md-2">
                         <img [src]="product.images[0]" class="img-fluid rounded-start" alt="Product Image">
                     </div>
@@ -24,16 +24,13 @@
                             <div class="d-flex align-items-center mt-2">
 
                                 <h5>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</h5>
-                                <!-- <h6 class="text-muted ml-2">
-                                    <del>$200</del>
-                                </h6> -->
                             </div>
                             
                         </div>
                     </div>
-                    <div class="col-md-2 d-flex align-items-center justify-content-center gap">
-                        <button class="btn btn-outline-dark" (click)="deleteProductInWishList(product?.productId)" ><i class="bi bi-trash text-danger" ></i></button>
-                        <button [routerLink]="['/shop-detail/',product?.productId]"  class="btn btn-primary" >
+                    <div class="col-md-2 d-flex align-items-center justify-content-center ">
+                        <button class="btn btn-outline-dark m-2" (click)="deleteProductInWishList(product?.productId)" ><i class="bi bi-trash text-danger" ></i></button>
+                        <button [routerLink]="['/shop-detail/',product?.productId]"  class="btn btn-primary m-2" >
                            Buy
                         </button>
                     </div>

@@ -24,32 +24,6 @@ export class ShoppingCartComponent implements OnInit {
   subTotal = 10;
   cartProductList: any[] = [];
 
-  someAddedCart = [
-    {
-      productId: '',
-      productName: 'Product Name',
-      price: 150,
-      quantity: 5,
-      totalProductPrice: 150,
-      Images: ['assets/img/product-1.jpg'],
-    },
-    {
-      productId: '',
-      productName: 'Product Name',
-      price: 150,
-      quantity: 1,
-      totalProductPrice: 150,
-      Images: ['assets/img/product-1.jpg'],
-    },
-    {
-      productId: '',
-      productName: 'Product Name',
-      price: 150,
-      quantity: 1,
-      totalProductPrice: 150,
-      Images: ['assets/img/product-1.jpg'],
-    },
-  ];
   constructor(
     public commonService: CommonService,
     private productService: ProductService,
@@ -171,10 +145,7 @@ export class ShoppingCartComponent implements OnInit {
       cartList.push(cartItem);
     });
 
-
     this.addCartList(cartList);
-
-    // this.productService.addProductToCart(this.cartProductList)
   }
 
   addCartList(cartList: any[]) {

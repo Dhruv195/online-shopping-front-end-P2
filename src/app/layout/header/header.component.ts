@@ -3,12 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonService } from '../../shared/service/common.service';
-import { AuthService } from '../../shared/service/auth.service';
 import { UserService } from '../../shared/service/user.service';
-import { API } from '../../shared/constant/api.constant';
 import { ProductService } from '../../shared/service/product.service';
-import { HEADER_ROUTES_ITEM, PROFILE_ROUTES_ITEM } from 'src/app/shared/constant/common-function';
-
+import { HEADER_ROUTES_ITEM, PROFILE_ROUTES_ITEM } from 'src/app/shared/constant/common.constant';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -44,6 +41,9 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
+  /**
+   * Get Category API Call
+   */
   getCategory() {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {

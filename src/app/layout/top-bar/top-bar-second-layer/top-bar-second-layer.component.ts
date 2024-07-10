@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -10,13 +9,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { Router } from '@angular/router';
-import {
-  Observable,
-  debounceTime,
-  distinctUntilChanged,
-  fromEvent,
-  map,
-} from 'rxjs';
 
 @Component({
   selector: 'app-top-bar-second-layer',
@@ -38,6 +30,9 @@ export class TopBarSecondLayerComponent {
     private cd: ChangeDetectorRef
   ) {}
 
+  /**
+   * searchQuery Click to search 
+   */
   onSearch() {
     if (this.searchQuery.trim()) {
       this.params = {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { featuredItems } from 'src/app/shared/constant/common-function';
+import { FEATURE_ITEMS } from 'src/app/shared/constant/common.constant';
 
 @Component({
   selector: 'app-featured-section',
@@ -11,6 +11,6 @@ import { featuredItems } from 'src/app/shared/constant/common-function';
 })
 export class FeaturedSectionComponent {
 
-  featuredItems = featuredItems
+  featuredItems = FEATURE_ITEMS
 
 }

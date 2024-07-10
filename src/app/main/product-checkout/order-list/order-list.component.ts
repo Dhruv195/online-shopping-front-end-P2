@@ -27,7 +27,8 @@ export class OrderListComponent implements OnInit {
   ) {}
 
   /**
-   * Call
+   * Call API Get Order
+   * Behaviour Subject Data Pass
    */
   ngOnInit(): void {
     this.getOrder();

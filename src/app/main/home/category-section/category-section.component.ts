@@ -17,9 +17,15 @@ export class CategorySectionComponent implements OnInit {
 
   constructor(private productService: ProductService,private router:Router) {}
 
+  /**
+   * Get Category API Call
+   */
   ngOnInit(): void {
     this.getCategory();
   }
+  /**
+   * Category API CALL
+   */
   getCategory() {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {
@@ -29,6 +35,10 @@ export class CategorySectionComponent implements OnInit {
       },
     });
   }
+  /**
+   * 
+   * @param categoryId CategoryId pass in queryParams
+   */
   onCategoryClick(categoryId:any) {
     let params = {
       'categoryId':categoryId,

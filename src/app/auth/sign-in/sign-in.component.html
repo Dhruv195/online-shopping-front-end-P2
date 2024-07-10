@@ -17,7 +17,11 @@
                                 placeholder="Email"
                                 [ngClass]="{'error': signInForm.get('email').invalid && (signInForm.get('email').touched || submitted)}">
                                 <span class="text-danger" *ngIf="signInForm.get('email').hasError('required') && (signInForm.get('email').touched || submitted)">Email is required</span>
-                                <span class="text-danger" *ngIf="signInForm.get('email').hasError('email')">Email is invalid</span>
+                                <span
+                                class="text-danger"
+                                *ngIf="signInForm.get('email').hasError('emailValidation') && (signInForm.get('email').dirty || signInForm.get('email').touched)" class="text-danger"
+                                >Email is invalid.</span
+                                >
                         </div>
                         <div class="form-group mb-3">
                             <label for="inputPassword1">Password<span class="text-danger">*</span></label>
@@ -28,8 +32,15 @@
                                     [ngClass]="{'bi bi-eye-fill': hiddenPassword, 'bi bi-eye-slash-fill': !hiddenPassword}"></button>
                             </div>
                             <span class="text-danger" *ngIf="signInForm.get('password').hasError('required') && (signInForm.get('password').touched || submitted)">Password is required</span>
+
+                            <ul *ngIf="signInForm.get('password').hasError('passwordValidation') && (signInForm.get('password').dirty || signInForm.get('password').touched)" class="text-danger">
+                                <li>At Least One UpperCase</li>
+                                <li>At Least One Lowercase</li>
+                                <li>At Least One Digit</li>
+                                <li>Minimum Length 6 </li>
+                            </ul>
                         </div>
-                        <div class="mb-3 text-end ">
+                        <div class="mb-3 text-end " >
                             <a routerLink="/auth/confirmation-email">Forgot password?</a>
                         </div>
                         <div class="mb-3 text-end ">

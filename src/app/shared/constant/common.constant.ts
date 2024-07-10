@@ -1,3 +1,4 @@
+
 export const FILTER = [
   {
     title: 'FILTER BY COLOR',
@@ -95,7 +96,7 @@ export const PROFILE_ITEMS = [
   },
 ];
 
-export const featuredItems = [
+export const FEATURE_ITEMS = [
   {
     icon: 'fa-check',
     title: 'Quality Product',
@@ -114,33 +115,28 @@ export const featuredItems = [
   },
 ];
 
-export const reviewList = {
-  _id: '667a93516a95e65e828409cc',
-  productName: 'Nike Running Shoes',
 
-  reviews: [
-    {
-      user_profile_pic: 'assets/img/user.jpg',
-      firstName: 'Dhruv',
-      lastName: 'Joshi',
-      reviewMessage:
-        'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-      reviewRating: 4,
-      reviewDate: '01/01/2045',
-    },
-    {
-      user_profile_pic: 'assets/img/user.jpg',
-      firstName: 'Vishal',
-      lastName: 'Joshi',
-      reviewMessage:
-        'Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.',
-      reviewRating: 2,
-      reviewDate: '01/01/20',
-    },
-  ],
-};
 
-export const navigationList = [
+export const shareList = [
+  {
+    icon: 'fa-facebook-f',
+    link: 'https://www.facebook.com/',
+  },
+  {
+    icon: ' fa-twitter',
+    link: 'https://x.com/?lang=en',
+  },
+  {
+    icon: 'fa-linkedin-in',
+    link: 'https://in.linkedin.com/',
+  },
+  {
+    icon: 'fa-pinterest',
+    link: 'https://in.pinterest.com/',
+  },
+];
+
+export const FOOTER_NAVIGATION = [
   {
     navigationLabel: 'QUICK SHOP',
     navigationLinks: [
@@ -193,25 +189,6 @@ export const navigationList = [
   },
 ];
 
-export const shareList = [
-  {
-    icon: 'fa-facebook-f',
-    link: 'https://www.facebook.com/',
-  },
-  {
-    icon: ' fa-twitter',
-    link: 'https://x.com/?lang=en',
-  },
-  {
-    icon: 'fa-linkedin-in',
-    link: 'https://in.linkedin.com/',
-  },
-  {
-    icon: 'fa-pinterest',
-    link: 'https://in.pinterest.com/',
-  },
-];
-
 
 export const HEADER_ROUTES_ITEM=[
   {
@@ -255,3 +232,24 @@ export const PROFILE_ROUTES_ITEM=[
     icon: 'bi bi-box-arrow-right fs-4 text-primary',
   },
 ];
+
+export const TOAST_TYPE = {
+  success:'success',
+  warning: 'warning',
+  danger:'danger'
+}
+
+export const PAYMENT_METHOD=['Paytm', 'Google Pay', 'Paypal'];
+
+export const COUNTRIES= ['USA', 'Canada', 'UK'];
+
+export const PAGE_SIZE_SHOP_LIST=[10,20,30]
+
+export  const FIRST_SELECTED_PRODUCT_INFO={
+  productId: 0,
+  quantity: 1,
+  price: 0,
+  size: '',
+  color: '',
+};
+    
