@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { TOAST_TYPE } from 'src/app/shared/constant/toast';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,10 +23,16 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./shopping-cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
   subTotal = 10;
   cartProductList: any[] = [];
 
+  subscription: Subscription = new Subscription();
+
+  couponName: string = '';
+  isCouponApplied: boolean = false;
+  totalAmount!: number;
+  originalTotalAmount!: number;
   someAddedCart = [
     {
       productId: '',
@@ -50,6 +59,7 @@ export class ShoppingCartComponent implements OnInit {
       Images: ['assets/img/product-1.jpg'],
     },
   ];
+
   constructor(
     public commonService: CommonService,
     private productService: ProductService,
@@ -73,6 +83,9 @@ export class ShoppingCartComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   setLocalStorage(typeOfString: any, storeData: any) {
     localStorage.setItem(typeOfString, JSON.stringify(storeData));
   }
@@ -122,6 +135,7 @@ export class ShoppingCartComponent implements OnInit {
         if (res.success) {
           this.cartProductList = res.data.products;
           this.commonService.subTotalAmount$.next(res.data.totalAmount);
+          localStorage.setItem('totalAmount', res.data.totalAmount);
           this.commonService.totalCartItem$.next(
             this.cartProductList?.length || 0
           );
@@ -171,10 +185,14 @@ export class ShoppingCartComponent implements OnInit {
       cartList.push(cartItem);
     });
 
-
     this.addCartList(cartList);
 
-    // this.productService.addProductToCart(this.cartProductList)
+    if (this.authService.loggedIn()) {
+      this.addCartList(cartList);
+      this.productService.addProductToCart(this.cartProductList);
+    } else {
+      this.router.navigate(['/checkout']);
+    }
   }
 
   addCartList(cartList: any[]) {
@@ -185,4 +203,5 @@ export class ShoppingCartComponent implements OnInit {
       },
     });
   }
+
 }

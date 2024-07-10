@@ -15,13 +15,13 @@
                 class="form-control"
                 formControlName="firstName"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('firstName')?.invalid &&
-                    (billingAddressForm.get('firstName')?.touched || submitted)
+                  'error':billingAddressForm.get('firstName')?.invalid && (billingAddressForm.get('firstName')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">First Name is required.</div>
+               @if (billingAddressForm.get('firstName')?.hasError('required') && (billingAddressForm.get('firstName')?.touched || submitted)) {
+                <span class="text-danger">First Name is required.</span>
+              }
             </div>
             <div class="form-group col-6">
               <label>Last Name</label>
@@ -31,13 +31,13 @@
                 placeholder="Doe"
                 formControlName="lastName"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('lastName')?.invalid &&
-                    (billingAddressForm.get('lastName')?.touched || submitted)
+                  'error':billingAddressForm.get('lastName')?.invalid && (billingAddressForm.get('lastName')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">Last Name is required.</div>
+                @if (billingAddressForm.get('lastName')?.hasError('required') && (billingAddressForm.get('lastName')?.touched || submitted)) {
+                  <span class="text-danger">Last Name is required.</span>
+                }
             </div>
           </div>
           <div class="form-row">
@@ -49,15 +49,16 @@
                 class="form-control"
                 formControlName="email"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('email')?.invalid &&
-                    (billingAddressForm.get('email')?.touched || submitted)
+                  'error':billingAddressForm.get('email')?.invalid && (billingAddressForm.get('email')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">
-                Email is required and must be valid.
-              </div>
+                @if (billingAddressForm.get('email')?.hasError('required') && (billingAddressForm.get('email')?.touched || submitted)) {
+                  <span class="text-danger">Email is required.</span>
+                }
+                @if (billingAddressForm.get('email')?.hasError('email') && (billingAddressForm.get('email')?.touched || submitted)) {
+                  <span class="text-danger">Email is invalid.</span>
+                }
             </div>
             <div class="form-group col-6">
               <label>Mobile No</label>
@@ -67,13 +68,16 @@
                 formControlName="mobileNo"
                 placeholder="+123 456 789"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('mobileNo')?.invalid &&
-                    (billingAddressForm.get('mobileNo')?.touched || submitted)
+                  'error':billingAddressForm.get('mobileNo')?.invalid && (billingAddressForm.get('mobileNo')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">Mobile No is required.</div>
+                @if (billingAddressForm.get('mobileNo')?.hasError('required') && (billingAddressForm.get('mobileNo')?.touched || submitted)) {
+                  <span class="text-danger">Mobile No is required.</span>
+                }
+                @if (billingAddressForm.get('mobileNo')?.hasError('pattern') && (billingAddressForm.get('mobileNo')?.touched || submitted)) {
+                  <span class="text-danger">Mobile No is required only number.</span>
+                }
             </div>
           </div>
           <div class="form-row">
@@ -85,14 +89,13 @@
                 class="form-control"
                 formControlName="addressLine1"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('addressLine1')?.invalid &&
-                    (billingAddressForm.get('addressLine1')?.touched ||
-                      submitted)
+                  'error':billingAddressForm.get('addressLine1')?.invalid && (billingAddressForm.get('addressLine1')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">Address Line 1 is required.</div>
+                @if (billingAddressForm.get('addressLine1')?.hasError('required') && (billingAddressForm.get('addressLine1')?.touched || submitted)) {
+                  <span class="text-danger">Address Line 1 is required.</span>
+                }
             </div>
             <div class="form-group col-6">
               <label>Address Line 2</label>
@@ -101,7 +104,14 @@
                 class="form-control"
                 placeholder="123 street"
                 formControlName="addressLine2"
+                [ngClass]="{
+                  'error':billingAddressForm.get('addressLine2')?.invalid && (billingAddressForm.get('addressLine2')?.touched || submitted)
+                }"
+                required
                 />
+                @if (billingAddressForm.get('addressLine2')?.hasError('required') && (billingAddressForm.get('addressLine2')?.touched || submitted)) {
+                  <span class="text-danger">Address Line 2 is required.</span>
+                }
             </div>
           </div>
           <div class="form-row">
@@ -113,13 +123,13 @@
                 placeholder="New York"
                 formControlName="city"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('city')?.invalid &&
-                    (billingAddressForm.get('city')?.touched || submitted)
+                  'error':billingAddressForm.get('city')?.invalid && (billingAddressForm.get('city')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">City is required.</div>
+                @if (billingAddressForm.get('city')?.hasError('required') && (billingAddressForm.get('city')?.touched || submitted)) {
+                  <span class="text-danger">City is required.</span>
+                }
             </div>
             <div class="form-group col-6">
               <label>State</label>
@@ -129,13 +139,13 @@
                 formControlName="state"
                 placeholder="New York"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('state')?.invalid &&
-                    (billingAddressForm.get('state')?.touched || submitted)
+                  'error':billingAddressForm.get('state')?.invalid && (billingAddressForm.get('state')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">State is required.</div>
+                @if (billingAddressForm.get('state')?.hasError('required') && (billingAddressForm.get('state')?.touched || submitted)) {
+                  <span class="text-danger">State is required.</span>
+                }
             </div>
             <div class="form-group col-6">
               <label>Zipcode</label>
@@ -145,15 +155,13 @@
                 placeholder="123"
                 formControlName="zipcode"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('zipcode')?.invalid &&
-                    (billingAddressForm.get('zipcode')?.touched || submitted)
+                  'error':billingAddressForm.get('zipcode')?.invalid && (billingAddressForm.get('zipcode')?.touched || submitted)
                 }"
                 required
                 />
-              <div class="invalid-feedback">
-                Zipcode is required and must contain only numbers.
-              </div>
+                @if (billingAddressForm.get('zipcode')?.hasError('required') && (billingAddressForm.get('zipcode')?.touched || submitted)) {
+                  <span class="text-danger">ZipCode is required.</span>
+                }
             </div>
             <div class="form-group col-6">
               <label>Country</label>
@@ -161,9 +169,7 @@
                 class="custom-select"
                 formControlName="country"
                 [ngClass]="{
-                  'is-invalid':
-                    billingAddressForm.get('country')?.invalid &&
-                    (billingAddressForm.get('country')?.touched || submitted)
+                  'error':billingAddressForm.get('country')?.invalid && (billingAddressForm.get('country')?.touched || submitted)
                 }"
                 required
                 >
@@ -174,7 +180,9 @@
                   </option>
                 }
               </select>
-              <div class="invalid-feedback">Country is required.</div>
+              @if (billingAddressForm.get('country')?.hasError('required') && (billingAddressForm.get('country')?.touched || submitted)) {
+                <span class="text-danger">Country is required.</span>
+              }
             </div>
           </div>
         </form>
@@ -206,14 +214,16 @@
                     class="form-control"
                     formControlName="firstName"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('firstName')?.invalid &&
                       (shippingAddressForm.get('firstName')?.touched ||
                         submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">First Name is required.</div>
+                    @if (shippingAddressForm.get('firstName')?.hasError('required') && (shippingAddressForm.get('firstName')?.touched || submitted)) {
+                      <span class="text-danger">First Name is required.</span>
+                    }
                 </div>
                 <div class="form-group col-6">
                   <label>Last Name</label>
@@ -223,14 +233,16 @@
                     placeholder="Doe"
                     formControlName="lastName"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('lastName')?.invalid &&
                       (shippingAddressForm.get('lastName')?.touched ||
                         submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">Last Name is required.</div>
+                    @if (shippingAddressForm.get('lastName')?.hasError('required') && (shippingAddressForm.get('lastName')?.touched || submitted)) {
+                      <span class="text-danger">Last Name is required.</span>
+                    }
                 </div>
               </div>
               <div class="form-row">
@@ -242,15 +254,18 @@
                     formControlName="email"
                     placeholder="example@email.com"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('email')?.invalid &&
                       (shippingAddressForm.get('email')?.touched || submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">
-                    Email is required and must be valid.
-                  </div>
+                    @if (shippingAddressForm.get('email')?.hasError('required') && (shippingAddressForm.get('email')?.touched || submitted)) {
+                      <span class="text-danger">Email is required.</span>
+                    }
+                    @if (shippingAddressForm.get('email')?.hasError('email') && (shippingAddressForm.get('email')?.touched || submitted)) {
+                      <span class="text-danger">Email is invalid.</span>
+                    }
                 </div>
                 <div class="form-group col-6">
                   <label>Mobile No</label>
@@ -260,14 +275,19 @@
                     formControlName="mobileNo"
                     placeholder="+123 456 789"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('mobileNo')?.invalid &&
                       (shippingAddressForm.get('mobileNo')?.touched ||
                         submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">Mobile No is required.</div>
+                    @if (shippingAddressForm.get('mobileNo')?.hasError('required') && (shippingAddressForm.get('mobileNo')?.touched || submitted)) {
+                      <span class="text-danger">Mobile No is required.</span>
+                    }
+                    @if (shippingAddressForm.get('mobileNo')?.hasError('pattern') && (shippingAddressForm.get('mobileNo')?.touched || submitted)) {
+                      <span class="text-danger">Mobile No is required only number.</span>
+                    }
                 </div>
               </div>
               <div class="form-row">
@@ -279,14 +299,16 @@
                     placeholder="123 street"
                     formControlName="addressLine1"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('addressLine1')?.invalid &&
                       (shippingAddressForm.get('addressLine1')?.touched ||
                         submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">Address Line 1 is required.</div>
+                    @if (billingAddressForm.get('addressLine1')?.hasError('required') && (billingAddressForm.get('addressLine1')?.touched || submitted)) {
+                      <span class="text-danger">Address Line 1 is required.</span>
+                    }
                 </div>
                 <div class="form-group col-6">
                   <label>Address Line 2</label>
@@ -295,7 +317,16 @@
                     class="form-control"
                     placeholder="123 street"
                     formControlName="addressLine2"
+                    [ngClass]="{
+                      'error':
+                        shippingAddressForm.get('addressLine2')?.invalid &&
+                        (shippingAddressForm.get('addressLine2')?.touched ||
+                          submitted)
+                    }"
                     />
+                    @if (shippingAddressForm.get('addressLine2')?.hasError('required') && (shippingAddressForm.get('addressLine2')?.touched || submitted)) {
+                      <span class="text-danger">Address Line 2 is required.</span>
+                    }
                 </div>
               </div>
               <div class="form-row">
@@ -307,13 +338,15 @@
                     placeholder="New York"
                     formControlName="city"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('city')?.invalid &&
                       (shippingAddressForm.get('city')?.touched || submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">City is required.</div>
+         @if (shippingAddressForm.get('city')?.hasError('required') && (shippingAddressForm.get('city')?.touched || submitted)) {
+                  <span class="text-danger">City is required.</span>
+                }
                 </div>
                 <div class="form-group col-6">
                   <label>State</label>
@@ -323,13 +356,15 @@
                     placeholder="New York"
                     formControlName="state"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('state')?.invalid &&
                       (shippingAddressForm.get('state')?.touched || submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">State is required.</div>
+                    @if (shippingAddressForm.get('state')?.hasError('required') && (shippingAddressForm.get('state')?.touched || submitted)) {
+                      <span class="text-danger">State is required.</span>
+                    }
                 </div>
                 <div class="form-group col-6">
                   <label>Zipcode</label>
@@ -339,15 +374,18 @@
                     placeholder="123"
                     formControlName="zipcode"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('zipcode')?.invalid &&
                       (shippingAddressForm.get('zipcode')?.touched || submitted)
                   }"
                     required
                     />
-                  <div class="invalid-feedback">
-                    Zipcode is required and must contain only numbers.
-                  </div>
+                    @if (shippingAddressForm.get('zipcode')?.hasError('required') && (shippingAddressForm.get('zipcode')?.touched || submitted)) {
+                      <span class="text-danger">ZipCode is required.</span>
+                    }
+                    @if (shippingAddressForm.get('zipcode')?.hasError('pattern') && (shippingAddressForm.get('zipcode')?.touched || submitted)) {
+                      <span class="text-danger">ZipCode required only numbers.</span>
+                    }
                 </div>
                 <div class="form-group col-6">
                   <label>Country</label>
@@ -355,7 +393,7 @@
                     class="custom-select"
                     formControlName="country"
                   [ngClass]="{
-                    'is-invalid':
+                    'error':
                       shippingAddressForm.get('country')?.invalid &&
                       (shippingAddressForm.get('country')?.touched || submitted)
                   }"
@@ -368,7 +406,9 @@
                       </option>
                     }
                   </select>
-                  <div class="invalid-feedback">Country is required.</div>
+                  @if (shippingAddressForm.get('country')?.hasError('required') && (shippingAddressForm.get('country')?.touched || submitted)) {
+                    <span class="text-danger">Country is required.</span>
+                  }
                 </div>
               </div>
             </form>
@@ -388,7 +428,7 @@
               class="d-flex justify-content-between"
               >
               <p>{{ product.name | titlecase }}</p>
-              <p>${{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</p>
+              <p>{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</p>
             </div>
           }
         </div>
@@ -423,6 +463,17 @@
             </h5>
           </div>
         </div>
+      </div>
+      <div class="mb-30" >
+        <div class="input-group">
+          <input type="text" class="form-control" name="coupon" [(ngModel)]="couponName" [disabled]="isCouponApplied" placeholder="Coupon Code" >
+          <div class="input-group-append">
+            <button class="btn btn-primary" (click)="toggleCoupon()">
+              {{ isCouponApplied ? 'Remove Coupon' : 'Apply Coupon' }}
+            </button>
+          </div>
+        </div>
+        
       </div>
       <div class="mb-5">
         <h5 class="section-title position-relative text-uppercase mb-3">

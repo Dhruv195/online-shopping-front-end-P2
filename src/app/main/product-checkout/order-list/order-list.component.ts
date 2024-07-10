@@ -64,4 +64,14 @@ export class OrderListComponent implements OnInit {
       },
     });
   }
+
+  cancelOrder(id:any) {
+    this.commonService.removeOrder(id).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.getOrder()
+        }
+      }
+    })
+  }
 }

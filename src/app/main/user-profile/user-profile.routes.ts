@@ -29,6 +29,10 @@ export const routes: Routes = [
             {
                 path:'order-list',
                 loadComponent:()=>import('../product-checkout/order-list/order-list.component').then((m)=>m.OrderListComponent)
+            },
+            {
+                path:'order-view/:id',
+                loadComponent:()=>import('../product-checkout/order-view/order-view.component').then((m)=>m.OrderViewComponent)
             }
         ]
     }

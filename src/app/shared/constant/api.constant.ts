@@ -30,5 +30,8 @@ export const API = {
   COLOR: 'product/color',
   GET_CATEGORY: 'faq/category',
   GEt_CATEGORY_FAQ: 'faq',
-  ABOUT_HELP_US:'pages'
+  ABOUT_HELP_US:'pages',
+  GET_SPECIAL_OFFER: 'specialOffer',
+  GET_COUPON_DETAILS: 'coupon/',
+  REMOVE_ORDER:'order/cancel'
 };

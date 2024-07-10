@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
@@ -31,7 +35,7 @@ import { CopyLinkDirective } from 'src/app/shared/directive/copy-link.directive'
     RouterModule,
     NgbModule,
     SetImageDimensionDirective,
-    CopyLinkDirective
+    CopyLinkDirective,
   ],
   templateUrl: './shope-details.component.html',
   styleUrls: ['./shope-details.component.scss'],
@@ -42,7 +46,7 @@ import { CopyLinkDirective } from 'src/app/shared/directive/copy-link.directive'
       transition('false <=> true', animate('300ms ease-in-out')),
     ]),
   ],
-  changeDetection:ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShopeDetailsComponent {
   constructor(
@@ -51,10 +55,9 @@ export class ShopeDetailsComponent {
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private authService: AuthService,
-    private cd:ChangeDetectorRef
+    private cd: ChangeDetectorRef
   ) {}
 
-  
   addProductCart = {
     productId: 0,
     quantity: 1,
@@ -63,7 +66,7 @@ export class ShopeDetailsComponent {
     color: '',
   };
   products: any = {};
-  currentUrl =  window.location.href;
+  currentUrl = window.location.href;
 
   addProductData = {
     productId: '',
@@ -73,21 +76,20 @@ export class ShopeDetailsComponent {
     totalProductPrice: 0,
     Images: [],
   };
-  
-//////
+
   routerOfProductInformation: any[] = [
     {
       title: 'Description',
-      link: 'product-description'
+      link: 'product-description',
     },
     {
       title: 'Information',
-      link: 'product-information'
+      link: 'product-information',
     },
     {
       title: 'Reviews (0)',
-      link: 'product-reviews'
-    }
+      link: 'product-reviews',
+    },
   ];
   customOptions: OwlOptions = {
     loop: true,
@@ -132,17 +134,17 @@ export class ShopeDetailsComponent {
   ];
   cartList: any[] = [];
   productId: any;
-  product:any;
-  productList:any;
-  
+  product: any;
+  productList: any;
+
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.getParams();
-    if(this.productId){
+    if (this.productId) {
       this.getProduct(this.productId);
       this.getRelatedProduct(this.productId);
     }
-    console.log("uRL ",)
+    console.log('uRL ');
   }
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
@@ -155,13 +157,13 @@ export class ShopeDetailsComponent {
     });
   }
 
-  getParams(){
+  getParams() {
     this.activatedRoute.params.subscribe({
       next: (res: any) => {
-          this.productId = res.id;
-          this.cd.markForCheck();
-        },
-      });
+        this.productId = res.id;
+        this.cd.markForCheck();
+      },
+    });
   }
 
   getProduct(productId: any) {
@@ -172,7 +174,6 @@ export class ShopeDetailsComponent {
         this.addProductCart.size = this.product.size[0];
         this.addProductCart.color = this.product.colors[0];
         this.cd.markForCheck();
-
       },
     });
   }
@@ -180,10 +181,9 @@ export class ShopeDetailsComponent {
   getRelatedProduct(productId: any) {
     this.productService.getRelatedProducts(productId).subscribe({
       next: (res: any) => {
-          this.productList = res.data.products;
-          this.cd.markForCheck();
-
-        }
+        this.productList = res.data.products;
+        this.cd.markForCheck();
+      },
     });
   }
 
@@ -205,7 +205,9 @@ export class ShopeDetailsComponent {
         .addProductToCart({ product: this.addProductCart })
         .subscribe({
           next: (res: any) => {
-            this.router.navigate(['/shopping-cart']);
+            if (res.success) {
+              this.router.navigate(['/shopping-cart']);
+            }
             this.cd.markForCheck();
           },
         });
@@ -219,7 +221,7 @@ export class ShopeDetailsComponent {
         this.commonService.getLocalStorage('cartProductList') || [];
       this.cartList.push(this.addProductData);
       this.commonService.setLocalStorage('cartProductList', this.cartList);
+      this.router.navigate(['/shopping-cart']);
     }
-    this.router.navigate(['/shopping-cart']);
   }
 }

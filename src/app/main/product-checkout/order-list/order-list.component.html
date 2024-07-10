@@ -1,70 +1,74 @@
 @if (orderList && orderList.length > 0) {
 
-@for (order of orderList; track order) {
-  <div class="order-details container border p-3 my-3">
-    <div class="row mb-4">
-      <div class="order-header col-12 col-md-4 mb-3 mb-md-0">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Order Details</h2>
-            <p>Order ID: {{ order._id }} ({{ order.products.length }} items)</p>
-            <p>Order Date: {{ order.createdAt | date }}</p>
-            <p>Total Amount: {{ order.totalAmount | currency }}</p>
-          </div>
+@for (order of orderList; track order)
+{
+<div class="order-details container border p-3 my-3">
+  <div class="row mb-4">
+    <div class="order-header col-12 col-md-4 mb-3 mb-md-0">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">Order Details</h2>
+          <p>Order ID: {{ order._id }} ({{ order.products.length }} items)</p>
+          <p>Order Date: {{ order.createdAt | date }}</p>
+          <p>Total Amount: {{ order.totalAmount | currency }}</p>
         </div>
       </div>
-      <div class="order-address col-12 col-md-4 mb-3 mb-md-0">
-        <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">Address</h3>
-            <p>
-              {{
-              order.billingAddress.firstName +
-              " " +
-              order.billingAddress.lastName
-              }}
-            </p>
-            <p>
-              {{ order.billingAddress.addressLine1 }}<br />
-              {{ order.billingAddress.city }}, {{ order.billingAddress.state }},
-              {{ order.billingAddress.country }}<br />
-              {{ order.billingAddress.zipcode }}
-            </p>
-            <p>Phone: {{ order.billingAddress.mobileNo }}</p>
-          </div>
+    </div>
+    <div class="order-address col-12 col-md-4 mb-3 mb-md-0">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3 class="card-title">Address</h3>
+          <p>
+            {{
+            order.billingAddress.firstName +
+            " " +
+            order.billingAddress.lastName
+            }}
+          </p>
+          <p>
+            {{ order.billingAddress.addressLine1 }}<br />
+            {{ order.billingAddress.city }}, {{ order.billingAddress.state }},
+            {{ order.billingAddress.country }}<br />
+            {{ order.billingAddress.zipcode }}
+          </p>
+          <p>Phone: {{ order.billingAddress.mobileNo }}</p>
         </div>
       </div>
-      <div class="order-total col-12 col-md-4 mb-3 mb-md-0">
-        <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">Manage Order</h3>
-            <p>Payment: {{ order.paymentMethod }}</p>
-            <p>
-              Order Status:
-              <span class="bg-primary text-white p-1 rounded">{{
-                order.orderStatus
+    </div>
+    <div class="order-total col-12 col-md-4 mb-3 mb-md-0">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3 class="card-title">Manage Order</h3>
+          <p>Payment: {{ order.paymentMethod }}</p>
+          <p>
+            Order Status:
+            <span class="bg-primary text-white p-1 rounded" [ngClass]="{ 'bg-danger':order.orderStatus=='Cancelled'}" >{{
+              order.orderStatus
               }}</span>
-            </p>
-            <button
-              class="btn btn-primary"
-              [routerLink]="['/order-view', order._id]"
-              routerLinkActive="router-link-active"
-              >
-              View Order
-            </button>
-          </div>
+          </p>
+          <button class="btn btn-primary" [routerLink]="['/user-profile/order-view', order._id]"
+            routerLinkActive="router-link-active">
+            View Order
+          </button>
+          @if(order.orderStatus!=='Delivered' && order.orderStatus!=='Cancelled')
+          {
+
+          <button class="btn btn-danger  mx-3" (click)="cancelOrder(order._id)">
+            Cancel
+          </button>
+          }
         </div>
       </div>
     </div>
   </div>
+</div>
 }
-}
-
-@else {
+  }
+  @else {
   <div class="empty-cart container text-center p-5 shadow">
     <img src="assets/img/image.png" alt="loading" />
     <h2>Your OrderList is empty!</h2>
     <p>Add items to it now.</p>
     <a routerLink="/shop" class="btn btn-primary">Shop now</a>
   </div>
-}
+  }

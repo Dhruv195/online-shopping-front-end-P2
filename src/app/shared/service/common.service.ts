@@ -105,4 +105,16 @@ export class CommonService {
     return this.httpService.get(API.ABOUT_HELP_US+typeOfInformation);
   }
 
+
+  getSpecialOffer() {
+    return this.httpService.get(API.GET_SPECIAL_OFFER);
+  }
+
+  getCoupon(couponName: any) {
+    return this.httpService.get(API.GET_COUPON_DETAILS + couponName);
+  }
+
+  removeOrder(orderId: any) {
+    return this.httpService.post(API.REMOVE_ORDER + `/${orderId}`, {});
+  }
 }

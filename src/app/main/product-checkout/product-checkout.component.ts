@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import {
   FormBuilder,
@@ -43,9 +43,13 @@ export class ProductCheckoutComponent {
     },
   };
   countries = ['USA', 'Canada', 'UK'];
-
   paymentMethodList = ['Paytm', 'Google Pay', 'Paypal'];
 
+  couponName: string = '';
+  isCouponApplied: boolean = false;
+  totalAmount!: number;
+  originalTotalAmount!: number;
+  couponCode: any;
   constructor(
     public commonService: CommonService,
     private fb: FormBuilder,
@@ -62,7 +66,6 @@ export class ProductCheckoutComponent {
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.createAddressForm();
-
     this.getUserCartDetail();
   }
   /**
@@ -88,9 +91,9 @@ export class ProductCheckoutComponent {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      mobileNo: new FormControl('', Validators.required),
+      mobileNo: new FormControl('',[ Validators.required,Validators.pattern('^[0-9]{10}$')]),
       addressLine1: new FormControl('', Validators.required),
-      addressLine2: new FormControl(''),
+      addressLine2: new FormControl('',Validators.required),
       city: new FormControl('', Validators.required),
       state: new FormControl('', Validators.required),
       zipcode: new FormControl('', [
@@ -106,7 +109,7 @@ export class ProductCheckoutComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       mobileNo: new FormControl('', Validators.required),
       addressLine1: new FormControl('', Validators.required),
-      addressLine2: new FormControl(''),
+      addressLine2: new FormControl('',Validators.required),
       city: new FormControl('', Validators.required),
       state: new FormControl('', Validators.required),
       zipcode: new FormControl('', [
@@ -141,6 +144,7 @@ export class ProductCheckoutComponent {
             };
             this.formData.orderTotal.products.push(newProduct);
           });
+          this.totalAmount = res.data.totalAmount;
           this.formData.orderTotal.subtotal = res.data.totalAmount;
           this.formData.orderTotal.total =
             res.data.totalAmount + this.formData.orderTotal.shipping;
@@ -161,18 +165,32 @@ export class ProductCheckoutComponent {
       (this.showShippingAddress ? this.shippingAddressForm.valid : true)
     ) {
 
-    }
+ 
 
     const billingAddress = this.billingAddressForm.value;
     const shippingAddress = this.showShippingAddress
       ? this.shippingAddressForm.value
       : billingAddress;
-    const orderData: any = {
-      billingAddress: shippingAddress,
-      shippingCharge: this.formData.orderTotal.shipping,
-      paymentMethod: this.paymentMethod,
-    };
-    this.addToCheckout(orderData);
+
+    if (this.isCouponApplied) {
+      const orderData: any = {
+        billingAddress: shippingAddress,
+        shippingCharge: this.formData.orderTotal.shipping,
+        paymentMethod: this.paymentMethod,
+        coupon: this.couponCode,
+      };
+
+      this.addToCheckout(orderData);
+    } else {
+      const orderData: any = {
+        billingAddress: shippingAddress,
+        shippingCharge: this.formData.orderTotal.shipping,
+        paymentMethod: this.paymentMethod,
+      };
+
+      this.addToCheckout(orderData);
+    }
+  }
   }
 
   /**
@@ -189,5 +207,60 @@ export class ProductCheckoutComponent {
         }
       },
     });
+  }
+
+  toggleCoupon() {
+    if (this.isCouponApplied) {
+      this.removeCoupon();
+    } else {
+      this.getCouponDetails();
+    }
+  }
+
+  getCouponDetails() {
+    console.log(this.couponName);
+
+    if (this.couponName.trim()) {
+      this.commonService.getCoupon(this.couponName).subscribe({
+        next: (res: any) => {
+
+          if (res.success) {
+            console.log(res);
+            this.couponCode = res.data.couponCode;
+
+            if (res.data.discountType === 'amount') {
+              const subtotal =
+                this.formData.orderTotal.subtotal - res.data.discount;
+              this.formData.orderTotal.subtotal = subtotal < 0 ? 0 : subtotal;
+            } else {
+              const subtotal =
+                (this.formData.orderTotal.subtotal * res.data.discount) / 100;
+              this.formData.orderTotal.subtotal = subtotal < 0 ? 0 : subtotal;
+            }
+            this.formData.orderTotal.total =
+              this.formData.orderTotal.subtotal +
+              this.formData.orderTotal.shipping;
+            this.isCouponApplied = true;
+          }
+          this.cdr.markForCheck();
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+      });
+    } else {
+      this.commonService.showToastMessage(
+        TOAST_TYPE.warning,
+        'Coupon is required'
+      );
+    }
+  }
+
+  removeCoupon() {
+    this.formData.orderTotal.subtotal = this.totalAmount;
+    this.formData.orderTotal.total =
+      this.totalAmount + this.formData.orderTotal.shipping;
+    this.couponName = '';
+    this.isCouponApplied = false;
   }
 }
