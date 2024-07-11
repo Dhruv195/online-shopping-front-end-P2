@@ -50,6 +50,14 @@
               <span class="text-danger" *ngIf="signUpForm.get('password').hasError('required') && (signUpForm.get('password').touched || submitted)">
                 Password is required
               </span>
+
+              <ul *ngIf="signUpForm.get('password').hasError('passwordValidation') && (signUpForm.get('password').dirty || signUpForm.get('password').touched)" class="text-danger">
+                <li>At Least One UpperCase</li>
+                <li>At Least One Lowercase</li>
+                <li>At Least One Digit</li>
+                <li>Minimum Length 6 </li>
+            </ul>
+
             </div>
             <div class="mb-3 text-end">
               <a routerLink="/auth/confirmation-email">Forgot password?</a>

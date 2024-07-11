@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { TOAST_TYPE } from 'src/app/shared/constant/common.constant';
+import { passwordValidation } from 'src/app/shared/validation/customeValidation.constant';
 
 @Component({
   selector: 'app-forgot-password',
@@ -42,8 +43,8 @@ export class ForgotPasswordComponent implements OnInit {
    */
   initializeForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
-      password: new FormControl('',Validators.required),
-      confirmPassword:new FormControl('',Validators.required)
+      password: new FormControl('',[Validators.required,passwordValidation()]),
+      confirmPassword:new FormControl('',[Validators.required,passwordValidation()])
     })
   }
   /**

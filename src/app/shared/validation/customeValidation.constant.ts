@@ -17,6 +17,7 @@ export function passwordValidation(): ValidatorFn {
             minLowercase: 1,
             minUppercase: 1,
             minNumbers: 1,
+            minSymbols:0
         });;
         // const passwordValid='/^[a-zA-Z0-9]';
 

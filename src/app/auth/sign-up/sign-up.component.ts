@@ -10,7 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { UserService } from 'src/app/shared/service/user.service';
-import { emailValidation } from 'src/app/shared/validation/customeValidation.constant';
+import { emailValidation, passwordValidation } from 'src/app/shared/validation/customeValidation.constant';
 
 @Component({
   selector: 'app-sign-up',
@@ -48,7 +48,7 @@ export class SignUpComponent {
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, emailValidation()]),
-      password: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required,passwordValidation()]),
     });
   }
 
