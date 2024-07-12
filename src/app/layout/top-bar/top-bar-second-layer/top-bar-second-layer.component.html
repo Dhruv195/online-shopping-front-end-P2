@@ -1,22 +1,27 @@
 <div class="container-fluid">
-
   <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
     <div class="col-lg-4">
       @if (commonService.siteConfig$ | async; as sitInfo) {
-        <a
-          class="text-decoration-none d-block d-lg-none"
-          >
-          <img [src]="sitInfo.logo" alt="Site Logo" />
-        </a>
+      <a class="text-decoration-none d-block d-lg-none">
+        <img [src]="sitInfo.logo" alt="Site Logo" />
+      </a>
       }
-      
     </div>
     <div class="col-lg-4 col-6 text-left">
       <form (ngSubmit)="onSearch()">
         <div class="input-group">
-          <input type="text" #inputSearch class="form-control" placeholder="Search for products" [(ngModel)]="searchQuery"
-            name="search"  />
-          <button type="submit" class="input-group-text bg-transparent text-primary rounded-0">
+          <input
+            type="text"
+            #inputSearch
+            class="form-control"
+            placeholder="Search for products"
+            [(ngModel)]="searchQuery"
+            name="search"
+          />
+          <button
+            type="submit"
+            class="input-group-text bg-transparent text-primary rounded-0"
+          >
             <i class="fa fa-search"></i>
           </button>
         </div>
