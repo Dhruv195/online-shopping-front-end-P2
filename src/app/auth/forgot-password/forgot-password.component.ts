@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { TOAST_TYPE } from 'src/app/shared/constant/toast';
+import { passwordValidation } from 'src/app/shared/validation/customeValidation.constant';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
   imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: any;
@@ -20,7 +22,7 @@ export class ForgotPasswordComponent implements OnInit {
   hiddenConfirmPassword = false;
   token: any;
 
-  constructor(private activatedRoute:ActivatedRoute,private authService:AuthService,private commonService:CommonService,private router:Router){}
+  constructor(private activatedRoute:ActivatedRoute,private authService:AuthService,private commonService:CommonService,private router:Router,private cd:ChangeDetectorRef){}
   /**
    * initializeForgotPasswordForm 
    * getParams fetch token
@@ -42,8 +44,8 @@ export class ForgotPasswordComponent implements OnInit {
    */
   initializeForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
-      password: new FormControl('',Validators.required),
-      confirmPassword:new FormControl('',Validators.required)
+      password: new FormControl('',[Validators.required,passwordValidation()]),
+      confirmPassword:new FormControl('',[Validators.required,passwordValidation()])
     })
   }
   /**
@@ -68,6 +70,7 @@ export class ForgotPasswordComponent implements OnInit {
         next: (res: any) => {
         this.commonService.showToastMessage(TOAST_TYPE.success,'Changed Password Successfully')
           this.router.navigate(['auth/sign-in']);
+          this.cd.markForCheck();
         }
       })
     }

@@ -1,6 +1,3 @@
-
-
-
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
   <div class="row w-100">
     <!-- Sign In Form Column -->
@@ -13,26 +10,36 @@
           <form (ngSubmit)="doSignIn()" [formGroup]="signInForm">
             <div class="form-group mb-3">
               <label for="inputEmail1">Email<span class="text-danger">*</span></label>
-              <input type="email" class="form-control" formControlName="email" id="inputEmail1"
-                placeholder="Email"
+              <input type="email" class="form-control" formControlName="email" id="inputEmail1" placeholder="Email"
                 [ngClass]="{'error': signInForm.get('email').invalid && (signInForm.get('email').touched || submitted)}">
               @if (signInForm.get('email').hasError('required') && (signInForm.get('email').touched || submitted)) {
-                <span class="text-danger">Email is required</span>
+              <span class="text-danger">Email is required</span>
               }
-              @if (signInForm.get('email').hasError('email')) {
-                <span class="text-danger">Email is invalid</span>
+              @if (signInForm.get('email').hasError('emailValidation') && (signInForm.get('email').dirty || signInForm.get('email').touched)) {
+              <span class="text-danger">Email is invalid.</span>
               }
+
             </div>
             <div class="form-group mb-3">
               <label for="inputPassword1">Password<span class="text-danger">*</span></label>
               <div class="input-group">
-                <input [type]="hiddenPassword ? 'text' : 'password'" class="form-control" formControlName="password" id="inputPassword1" placeholder="Password"
+                <input [type]="hiddenPassword ? 'text' : 'password'" class="form-control" formControlName="password"
+                  id="inputPassword1" placeholder="Password"
                   [ngClass]="{'error': signInForm.get('password').invalid && (signInForm.get('password').touched || submitted)}">
                 <button type="button" class="btn bg-primary " (click)="showPass()"
-                [ngClass]="{'bi bi-eye-fill': hiddenPassword, 'bi bi-eye-slash-fill': !hiddenPassword}"></button>
+                  [ngClass]="{'bi bi-eye-fill': hiddenPassword, 'bi bi-eye-slash-fill': !hiddenPassword}"></button>
               </div>
-              @if (signInForm.get('password').hasError('required') && (signInForm.get('password').touched || submitted)) {
-                <span class="text-danger">Password is required</span>
+              @if (signInForm.get('password').hasError('required') && (signInForm.get('password').touched || submitted))
+              {
+              <span class="text-danger">Password is required</span>
+              }
+              @if(signInForm.get('password').hasError('passwordValidation') && (signInForm.get('password').dirty || signInForm.get('password').touched)){
+                <ul class="text-danger">
+                  <li>At Least One UpperCase</li>
+                  <li>At Least One Lowercase</li>
+                  <li>At Least One Digit</li>
+                  <li>Minimum Length 6 </li>
+              </ul>
               }
             </div>
             <div class="mb-3 text-end ">
@@ -52,9 +59,11 @@
 
     <!-- Welcome Information Column -->
     <div class="col-md-6 d-none d-md-flex ">
-      <div class="card h-100 shadow-lg border  rounded-0 text-center p-4 d-flex justify-content-center align-items-center">
+      <div
+        class="card h-100 shadow-lg border  rounded-0 text-center p-4 d-flex justify-content-center align-items-center">
         <h2 class="text-primary">Welcome to Multi Shop!</h2>
-        <p class="lead">We are delighted to have you here. Our platform offers a wide range of products at competitive prices. Enjoy a seamless shopping experience with easy navigation and secure checkout.</p>
+        <p class="lead">We are delighted to have you here. Our platform offers a wide range of products at competitive
+          prices. Enjoy a seamless shopping experience with easy navigation and secure checkout.</p>
 
         <ul class="list-unstyled horizontal-list ">
           <li><i class="bi bi-check-circle-fill text-success"></i> Exclusive deals and offers</li>
@@ -67,4 +76,3 @@
     </div>
   </div>
 </div>
-

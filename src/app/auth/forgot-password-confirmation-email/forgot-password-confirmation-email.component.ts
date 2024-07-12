@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { emailValidation } from 'src/app/shared/validation/customeValidation.constant';
 
 @Component({
   selector: 'app-forgot-password',
@@ -29,7 +30,7 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
    */
   initializeForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
-      email: new FormControl('',[Validators.required]),
+      email: new FormControl('',[Validators.required,emailValidation()]),
     })
   }
   /**
