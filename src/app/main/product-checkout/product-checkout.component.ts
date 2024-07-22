@@ -15,7 +15,6 @@ import {
 } from '@angular/forms';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
-import { NgbRefDirective } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { OrderService } from 'src/app/shared/service/order.service';
 import { Router } from '@angular/router';
 import { TOAST_TYPE } from 'src/app/shared/constant/toast';
