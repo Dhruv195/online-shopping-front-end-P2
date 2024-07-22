@@ -7,6 +7,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from 'src/app/shared/service/user.service';
 import { TOAST_TYPE } from 'src/app/shared/constant/toast';
+import { emailValidation } from 'src/app/shared/validation/customeValidation.constant';
 
 @Component({
   selector: 'app-sign-in',
@@ -33,7 +34,7 @@ export class SignInComponent {
 
   signInFormGroup() {
     this.signInForm = new FormGroup({
-      email: new FormControl(null,[Validators.required,Validators.email]),
+      email: new FormControl(null,[Validators.required,emailValidation()]),
       password:new FormControl(null,[Validators.required])
     })
   }

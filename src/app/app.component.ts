@@ -6,6 +6,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { UserService } from './shared/service/user.service';
+import { BackToTopDirective } from './shared/directive/back-to-top.directive';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { UserService } from './shared/service/user.service';
     TopBarComponent,
     HeaderComponent,
     FooterComponent,
-    ToastComponent
+    ToastComponent,
+    BackToTopDirective
 ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

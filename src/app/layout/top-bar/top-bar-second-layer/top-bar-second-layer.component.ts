@@ -23,7 +23,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-top-bar-second-layer',
   standalone: true,
-  imports: [FormsModule,AsyncPipe],
+  imports: [FormsModule, AsyncPipe],
   templateUrl: './top-bar-second-layer.component.html',
   styleUrls: ['./top-bar-second-layer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,7 +38,7 @@ export class TopBarSecondLayerComponent {
     public productService: ProductService,
     public router: Router,
     private cd: ChangeDetectorRef,
-    public commonService:CommonService
+    public commonService: CommonService
   ) {}
 
   onSearch() {
