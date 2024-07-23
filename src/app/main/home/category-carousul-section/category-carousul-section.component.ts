@@ -12,10 +12,7 @@ import { ProductService } from 'src/app/shared/service/product.service';
 @Component({
   selector: 'app-category-carousul-section',
   standalone: true,
-  imports: [RouterModule,
-    CurrencyPipe,
-    PercentPipe,
-    DatePipe],
+  imports: [RouterModule, CurrencyPipe, PercentPipe, DatePipe],
   templateUrl: './category-carousul-section.component.html',
   styleUrls: ['./category-carousul-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,12 +20,12 @@ import { ProductService } from 'src/app/shared/service/product.service';
 export class CategoryCarousulSectionComponent {
   carouselItems: any[] = [];
 
-  @Input() specialOffer:any[]=[]
+  @Input() specialOffer: any[] = [];
 
   constructor(
     private productService: ProductService,
     private cdr: ChangeDetectorRef,
-    private router:Router
+    private router: Router
   ) {}
 
   products: any;
@@ -46,11 +43,11 @@ export class CategoryCarousulSectionComponent {
           res.data.categories.forEach((element: any) => {
             if (element.banner) {
               const bannerItem = {
-                image: element.image,
+                image: element.bannerImage,
                 title: element.categoryName,
                 description: element.description,
                 buttonText: 'Shop Now',
-                id:element._id
+                id: element._id,
               };
               this.carouselItems.push(bannerItem);
             }
@@ -63,7 +60,7 @@ export class CategoryCarousulSectionComponent {
       },
     });
   }
-  onCategoryClick(categoryId:any){
+  onCategoryClick(categoryId: any) {
     let params = {
       categoryId: categoryId,
     };
@@ -71,5 +68,5 @@ export class CategoryCarousulSectionComponent {
       queryParams: params,
       queryParamsHandling: 'merge',
     });
-  } 
+  }
 }
