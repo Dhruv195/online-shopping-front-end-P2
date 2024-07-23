@@ -4,29 +4,28 @@
     <span class="bg-secondary pr-3">Categories</span>
   </h2>
   <div class="row px-xl-5 pb-3">
-    @for (category of categories; track category) {
-      <div
-        class="col-lg-3 col-md-4 col-sm-6 pb-1"
-        >
-        <a class="text-decoration-none" (click)="onCategoryClick(category._id)" >
-          <div class="cat-item d-flex align-items-center mb-4">
-            <div class="overflow-hidden" style="width: 100px; height: 100px">
-              <img
-                class="img-fluid"
-                [src]="category.image"
-                alt="{{ category.name }}"
-                />
-            </div>
-            <div class="flex-fill pl-3">
-              <h6>{{ category.categoryName | titlecase }}</h6>
-              <small class="text-body"
-                >{{ category.productCount }} Products</small
-                >
-              </div>
-            </div>
-          </a>
+    <div
+      *ngFor="let category of categories; trackBy: trackByCategoryId"
+      class="col-lg-3 col-md-4 col-sm-6 pb-1"
+    >
+      <a class="text-decoration-none" (click)="onCategoryClick(category._id)">
+        <div class="cat-item d-flex align-items-center mb-4">
+          <div class="overflow-hidden" style="width: 100px; height: 100px">
+            <img
+              class="img-fluid"
+              [src]="category.image"
+              alt="{{ category.name }}"
+            />
+          </div>
+          <div class="flex-fill pl-3">
+            <h6>{{ category.categoryName | titlecase }}</h6>
+            <small class="text-body"
+              >{{ category.productCount }} Products</small
+            >
+          </div>
         </div>
-      }
+      </a>
     </div>
   </div>
-  <!-- Categories End -->
+</div>
+<!-- Categories End -->

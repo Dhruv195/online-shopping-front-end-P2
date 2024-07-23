@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { Router, RouterModule } from '@angular/router';
@@ -9,37 +15,50 @@ import { Router, RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   templateUrl: './category-section.component.html',
   styleUrls: ['./category-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategorySectionComponent implements OnInit {
-  
+export class CategorySectionComponent implements OnInit, AfterViewInit {
+  categories: any[] = [];
 
-  categories: any;
-
-  constructor(private productService: ProductService,private router:Router) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+    // this.getCategory();
+  }
+
+  ngAfterViewInit(): void {
     this.getCategory();
   }
+
   getCategory() {
     this.productService.getCategoryList().subscribe({
       next: (res: any) => {
-        if (res.data) {
-          this.categories = res.data.categories;
+        if (res.success) {
+          this.categories = [...res.data.categories];
+          this.cdr.markForCheck();
         }
+      },
+      error: (err: any) => {
+        console.error('Error fetching categories:', err);
       },
     });
   }
-  onCategoryClick(categoryId:any) {
+
+  onCategoryClick(categoryId: any) {
     let params = {
-      'categoryId':categoryId,
-    }
-    this.router.navigate(
-      ['/shop'],
-      {
-        queryParams: params,
-        queryParamsHandling: 'merge',
-      }
-    );
+      categoryId: categoryId,
+    };
+    this.router.navigate(['/shop'], {
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
   }
-  
+
+  trackByCategoryId(index: number, category: any): number {
+    return index;
+  }
 }

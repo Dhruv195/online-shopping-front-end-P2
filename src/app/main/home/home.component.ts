@@ -27,13 +27,11 @@ import { CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  specialOfferDetails: any[] = [
-   
-  ];
+  specialOfferDetails: any[] = [];
   constructor(public commonService: CommonService) {}
   ngOnInit(): void {
     this.changeBreadCrumbData();
-    this.setSpecialOffer()
+    this.setSpecialOffer();
   }
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next(null);
@@ -42,10 +40,7 @@ export class HomeComponent implements OnInit {
   setSpecialOffer() {
     this.commonService.getSpecialOffer().subscribe({
       next: (res: any) => {
-        console.log(res);
-        
         if (res.success) {
-          console.log(this.specialOfferDetails);
           this.specialOfferDetails = res.data.specialOffers;
         }
       },
