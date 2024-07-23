@@ -6,6 +6,7 @@ import { CommonService } from 'src/app/shared/service/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/service/user.service';
 import { SetImageDimensionDirective } from 'src/app/shared/directive/set-image-dimension.directive';
+import { ProductService } from 'src/app/shared/service/product.service';
 
 @Component({
   selector: 'app-product-reviews',
@@ -25,7 +26,9 @@ export class ProductReviewsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cd:ChangeDetectorRef,
     private userService: UserService,
+    public productService:ProductService,
   ) {}
+
 
   ngOnInit(): void {
     this.inititalizeReviewForm();
@@ -51,17 +54,24 @@ export class ProductReviewsComponent implements OnInit {
     if(this.reviewForm.valid){
       this.userService.addReview(this.reviewForm.value,this.productId).subscribe({
         next:(res:any)=>{
-          this.getTotalReviewList(this.productId);
+          this.productService.getProductReview$.next(true);
         }
       })
+      this.reviewForm.reset();
     }
   }
 
   getTotalReviewList(productId:any) {
-    this.userService.getReviewList(productId).subscribe({
-      next: (res: any) => {
-        this.reviewList = res.data;
+    this.productService.getProductReview$.subscribe({
+      next:(res:any)=>{
+        this.userService.getReviewList(productId).subscribe({
+          next: (res: any) => {
+            this.reviewList = res.data;
+            // console.log("Reviw =>",res)
+          }
+        })
       }
     })
+    
   }
 }

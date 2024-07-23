@@ -23,6 +23,7 @@ export class FaqComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFAQData();
+    this.changeBreadCrumbData()
   }
   /**
    * getFaq using API
@@ -58,6 +59,9 @@ export class FaqComponent implements OnInit {
     this.router.navigate(['faq'], {
       queryParams:this.params
     })
+  }
+  changeBreadCrumbData() {
+    this.commonService.breadCrumbData$.next(null);
   }
   
 }

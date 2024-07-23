@@ -6,3 +6,15 @@
     list-style-type: none;
     justify-items: start; /* Align items to start of columns */
   }
+
+  .image-container {
+    width: 100%;
+    height: auto;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; /* Adjust this value based on your requirements */
+    object-fit: cover; /* This ensures the image covers the container without distortion */
+}

@@ -87,7 +87,7 @@ export class ShopeDetailsComponent {
       link: 'product-information',
     },
     {
-      title: 'Reviews (0)',
+      title: 'Reviews',
       link: 'product-reviews',
     },
   ];

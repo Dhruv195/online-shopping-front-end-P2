@@ -12,7 +12,8 @@ export class ProductService {
   productList = new BehaviorSubject<any>([]);
   totalProducts = new BehaviorSubject<any>(0);
   productDetails$=new BehaviorSubject<any>({});
-
+  getProductReview$=new BehaviorSubject<any>(false);
+  getProductWishList$=new BehaviorSubject<any>(0);
   getCategoryList() {
     return this.httpService.get(API.CATEGORY_LIST);
   }

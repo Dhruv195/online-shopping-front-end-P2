@@ -6,10 +6,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/service/product.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterCardComponent } from 'src/app/shared/components/filter-card/filter-card.component';
@@ -30,7 +29,7 @@ import { ProductListViewComponent } from 'src/app/shared/components/product-list
     NgbModule,
     FilterCardComponent,
     NgxSliderModule
-],
+  ],
   templateUrl: './shope.component.html',
   styleUrls: ['./shope.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,14 +42,14 @@ export class ShopeComponent implements OnInit {
   pageSize = 9;
   page = 1;
   totalProduct: any;
-  params: any;
+  params: any = {};
   productList: any;
   displayMode: string = 'grid';
   minValue: number = 0;
-  maxValue: number = 400;
+  maxValue: number = 50000;
   options: Options = {
     floor: 0,
-    ceil: 500,
+    ceil: 50000,
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
@@ -63,6 +62,7 @@ export class ShopeComponent implements OnInit {
     },
   };
   searchParams: any;
+
   @ViewChild('priceMinMax') minMaxPrice!: ElementRef;
 
   constructor(
@@ -73,26 +73,20 @@ export class ShopeComponent implements OnInit {
     public cd: ChangeDetectorRef
   ) {}
 
-  /**
-   * BreadCrumbData
-   * HandlePrams
-   * PagePramsTo fetch getProductList
-   * Behaviour Subject to get ProductList and TotalProduct Why ? Because "serch Bar in header"
-   */
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.getProductListAndTotalProduct();
     this.fetchQueryParams();
     this.getColors();
   }
+
   fetchQueryParams() {
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
-      this.searchParams = params.params;
+      this.searchParams = { ...params.params };
       this.handlePrams();
     });
   }
 
-  //page and pageSize in params
   handlePrams() {
     this.params = {
       ...this.params,
@@ -100,16 +94,14 @@ export class ShopeComponent implements OnInit {
       page: this.page,
       items: this.pageSize,
     };
-    this.getProductList(this.params);
+    this.updateQueryParams();
   }
 
-  //change Page size to set Products
   onChangePageSize(pageSize: any) {
     this.pageSize = pageSize;
     this.handlePrams();
   }
 
-  //Behaviour Subject to get ProductList and TotalProduct Why ? Because "serch Bar in header"
   getProductListAndTotalProduct() {
     this.productService.productList.subscribe({
       next: (res: any) => {
@@ -130,7 +122,7 @@ export class ShopeComponent implements OnInit {
       },
     });
   }
-  //filter Card to get selected filter items
+
   onFilterChanged(selectedFilters: any) {
     // Clear previous filters
     Object.keys(this.params).forEach((key) => {
@@ -143,45 +135,38 @@ export class ShopeComponent implements OnInit {
       }
     });
 
-
-     
-    //handle params for API multiple select price,size 
-    Object.keys(selectedFilters).forEach((element : any) => {
+    // Add new filters
+    Object.keys(selectedFilters).forEach((element: any) => {
       if (element && selectedFilters[element].length && !selectedFilters[element].includes(`All ${element.charAt(0).toUpperCase() + element.slice(1)}`)) {
-        selectedFilters[element].forEach((item : any,index : any) => {
-            this.params[element+`[${index}]`] = item
-        });      
+        selectedFilters[element].forEach((item: any, index: any) => {
+          this.params[element + `[${index}]`] = item;
+        });
       }
     });
 
-    this.handlePrams();
-    // this.getProductList(this.params);
+    this.updateQueryParams();
   }
-  //grid View and list View For change View Mode
+
   onDisplayModeChange(mode: string) {
     this.displayMode = mode;
   }
-  //API Call Of ProductList
+
   getProductList(params: any) {
     this.productService.getProductList(params).subscribe({
       next: (res: any) => {
-        this.options.floor= res.data.min_price;
-        this.options.ceil = res.data.max_price;
-        //pass in Behaviour Subject
+        
         this.productService.productList.next(res.data.products);
-        console.log(res,'=>>> ')
-        console.log("Opriotn ",this.options)
         this.productService.totalProducts.next(res.data.total_count);
-        this.router.navigate(['/shop'], {
+
+        this.router.navigate([], {
           relativeTo: this.activatedRoute,
-          queryParams: this.params,
-          // queryParamsHandling: 'merge',
+          queryParams: params,
         });
         this.cd.markForCheck();
       },
     });
   }
-  //set BreadCrumbData
+
   changeBreadCrumbData() {
     this.commonService.breadCrumbData$.next({
       pageTitle: 'Shop Page',
@@ -192,21 +177,35 @@ export class ShopeComponent implements OnInit {
       ],
     });
   }
-  //Change Page and Call API of ProductList
+
   changePageOfProduct(page: any) {
     this.page = page;
     this.handlePrams();
   }
 
   getMinMaxPrice(priceMinMax: any) {
-    // this.params.minPrice = this.minValue;
-    // this.params.maxPrice = this.maxValue;
     this.params = {
       ...this.params,
       minPrice: this.minValue,
       maxPrice: this.maxValue,
     };
-    this.getProductList(this.params);
+    this.updateQueryParams();
+  }
+
+  updateQueryParams() {
+    const queryParams = { ...this.params };
+
+    // Remove empty params
+    Object.keys(queryParams).forEach((key) => {
+      if (!queryParams[key]) {
+        delete queryParams[key];
+      }
+    });
+
+    
+    console.log("QueryPrams => ",queryParams)
+
+    this.getProductList(queryParams);
   }
 
   getColors() {
@@ -227,7 +226,6 @@ export class ShopeComponent implements OnInit {
             this.colorList.push(color);
           });
           this.filters[0].color = this.colorList;
-
           this.cd.markForCheck();
         }
       },

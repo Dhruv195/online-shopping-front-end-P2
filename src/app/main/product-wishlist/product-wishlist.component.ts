@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CommonService } from 'src/app/shared/service/common.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UserService } from 'src/app/shared/service/user.service';
+import { ProductService } from 'src/app/shared/service/product.service';
 
 @Component({
   selector: 'app-product-wishlist',
@@ -15,15 +16,17 @@ import { UserService } from 'src/app/shared/service/user.service';
 export class ProductWishlistComponent  {
   productWishList: any;
   productId:any;
+  subsciber:any;
 
  
-  constructor(private commonService:CommonService,private userService:UserService,private acitveRoute:ActivatedRoute,private cd:ChangeDetectorRef){}
+  constructor(private commonService:CommonService,private userService:UserService,private acitveRoute:ActivatedRoute,private cd:ChangeDetectorRef,private productService:ProductService){}
 
   ngOnInit(): void {
     this.changeBreadCrumbData();
     this.getParams();
     if(this.productId==undefined){
       this.getWishList();
+      
     }
   }
   
@@ -58,6 +61,7 @@ export class ProductWishlistComponent  {
     this.userService.getWishList().subscribe({
       next:(res:any)=>{
         this.productWishList=res.data.products;
+        this.productService.getProductWishList$.next(this.productWishList.length);
         this.cd.markForCheck();
       },
       error:(err:any)=>{
@@ -70,6 +74,8 @@ export class ProductWishlistComponent  {
     this.userService.postWishList(this.productId).subscribe({
       next:(res:any)=>{
         this.getWishList();
+        this.productService.getProductWishList$.next(this.productWishList.length);
+
         this.cd.markForCheck();
       },
       error:(err:any)=>{}

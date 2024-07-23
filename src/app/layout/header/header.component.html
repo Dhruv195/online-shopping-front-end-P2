@@ -22,7 +22,7 @@
           <a
             class="nav-item nav-link"
             (click)="onCategoryClick(category._id)"
-            >{{ category.categoryName }}</a
+            >{{ category.categoryName | titlecase }}</a
           >
           }
         </div>
@@ -60,12 +60,12 @@
             }
           </div>
           <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-            <a class="btn px-0" routerLink="/wish-list">
-              <i class="fas fa-heart text-primary"></i>
+            <a class="btn px-0 ml-3" routerLink="/wish-list">
+              <i class="fas fa-heart mr-1 text-primary"></i>
               <span
                 class="badge text-secondary border border-secondary rounded-circle"
                 style="padding-bottom: 2px"
-                >{{ commonService.totalWishListItem$ | async }}</span
+                >{{ productService.getProductWishList$ | async }}</span
               >
             </a>
             <a class="btn px-0 ml-3" routerLink="/shopping-cart">

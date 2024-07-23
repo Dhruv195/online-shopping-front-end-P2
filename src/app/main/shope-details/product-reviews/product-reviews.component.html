@@ -1,22 +1,30 @@
 <div>
   <div class="row">
     <div class="col-md-6">
-      <h4 class="mb-4">{{reviewList.item}} review for ProductName </h4>
-      @for (review of reviewList.reviews; track review) {
-        <div class="media mb-4">
-          <img [src]="review.profilePic ?  review.profilePic :'assets/img/not-image-found.jpg'" alt="Image"  class="img-fluid mr-3 mt-1"  style="width: 45px;">
-          <div class="media-body">
-            <h6>{{review.name}}<small> - <i>{{review.createdAt | date}}</i></small></h6>
-            <ngb-rating   [disabled]="true" [(rate)]="review.rating" [max]="5" class="fs-5" >
-              <ng-template let-fill="fill" let-index="index">
-                <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < review.rating"></i>
-              </ng-template>
-            </ngb-rating>
-            <p>{{review.review}}</p>
+        @if(reviewList.reviews.length > 0){
+        <div class="scroll">
+        @for (review of reviewList.reviews; track review) {
+          <div class="media mb-4 ">
+            <img [src]="review.profilePic ?  review.profilePic :'assets/img/not-image-found.jpg'" alt="Image"  class="img-fluid mr-3 mt-1"  style="width: 45px;">
+            <div class="media-body  ">
+              <h6>{{review.name}}<small> - <i>{{review.createdAt | date}}</i></small></h6>
+              <ngb-rating   [disabled]="true" [(rate)]="review.rating" [max]="5" class="fs-5" >
+                <ng-template let-fill="fill" let-index="index">
+                  <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < review.rating"></i>
+                </ng-template>
+              </ngb-rating>
+              <p>{{review.review}}</p>
+            </div>
           </div>
-        </div>
-      }
-    </div>
+        }
+      </div>
+    } 
+    @else {
+      <p class="text-center mt-5">No Review found</p>
+    }
+      </div>
+    
+
 
     <div class="col-md-6">
       <h4 class="mb-4">Leave a review</h4>
@@ -45,3 +53,6 @@
     </div>
   </div>
 </div>
+
+
+

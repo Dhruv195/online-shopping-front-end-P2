@@ -21,7 +21,7 @@ export class AboutHelpSlugComponent implements OnInit {
   ngOnInit(): void {
     this.typeOfInformation = this.router.url;
     this.getHelpAndAboutInformation();
-
+    this.changeBreadCrumbData()
   }
 
 
@@ -33,5 +33,9 @@ export class AboutHelpSlugComponent implements OnInit {
         this.cd.markForCheck()
       }
     })
+  }
+
+  changeBreadCrumbData() {
+    this.commonService.breadCrumbData$.next(null);
   }
 }

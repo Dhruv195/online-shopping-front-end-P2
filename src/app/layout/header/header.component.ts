@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public commonService: CommonService,
     public userService: UserService,
-    private productService: ProductService,
+    public productService: ProductService,
     private router: Router
   ) { }
   /**
