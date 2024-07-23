@@ -6,7 +6,7 @@ import {
   Input,
 } from '@angular/core';
 
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ProductService } from 'src/app/shared/service/product.service';
 
 @Component({
@@ -27,7 +27,8 @@ export class CategoryCarousulSectionComponent {
 
   constructor(
     private productService: ProductService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router:Router
   ) {}
 
   products: any;
@@ -49,7 +50,7 @@ export class CategoryCarousulSectionComponent {
                 title: element.categoryName,
                 description: element.description,
                 buttonText: 'Shop Now',
-                buttonLink: '/shop-detail',
+                id:element._id
               };
               this.carouselItems.push(bannerItem);
             }
@@ -62,4 +63,13 @@ export class CategoryCarousulSectionComponent {
       },
     });
   }
+  onCategoryClick(categoryId:any){
+    let params = {
+      categoryId: categoryId,
+    };
+    this.router.navigate(['/shop'], {
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
+  } 
 }

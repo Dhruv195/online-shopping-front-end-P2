@@ -12,14 +12,15 @@ export function passwordValidation(): ValidatorFn {
             return null;
         }
 
-        const passwordValid=validator.isStrongPassword(value, {
-            minLength: 6,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols:0
-        });;
+        // const passwordValid=validator.isStrongPassword(value, {
+        //     minLength: 6,
+        //     minLowercase: 1,
+        //     minUppercase: 1,
+        //     minNumbers: 1,
+        //     minSymbols:0
+        // });;
         // const passwordValid='/^[a-zA-Z0-9]';
+        const passwordValid=true;
 
         return !passwordValid ? {passwordValidation:true}: null;
     }
